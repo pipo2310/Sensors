@@ -1,7 +1,0 @@
-﻿id,maxSpeed(m/s),acceleration(m^2/s),pipeDiameter(m),P(open),P(close),packageSize,probabilityBound
-water1,25,25,0.15,0.1,0.1,1,1000
-water2,25,25,0.15,0.1,0.1,1,100
-gas1,25,25,0.15,0.1,0.1,1,10
-gas2,25,25,0.15,0.1,0.1,1,100
-
-
