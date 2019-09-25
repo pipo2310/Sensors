@@ -13,6 +13,7 @@ import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import android.R.attr.gravity
+import android.content.Intent
 import android.graphics.Typeface
 import android.widget.LinearLayout
 
@@ -101,6 +102,9 @@ class vistaSensores : AppCompatActivity() {
                 id=i*1000
                 }
 
+             actualizar.setOnClickListener {
+                 accionDeActualizar("Sensor:  ${sensores.get(i)}  ")
+             }
 
             button.apply {
                 layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -120,6 +124,14 @@ class vistaSensores : AppCompatActivity() {
             tableLayout.addView(row)
         }
         linearLayout.addView(tableLayout)
+
+    }
+
+    fun accionDeActualizar(s: String) {
+        intent = Intent(this, modificarSensores::class.java)
+        intent.putExtra("nombre",s)
+        //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
+        startActivity(intent);
 
     }
 
