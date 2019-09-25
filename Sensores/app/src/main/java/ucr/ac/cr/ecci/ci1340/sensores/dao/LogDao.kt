@@ -1,10 +1,11 @@
-package ucr.ac.cr.ecci.ci1340.sensores
+package ucr.ac.cr.ecci.ci1340.sensores.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import ucr.ac.cr.ecci.ci1340.sensores.entity.Log
 
 @Dao
 interface LogDao {

@@ -5,6 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ucr.ac.cr.ecci.ci1340.sensores.database.SensorRoomDatabase
+import ucr.ac.cr.ecci.ci1340.sensores.entity.Log
+import ucr.ac.cr.ecci.ci1340.sensores.repository.LogRepository
 
 // Class extends AndroidViewModel and requires application as a parameter.
 class LogViewModel(application: Application) : AndroidViewModel(application) {

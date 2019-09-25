@@ -1,6 +1,8 @@
-package ucr.ac.cr.ecci.ci1340.sensores
+package ucr.ac.cr.ecci.ci1340.sensores.repository
 
 import androidx.lifecycle.LiveData
+import ucr.ac.cr.ecci.ci1340.sensores.dao.SensorDao
+import ucr.ac.cr.ecci.ci1340.sensores.entity.Sensor
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO

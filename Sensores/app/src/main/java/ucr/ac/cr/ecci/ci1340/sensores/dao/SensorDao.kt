@@ -1,7 +1,8 @@
-package ucr.ac.cr.ecci.ci1340.sensores
+package ucr.ac.cr.ecci.ci1340.sensores.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import ucr.ac.cr.ecci.ci1340.sensores.entity.Sensor
 
 @Dao
 interface SensorDao {

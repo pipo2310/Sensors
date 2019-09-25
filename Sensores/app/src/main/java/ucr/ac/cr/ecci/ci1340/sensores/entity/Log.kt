@@ -1,4 +1,4 @@
-package ucr.ac.cr.ecci.ci1340.sensores
+package ucr.ac.cr.ecci.ci1340.sensores.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
