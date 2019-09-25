@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.app.ActionBar
 import android.widget.TableLayout
 import android.util.Log
+import android.view.Gravity
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.ViewGroup
 import android.view.View
@@ -19,7 +20,7 @@ class vistaSensores : AppCompatActivity() {
 
     //var sensores
 
-    val tableLayout by lazy { TableLayout(this) }
+    val tableLayout by lazy{ TableLayout(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,7 @@ class vistaSensores : AppCompatActivity() {
         val lp = TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         tableLayout.apply {
             layoutParams = lp
-            //isShrinkAllColumns = true
+            isShrinkAllColumns = true
         }
 
 
@@ -49,6 +50,7 @@ class vistaSensores : AppCompatActivity() {
         for (i in 0 until rows) {
 
             val row = TableRow(this)
+            row.gravity = Gravity.CENTER
             row.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
 
