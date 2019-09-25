@@ -12,6 +12,11 @@ import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
+import android.R.attr.gravity
+import android.graphics.Typeface
+import android.widget.LinearLayout
+
+
 
 class vistaSensores : AppCompatActivity() {
     lateinit var t1: TableLayout
@@ -57,9 +62,26 @@ class vistaSensores : AppCompatActivity() {
             val divisionFrame=FrameLayout(this)
             val eliminar =ImageButton(this)
             val actualizar = ImageButton(this)
+            val nombreSensor = TextView(this)
             val button = Button(this)
+            nombreSensor.text="Sensor:  ${sensores.get(i)}  "
+            nombreSensor.gravity= Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+            nombreSensor.textSize=18f
+            nombreSensor.setTextColor(Color.parseColor("#000000"))
+            nombreSensor.setTypeface(null, Typeface.BOLD)
             frame.setBackgroundColor(Color.parseColor("#3B77D2"))
+            //frame.foregroundGravity= Gravity.RIGHT
+
+            val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+            params.gravity = Gravity.TOP or Gravity.RIGHT
+
+            eliminar.setLayoutParams(params)
             divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
+            eliminar.id=i
+            eliminar.setOnClickListener {
+                accionDeEliminar(eliminar.id,"Sensor:  ${sensores.get(i)}  ")
+            }
+
            // frame.set
 
 // Changes the height and width to the specified *pixels*
@@ -70,19 +92,22 @@ class vistaSensores : AppCompatActivity() {
                150)}
             //eliminar.background=@color/fondo
             eliminar.setImageResource(R.drawable.deleteicon)
-            eliminar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT)
-                }
+           // eliminar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+             //   TableRow.LayoutParams.WRAP_CONTENT)
+              //  }
             actualizar.setImageResource(R.drawable.editbutton)
             actualizar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT)
+                id=i*1000
                 }
+
 
             button.apply {
                 layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT)
                 text = "Sensor:  ${sensores.get(i)}  "
             }
+            frame.addView(nombreSensor)
             frame.addView(eliminar)
             frame.addView(actualizar)
             frame.addView(divisionFrame)
@@ -96,6 +121,11 @@ class vistaSensores : AppCompatActivity() {
         }
         linearLayout.addView(tableLayout)
 
+    }
+
+    fun accionDeEliminar(id: Int, text: String) {
+        var texto = findViewById<TextView>(R.id.prueba);
+        texto.setText(text)
     }
 
 
