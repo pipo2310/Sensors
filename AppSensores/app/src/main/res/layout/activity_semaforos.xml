@@ -58,9 +58,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_width="70dp"
                 android:layout_height="450dp"
-                android:progress="50"
-                android:max="200"
-                android:progressDrawable="@drawable/progressbar_states"/>
+                android:progressDrawable="@drawable/greenprogressbar"/>
         />
 
         <ProgressBar
@@ -70,9 +68,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_width="70dp"
                 android:layout_height="450dp"
-                android:progress="100"
-                android:max="200"
-                android:progressDrawable="@drawable/progressbar_states"/>
+                android:progressDrawable="@drawable/greenprogressbar"/>
         />
 
         <ProgressBar
@@ -83,9 +79,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_width="70dp"
                 android:layout_height="450dp"
-                android:progress="150"
-                android:max="200"
-                android:progressDrawable="@drawable/progressbar_states"/>
+                android:progressDrawable="@drawable/greenprogressbar"/>
         />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
