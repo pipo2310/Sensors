@@ -1,18 +1,50 @@
 package com.example.myapplication123
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
+import android.widget.*
 import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
+    var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
+    //var spinner: Spinner? = null;
+    //var textView_msg: TextView? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
+        var agregarProb= findViewById<Button>(R.id.button);
+        agregarProb.setOnClickListener {
+            intent = Intent(this, vistaSensores::class.java)
+            startActivity(intent);
+        }
+
+
+
+        spinner!!.setOnItemSelectedListener(this)
+
+        // Create an ArrayAdapter using a simple spinner layout and languages array
+        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
+        // Set layout to use when the list of choices appear
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Set Adapter to Spinner
+        spinner!!.setAdapter(aa)
 
         //Button agregarProb = findViewById(R.id.button);
         //Button agregarProb = clearFindViewByIdCache(R.id.button);
+
+ }
+
+    override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
+        //Con position se sabe cual selecciono
+        //if es 0 es litros si es 1 watts y si 2 es lo que sea que se mide el gas jeje
+        //textView_msg!!.text = "Selected : "+list_of_items[position]
+    }
+
+    override fun onNothingSelected(arg0: AdapterView<*>) {
 
     }
 }
