@@ -3,16 +3,14 @@ package com.example.myapplication123
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.app.ActionBar
-import android.widget.TableLayout
+import android.graphics.Color
 import android.util.Log
 import android.view.Gravity
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.ViewGroup
 import android.view.View
-import android.widget.Button
-import android.widget.TableRow
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 class vistaSensores : AppCompatActivity() {
@@ -29,7 +27,7 @@ class vistaSensores : AppCompatActivity() {
 
         /* Llenar vector de sensores
         * */
-        val filas = 3 // Obtener count de sensores
+        val filas = 3// Obtener count de sensores
 
         val nomSensores = arrayOf("SENSOR AGUA 1", "SENSOR AGUA 2", "SENSOR ELEC 1")
 
@@ -55,14 +53,42 @@ class vistaSensores : AppCompatActivity() {
                 ViewGroup.LayoutParams.WRAP_CONTENT)
 
 
-
+            val frame = FrameLayout(this)
+            val divisionFrame=FrameLayout(this)
+            val eliminar =ImageButton(this)
+            val actualizar = ImageButton(this)
             val button = Button(this)
+            frame.setBackgroundColor(Color.parseColor("#3B77D2"))
+            divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
+           // frame.set
+
+// Changes the height and width to the specified *pixels*
+            divisionFrame.apply {layoutParams = TableRow.LayoutParams(850,
+                5)}
+
+            frame.apply {layoutParams = TableRow.LayoutParams(850,
+               150)}
+            //eliminar.background=@color/fondo
+            eliminar.setImageResource(R.drawable.deleteicon)
+            eliminar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT)
+                }
+            actualizar.setImageResource(R.drawable.editbutton)
+            actualizar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT)
+                }
+
             button.apply {
                 layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT)
                 text = "Sensor:  ${sensores.get(i)}  "
             }
-            row.addView(button)
+            frame.addView(eliminar)
+            frame.addView(actualizar)
+            frame.addView(divisionFrame)
+            row.addView(frame)
+
+
 
 
 
