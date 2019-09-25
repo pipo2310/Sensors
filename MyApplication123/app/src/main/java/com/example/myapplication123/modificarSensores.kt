@@ -1,7 +1,9 @@
 package com.example.myapplication123
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
@@ -19,6 +21,12 @@ class modificarSensores : AppCompatActivity() {
         nombre.hint=id
         tipo.hint=id
         unidad.hint=id
+        var modificar=findViewById<Button>(R.id.button)
+        modificar.setOnClickListener {
+            intent = Intent(this, vistaSensores::class.java)
+            //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
+            startActivity(intent);
+        }
         //nombre.setText(id)
         //tipo.setText(id)
         //unidad.setText(id)

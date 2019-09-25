@@ -13,10 +13,12 @@ import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import android.R.attr.gravity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Typeface
+import android.view.LayoutInflater
 import android.widget.LinearLayout
-
+import kotlinx.android.synthetic.main.another_view.view.*
 
 
 class vistaSensores : AppCompatActivity() {
@@ -136,6 +138,28 @@ class vistaSensores : AppCompatActivity() {
     }
 
     fun accionDeEliminar(id: Int, text: String) {
+
+        val mDialog = LayoutInflater.from(this).inflate(R.layout.another_view, null);
+        mDialog.deleteText.setText("¿Está seguro que desea eliminar $text ?")
+
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialog)
+            .setTitle("Alerta")
+
+
+        val mAlertDialog = mBuilder.show()
+
+        mDialog.button_cancela.setOnClickListener{
+            mAlertDialog.dismiss()
+        }
+
+        mDialog.button_elimina.setOnClickListener {
+            //Deberia hacer refresh de la pagina y poner que se elimino exitosamente
+            //mAlertDialog.dismiss()
+        }
+
+
+
         var texto = findViewById<TextView>(R.id.prueba);
         texto.setText(text)
     }

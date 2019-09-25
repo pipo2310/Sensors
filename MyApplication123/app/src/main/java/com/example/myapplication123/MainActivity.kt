@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
  }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
+
+        var unit=findViewById<EditText>(R.id.editText5);
+        if (position==0){
+            unit.setText("mL/s")
+        }else if (position==1){
+            unit.setText("mg/m3")
+        }else if (position==2){
+            unit.setText("Ws")
+        }
         //Con position se sabe cual selecciono
         //if es 0 es litros si es 1 watts y si 2 es lo que sea que se mide el gas jeje
         //textView_msg!!.text = "Selected : "+list_of_items[position]
