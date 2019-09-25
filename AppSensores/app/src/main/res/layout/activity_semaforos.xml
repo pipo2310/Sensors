@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Semaforos" android:background="#F2F2F2">
+        tools:context=".Semaforos" android:background="#F2F2F2" android:id="@+id/pantalla">
 
     <Button
             android:text="Agua"
@@ -31,29 +31,31 @@
             app:layout_constraintStart_toEndOf="@+id/btn_agua" app:layout_constraintEnd_toStartOf="@+id/btn_elect"
             android:layout_marginBottom="28dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout" app:layout_constraintVertical_bias="1.0"/>
     <TextView
             android:text="Consumo de Recursos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/titulo" app:fontFamily="sans-serif-medium"
             android:textSize="24sp" android:textColor="#000000" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="109dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.5"
-    />
-    <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:id="@+id/cardView" android:layout_marginTop="155dp"
-            android:layout_marginBottom="30dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_gas" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp" android:layout_marginEnd="30dp" android:layout_marginRight="30dp">
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.497"
+            android:layout_marginBottom="25dp" app:layout_constraintBottom_toTopOf="@+id/frameLayout"/>
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:id="@+id/frameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/titulo" android:layout_marginBottom="89dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="10dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="10dp" android:layout_marginEnd="10dp" android:layout_marginRight="10dp"
+            app:layout_constraintHorizontal_bias="0.508">
         <ProgressBar
                 android:id="@+id/bar_agua"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="17dp"
                 android:layout_width="70dp"
                 android:layout_height="450dp"
                 android:progress="50"
@@ -77,6 +79,7 @@
                 android:id="@+id/bar_elect"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_marginLeft="260dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="18dp"
                 android:layout_width="70dp"
                 android:layout_height="450dp"
@@ -84,13 +87,5 @@
                 android:max="200"
                 android:progressDrawable="@drawable/progressbar_states"/>
         />
-        <Button
-                android:id="@+id/btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start Operation"
-                android:layout_below="@id/bar_agua"
-                android:layout_marginTop="10dp"
-        />
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

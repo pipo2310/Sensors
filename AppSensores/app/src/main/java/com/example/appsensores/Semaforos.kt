@@ -9,10 +9,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.ProgressBar
 import android.os.Handler
+import kotlin.concurrent.thread
 
 
 class Semaforos : AppCompatActivity() {
-    private var progressStatus = 0
+    private var progressStatus = 50
     private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,21 +21,21 @@ class Semaforos : AppCompatActivity() {
         setContentView(R.layout.activity_semaforos)
 
         // Get the widgets reference from XML layout
-        val btn = findViewById(R.id.btn) as Button
-        val tv = findViewById(R.id.titulo) as TextView
-        val pb = findViewById(R.id.bar_agua) as ProgressBar
+        var btn = findViewById<Button>(R.id.btn_agua)
+        var tv = findViewById<TextView>(R.id.titulo)
+        var pb = findViewById<ProgressBar>(R.id.bar_agua)
 
         btn.setOnClickListener {
-            // Set the progress status zero on each button click
             progressStatus = 0
 
             // Start the lengthy operation in a background thread
-            Thread(Runnable {
-                while (progressStatus < 100) {
+            val thread = Thread {
+                while (progressStatus < 200) {
                     // Update the progress status
-                    progressStatus += 1
+                    progressStatus += 5
 
                     // Try to sleep the thread for 20 milliseconds
+
                     try {
                         Thread.sleep(20)
                     } catch (e: InterruptedException) {
@@ -47,13 +48,15 @@ class Semaforos : AppCompatActivity() {
                         // Show the progress on TextView
                         tv.text = progressStatus.toString() + ""
                         // If task execution completed
-                        if (progressStatus == 100) {
+                        if (progressStatus == 200) {
                             // Set a message of completion
                             tv.text = "Operation completed."
                         }
                     }
                 }
-            }).start() // Start the operation
+            }
+
+            thread.start()
         }
     }
 }
