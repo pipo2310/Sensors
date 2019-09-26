@@ -7,11 +7,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.View
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.ProgressBar
 import android.os.Handler
+import android.widget.*
 import androidx.core.graphics.toColor
 import kotlin.concurrent.thread
 import androidx.constraintlayout.solver.widgets.WidgetContainer.getBounds
@@ -28,17 +25,12 @@ class Semaforos : AppCompatActivity() {
     private var redLimit2 = 130
     private var yellowLimit3 = 125
     private var redLimit3 = 275
-    private val intent = Intent(this, ModificarLimites::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_semaforos)
-        yellowLimit1 = intent.getIntExtra("yellowlimA", yellowLimit1)
-        redLimit1 = intent.getIntExtra("redlimA", redLimit1)
-        yellowLimit2 = intent.getIntExtra("yellowlimG", yellowLimit1)
-        redLimit2 = intent.getIntExtra("redlimG", redLimit2)
-        yellowLimit3 = intent.getIntExtra("yellowlimE", yellowLimit3)
-        redLimit3 = intent.getIntExtra("redlimE", redLimit3)
+        intent = Intent(this, ModificarLimites::class.java)
+
         for(i in 0 until 3){
             if(i==0){
                 val pb = findViewById<ProgressBar>(R.id.bar_agua)
@@ -58,14 +50,46 @@ class Semaforos : AppCompatActivity() {
         }
         val btn2 = findViewById<Button>(R.id.btn_modi)
         btn2.setOnClickListener {
+            intent.putExtra("yellowlimA", yellowLimit1)
+            intent.putExtra("redlimA", redLimit1)
+            intent.putExtra("yellowlimG", yellowLimit2)
+            intent.putExtra("redlimG", redLimit2)
+            intent.putExtra("yellowlimE", yellowLimit3)
+            intent.putExtra("redlimE", redLimit3)
             startActivity(intent)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        yellowLimit1 = intent.getIntExtra("yellowlimA", yellowLimit1)
+        var text1 = findViewById<TextView>(R.id.titulo)
+        text1.text = yellowLimit1.toString()
+        redLimit1 = intent.getIntExtra("redlimA", redLimit1)
+        yellowLimit2 = intent.getIntExtra("yellowlimG", yellowLimit1)
+        redLimit2 = intent.getIntExtra("redlimG", redLimit2)
+        yellowLimit3 = intent.getIntExtra("yellowlimE", yellowLimit3)
+        redLimit3 = intent.getIntExtra("redlimE", redLimit3)
+        /*
+        intent = Intent(this, ModificarLimites::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        val b = intent.extras
+        if(b!!.getInt("yellowlimA") != null){
+            yellowLimit1 = b!!.getInt("yellowlimA")
+            var text1 = findViewById<TextView>(R.id.titulo)
+            text1.text = yellowLimit1.toString()
+        }
+        yellowLimit1 = intent.getIntExtra("yellowlimA", yellowLimit1)
+        var text1 = findViewById<TextView>(R.id.titulo)
+        text1.text = yellowLimit1.toString()
+        */
+    }
+
+
     fun aumentarBarra(pb: ProgressBar?, yellowLimitParam: Int, redLimitParam: Int, totalLimit: Int, idSem: Int) {
         var yellowLimit = yellowLimitParam
         var redLimit = redLimitParam
-        var tv = findViewById<TextView>(R.id.titulo)
+        //var tv = findViewById<TextView>(R.id.titulo)
         val res = resources
         val thread = Thread {
             pb!!.max = totalLimit
@@ -88,7 +112,7 @@ class Semaforos : AppCompatActivity() {
                 //Escuchando si cambian los valores limites
 
                 try {
-                    Thread.sleep(40)
+                    Thread.sleep(2000)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
