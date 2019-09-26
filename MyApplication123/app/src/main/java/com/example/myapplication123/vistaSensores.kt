@@ -50,6 +50,13 @@ class vistaSensores : AppCompatActivity() {
         createTable(filas, nomSensores)
 
 
+        var agregarSensor = findViewById<Button>(R.id.button2);
+        agregarSensor.setOnClickListener {
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
+
+
     }
 
     fun createTable(rows: Int , sensores:Array<String>){
@@ -161,8 +168,7 @@ class vistaSensores : AppCompatActivity() {
 
 
 
-        var texto = findViewById<TextView>(R.id.prueba);
-        texto.setText(text)
+
     }
 
 
