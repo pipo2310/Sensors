@@ -1,19 +1,18 @@
 package com.example.appsensores
 
+
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import com.example.appsensores.VistaSensores
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.*
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.activity_create_sensors.*
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+class CreateSensors : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     //var spinner: Spinner? = null;
     //var textView_msg: TextView? = null;
@@ -55,8 +54,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
-
-
         var unit=findViewById<EditText>(R.id.editText5);
         if (position==0){
             unit.setText("mL/s")
@@ -93,12 +90,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }else if (item.itemId == R.id.semaforos)
         {
             intent = Intent(this, Semaforos::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+
         }else{
             super.onOptionsItemSelected(item)
         }
         return true
     }
 }
-

@@ -6,14 +6,16 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.view.View
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.core.graphics.toColor
 import kotlin.concurrent.thread
 import androidx.constraintlayout.solver.widgets.WidgetContainer.getBounds
-
-
+import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 
 class Semaforos : AppCompatActivity() {
@@ -29,7 +31,9 @@ class Semaforos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_semaforos)
+        setSupportActionBar(toolbar)
         intent = Intent(this, ModificarLimites::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
         for(i in 0 until 3){
             if(i==0){
@@ -62,14 +66,12 @@ class Semaforos : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        yellowLimit1 = intent.getIntExtra("yellowlimA", yellowLimit1)
-        var text1 = findViewById<TextView>(R.id.titulo)
-        text1.text = yellowLimit1.toString()
-        redLimit1 = intent.getIntExtra("redlimA", redLimit1)
-        yellowLimit2 = intent.getIntExtra("yellowlimG", yellowLimit1)
+        /*
+        yellowLimit2 = intent.getIntExtra("yellowlimG", yellowLimit2)
         redLimit2 = intent.getIntExtra("redlimG", redLimit2)
         yellowLimit3 = intent.getIntExtra("yellowlimE", yellowLimit3)
         redLimit3 = intent.getIntExtra("redlimE", redLimit3)
+        */
         /*
         intent = Intent(this, ModificarLimites::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
@@ -85,46 +87,50 @@ class Semaforos : AppCompatActivity() {
         */
     }
 
+    fun verificarLimites(){
+        /*
+        yellowLimit1 = getIntent().getIntExtra("yellowlimA", yellowLimit1)
+        redLimit1 = intent.getIntExtra("redlimA", redLimit1)
+        yellowLimit2 = intent.getIntExtra("yellowlimG", yellowLimit2)
+        redLimit2 = intent.getIntExtra("redlimG", redLimit2)
+        yellowLimit3 = intent.getIntExtra("yellowlimE", yellowLimit3)
+        redLimit3 = intent.getIntExtra("redlimE", redLimit3)
+        */
+    }
+
 
     fun aumentarBarra(pb: ProgressBar?, yellowLimitParam: Int, redLimitParam: Int, totalLimit: Int, idSem: Int) {
         var yellowLimit = yellowLimitParam
         var redLimit = redLimitParam
-        //var tv = findViewById<TextView>(R.id.titulo)
+        var tv = findViewById<TextView>(R.id.titulo)
         val res = resources
         val thread = Thread {
             pb!!.max = totalLimit
             while (progressStatus < totalLimit) {
-
                 if (idSem == 0){
-                    yellowLimit = yellowLimit1
-                    redLimit = redLimit1
+                    yellowLimit = intent.getIntExtra("yLA", yellowLimit)
+                    redLimit = intent.getIntExtra("rLA", redLimit)
                 }else if (idSem == 1){
-                    yellowLimit = yellowLimit2
-                    redLimit = redLimit2
+                    yellowLimit = intent.getIntExtra("yLG", yellowLimit)
+                    redLimit = intent.getIntExtra("rLG", redLimit)
                 }else{
-                    yellowLimit = yellowLimit3
-                    redLimit = redLimit3
+                    yellowLimit = intent.getIntExtra("yLR", yellowLimit)
+                    redLimit = intent.getIntExtra("rLR", redLimit)
                 }
-                // Update the progress status
+
                 progressStatus += 1
 
-                // Try to sleep the thread for 20 milliseconds
-                //Escuchando si cambian los valores limites
-
                 try {
-                    Thread.sleep(2000)
+                    Thread.sleep(1000)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
 
-                // Update the progress bar
                 handler.post {
                     pb.progress = progressStatus
-                    // Show the progress on TextView
                     if (progressStatus >= yellowLimit) {
                         pb.setProgressDrawable(res.getDrawable(R.drawable.yellowprogressbar));
                     }
-                    // If task execution completed
                     if (progressStatus >= redLimit) {
                         pb.setProgressDrawable(res.getDrawable(R.drawable.redprogressbar));
                     }
@@ -132,5 +138,29 @@ class Semaforos : AppCompatActivity() {
             }
         }
         thread.start()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        if(item.itemId == R.id.sensores){
+            intent = Intent(this, VistaSensores::class.java)
+            startActivity(intent)
+        }else if (item.itemId == R.id.semaforos)
+        {
+            intent = Intent(this, Semaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else{
+            super.onOptionsItemSelected(item)
+        }
+        return true
     }
 }
