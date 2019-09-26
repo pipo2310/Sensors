@@ -14,7 +14,15 @@ class MainActivity : AppCompatActivity() {
         val btn = findViewById<Button>(R.id.btn_sem)
         btn.setOnClickListener {
             // Set the progress status zero on each button click
+            //returnActivity
             intent = Intent(this, Semaforos::class.java)
+            startActivity(intent)
+        }
+
+        val btn2 = findViewById<Button>(R.id.btn_mod)
+        btn2.setOnClickListener {
+            // Set the progress status zero on each button click
+            intent = Intent(this, ModificarLimites::class.java)
             startActivity(intent)
         }
     }
