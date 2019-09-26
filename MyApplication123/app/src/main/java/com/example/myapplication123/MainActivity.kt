@@ -12,12 +12,22 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     //var spinner: Spinner? = null;
     //var textView_msg: TextView? = null;
+    var tipo=""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         var agregarProb= findViewById<Button>(R.id.button);
         agregarProb.setOnClickListener {
+            var nombre = findViewById<EditText>(R.id.editText2);
+            ;
+            //Tipo se cambia cuando se selecciona
+            //tipo.selec.toString()
+           // var tipo = spinner.getSelectedItem().toString()
+            //var tipo = findViewById<EditText>(R.id.tipo);
+            var unidad = findViewById<EditText>(R.id.editText5);
+
             intent = Intent(this, vistaSensores::class.java)
             startActivity(intent);
         }
@@ -40,13 +50,17 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
+
         var unit=findViewById<EditText>(R.id.editText5);
         if (position==0){
             unit.setText("mL/s")
+            tipo="mL/s"
         }else if (position==1){
             unit.setText("mg/m3")
+            tipo="mg/m3"
         }else if (position==2){
             unit.setText("Ws")
+            tipo="Ws"
         }
         //Con position se sabe cual selecciono
         //if es 0 es litros si es 1 watts y si 2 es lo que sea que se mide el gas jeje

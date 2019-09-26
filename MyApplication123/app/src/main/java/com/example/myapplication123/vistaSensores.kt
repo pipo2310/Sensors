@@ -67,7 +67,7 @@ class vistaSensores : AppCompatActivity() {
             val actualizar = ImageButton(this)
             val nombreSensor = TextView(this)
             val button = Button(this)
-            nombreSensor.text="Sensor:  ${sensores.get(i)}  "
+            nombreSensor.text="${sensores.get(i)}"
             nombreSensor.gravity= Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f
             nombreSensor.setTextColor(Color.parseColor("#000000"))
@@ -82,7 +82,7 @@ class vistaSensores : AppCompatActivity() {
             divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
             eliminar.id=i
             eliminar.setOnClickListener {
-                accionDeEliminar(eliminar.id,"Sensor:  ${sensores.get(i)}  ")
+                accionDeEliminar(eliminar.id,"${sensores.get(i)}")
             }
 
            // frame.set
@@ -154,6 +154,7 @@ class vistaSensores : AppCompatActivity() {
         }
 
         mDialog.button_elimina.setOnClickListener {
+            //parametro para eliminar: text
             //Deberia hacer refresh de la pagina y poner que se elimino exitosamente
             //mAlertDialog.dismiss()
         }

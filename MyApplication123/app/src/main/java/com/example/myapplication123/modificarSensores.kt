@@ -23,6 +23,10 @@ class modificarSensores : AppCompatActivity() {
         unidad.hint=id
         var modificar=findViewById<Button>(R.id.button)
         modificar.setOnClickListener {
+            //Prametros para la llamda a la base de update
+            //nombre.text
+            //tipo.text
+            //unidad.text
             intent = Intent(this, vistaSensores::class.java)
             //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
             startActivity(intent);
