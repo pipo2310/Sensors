@@ -1,4 +1,4 @@
-package application.controlers;
+package application.controllers;
 
 import application.core.test.service.TestService;
 import application.dto.TestDto;
