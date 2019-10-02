@@ -13,17 +13,23 @@ import android.widget.EditText
 import com.example.appsensores.VistaSensores
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
+class MainActivity : AppCompatActivity() {
+    //var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     //var spinner: Spinner? = null;
     //var textView_msg: TextView? = null;
-    var tipo=""
+    //var tipo=""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar)
+        /*
+        var prob= findViewById<Button>(R.id.prueba);
+        prueba.setOnClickListener {
+            intent = Intent(this, CrearSensores::class.java)
+            startActivity(intent);
+        }
         var agregarProb= findViewById<Button>(R.id.button);
         agregarProb.setOnClickListener {
             var nombre = findViewById<EditText>(R.id.editText2);
@@ -51,9 +57,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         //Button agregarProb = findViewById(R.id.button);
         //Button agregarProb = clearFindViewByIdCache(R.id.button);
-
+*/
     }
-
+/*
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
 
@@ -76,7 +82,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(arg0: AdapterView<*>) {
 
     }
-
+*/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)

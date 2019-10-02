@@ -15,11 +15,16 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.view.*
 import android.widget.LinearLayout
+import androidx.core.view.setMargins
 import com.example.appsensores.R
 import com.example.appsensores.Semaforos
 import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
 import kotlinx.android.synthetic.main.another_view.view.*
+import android.graphics.drawable.Drawable
+
+
+
 
 
 class VistaSensores : AppCompatActivity() {
@@ -77,19 +82,27 @@ class VistaSensores : AppCompatActivity() {
             val nombreSensor = TextView(this)
             val button = Button(this)
             nombreSensor.text="${sensores.get(i)}"
-            nombreSensor.gravity= Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+            nombreSensor.setPadding(50,0,0,0)
+            nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f
-            nombreSensor.setTextColor(Color.parseColor("#000000"))
+            nombreSensor.setTextColor(Color.parseColor("#FFFFFF"))
             nombreSensor.setTypeface(null, Typeface.BOLD)
             frame.setBackgroundColor(Color.parseColor("#3B77D2"))
             //frame.foregroundGravity= Gravity.RIGHT
 
             val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-            params.gravity = Gravity.TOP or Gravity.RIGHT
+            //params.gravity = Gravity.TOP or Gravity.RIGHT
+            params.setMargins(650,10,10,10)
+            params.gravity=Gravity.CENTER_VERTICAL
 
-            eliminar.setLayoutParams(params)
+            val params2 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+            //params.gravity = Gravity.TOP or Gravity.RIGHT
+            params2.setMargins(750,10,10,10)
+            params2.gravity=Gravity.CENTER_VERTICAL
+            eliminar.setLayoutParams(params2)
             divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
             eliminar.id=i
+            eliminar.setBackgroundColor(Color.parseColor("#00ff0000"))
             eliminar.setOnClickListener {
                 accionDeEliminar(eliminar.id,"${sensores.get(i)}")
             }
@@ -103,15 +116,23 @@ class VistaSensores : AppCompatActivity() {
             frame.apply {layoutParams = TableRow.LayoutParams(850,
                 150)}
             //eliminar.background=@color/fondo
-            eliminar.setImageResource(R.drawable.deleteicon)
+            //val drawable = resources.getDrawable(R.drawable.deleteicon)
+            eliminar.setImageResource(R.drawable.delete32)
+            //eliminar.setImageDrawable(drawable)
             // eliminar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
             //   TableRow.LayoutParams.WRAP_CONTENT)
             //  }
-            actualizar.setImageResource(R.drawable.editbutton)
-            actualizar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT)
-                id=i*1000
-            }
+            //actualizar.setImageResource(R.drawable.editbutton)
+
+            actualizar.setLayoutParams(params)
+            actualizar.id=i*1000
+            //actualizar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            //    TableRow.LayoutParams.WRAP_CONTENT)
+             //   id=i*1000
+           // }
+            actualizar.setBackgroundColor(Color.parseColor("#00ff0000"))
+            actualizar.setBackgroundResource(R.drawable.edit32)
+
 
             actualizar.setOnClickListener {
                 accionDeActualizar("Sensor:  ${sensores.get(i)}  ")

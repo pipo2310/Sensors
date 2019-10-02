@@ -9,15 +9,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CreateSensors">
-        </activity>
+
         <activity android:name=".ModificarSensores">
         </activity>
         <activity android:name=".CrearSensores">
         </activity>
         <activity android:name=".VistaSensores">
-        </activity>
-        <activity android:name=".vistaSensores">
         </activity>
         <activity android:name=".ModificarLimites">
         </activity>

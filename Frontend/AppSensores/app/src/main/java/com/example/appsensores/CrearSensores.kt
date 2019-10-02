@@ -21,7 +21,7 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_crear_sensores);
         setSupportActionBar(toolbar)
         var agregarProb= findViewById<Button>(R.id.button);
         agregarProb.setOnClickListener {
