@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Inge2_Sensores.iml" filepath="$PROJECT_DIR$/Inge2_Sensores.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sensores-sprintboot-backend.iml" filepath="$PROJECT_DIR$/sensores-sprintboot-backend.iml" />
     </modules>
   </component>
 </project>

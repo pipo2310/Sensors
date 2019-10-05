@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import android.R.attr.gravity
 import android.app.AlertDialog
+import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Typeface
 import android.view.*
@@ -22,6 +23,16 @@ import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
 import kotlinx.android.synthetic.main.another_view.view.*
 import android.graphics.drawable.Drawable
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
+import com.android.volley.VolleyError
+import org.json.JSONException
+
+import org.json.JSONArray
 
 
 
@@ -31,13 +42,14 @@ class VistaSensores : AppCompatActivity() {
     lateinit var t1: TableLayout
 
 
-
+    lateinit var mqueue:RequestQueue
     val tableLayout by lazy{ TableLayout(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vista_sensores)
         setSupportActionBar(toolbar)
+        mqueue=Volley.newRequestQueue(this)
         t1 = TableLayout(this)
 
         /* Llenar vector de sensores
@@ -81,7 +93,34 @@ class VistaSensores : AppCompatActivity() {
             val actualizar = ImageButton(this)
             val nombreSensor = TextView(this)
             val button = Button(this)
-            nombreSensor.text="${sensores.get(i)}"
+            var agregarProb= findViewById<TextView>(R.id.textView4);
+            val url:String="http://localhost:8080/api/sensores"
+            val request = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    try {
+                        val jsonArray = response.getJSONArray("")
+
+                        for (i in 0 until jsonArray.length()) {
+                            val sensor = jsonArray.getJSONObject(i)
+
+
+                            val firstName = sensor.getString("unidad")
+
+                            nombreSensor.text=firstName
+                            agregarProb.text=firstName
+                            //val age = sensor.getInt("age")
+                            //val mail = sensor.getString("mail")
+
+
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }, Response.ErrorListener { error -> error.printStackTrace() })
+
+            mqueue.add(request)
+
+            //nombreSensor.text="${sensores.get(i)}"
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f
@@ -138,11 +177,11 @@ class VistaSensores : AppCompatActivity() {
                 accionDeActualizar("Sensor:  ${sensores.get(i)}  ")
             }
 
-            button.apply {
-                layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT)
-                text = "Sensor:  ${sensores.get(i)}  "
-            }
+            //button.apply {
+             //   layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+              //      TableRow.LayoutParams.WRAP_CONTENT)
+            //    text = "Sensor:  ${sensores.get(i)}  "
+          //  }
             frame.addView(nombreSensor)
             frame.addView(eliminar)
             frame.addView(actualizar)

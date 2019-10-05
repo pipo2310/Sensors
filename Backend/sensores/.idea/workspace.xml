@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d9189689-664f-4d74-b192-463a31b7ec2a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/androidTest/java/com/example/appsensores/ExampleInstrumentedTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/CreateSensors.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/ModificarLimites.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/ModificarSensores.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/Semaforos.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/java/com/example/appsensores/VistaSensores.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/boton.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/boton_rojo.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/deleteicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/editbutton.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/greenprogressbar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/redprogressbar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/drawable/yellowprogressbar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_crear_sensores.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_create_sensors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_modificar_limites.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_modificar_sensores.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_semaforos.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/activity_vista_sensores.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/layout/another_view.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/menu/menu.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/app/src/test/java/com/example/appsensores/ExampleUnitTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../AppSensores/settings.gradle" beforeDir="false" />
+    <list default="true" id="0e5008cb-db19-4d1d-9768-a8b265dc2523" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Inge2_Sensores_war.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Inge2_Sensores_war_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_3_11_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_postgresql_postgresql_42_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_1_10_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_1_10_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Inge2_Sensores.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SensorsMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/configuration/HibernateConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/controllers/TestController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/core/test/dao/TestDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/core/test/dao/implementation/TestDaoImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/core/test/service/TestService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/core/test/service/implementation/TestServiceImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/dto/TestDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/properties/hibernate.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SensorsMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/configuration/HibernateConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/controlers/TestController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/core/test/dao/TestDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/core/test/dao/implementation/TestDaoImplementation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/core/test/service/TestService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/core/test/service/implementation/TestServiceImplementation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/dto/TestDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/properties/hibernate.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,29 +70,42 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1RbwWLTEqqg71QhQD4qVckG8yur" />
+  <component name="ProjectId" id="1RlJ4I1XWl1vmQ7okYyA8vXG1qF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -107,37 +120,53 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="SensorsMain" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="Inge2_Sensores" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="SensorsMain" />
+    <configuration name="SensoresSprintbootBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="sensores-sprintboot-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.sensores.springboot.backend.SensoresSprintbootBackendApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d9189689-664f-4d74-b192-463a31b7ec2a" name="Default Changelist" comment="" />
-      <created>1569889171266</created>
+      <changelist id="0e5008cb-db19-4d1d-9768-a8b265dc2523" name="Default Changelist" comment="" />
+      <created>1570235556438</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1569889171266</updated>
-      <workItem from="1569889172828" duration="496000" />
-      <workItem from="1569889980316" duration="235000" />
-      <workItem from="1569949137127" duration="1109000" />
+      <updated>1570235556438</updated>
+      <workItem from="1570235562781" duration="3903000" />
+      <workItem from="1570244910047" duration="1969000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <ignored-roots>
-      <path value="$PROJECT_DIR$" />
-      <path value="$PROJECT_DIR$/../.." />
-    </ignored-roots>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
