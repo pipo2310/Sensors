@@ -94,29 +94,34 @@ class VistaSensores : AppCompatActivity() {
             val nombreSensor = TextView(this)
             val button = Button(this)
             var agregarProb= findViewById<TextView>(R.id.textView4);
-            val url:String="http://localhost:8080/api/sensores"
-            val request = JsonObjectRequest(Request.Method.GET, url, null,
+            val url="http://localhost:8080/api/sensores"
+
+            val request = JsonObjectRequest(Request.Method.GET, url,null,
                 Response.Listener { response ->
+                    agregarProb.text = "Response: %s".format(response.toString())
                     try {
-                        val jsonArray = response.getJSONArray("")
+                        val jsonArray= response.getJSONArray("")
 
                         for (i in 0 until jsonArray.length()) {
                             val sensor = jsonArray.getJSONObject(i)
 
 
-                            val firstName = sensor.getString("unidad")
 
+                            val firstName = sensor.getString("unidad")
+                            agregarProb.text=jsonArray.toString()
                             nombreSensor.text=firstName
-                            agregarProb.text=firstName
+
                             //val age = sensor.getInt("age")
                             //val mail = sensor.getString("mail")
 
 
                         }
                     } catch (e: JSONException) {
+                        agregarProb.text="Hola"
                         e.printStackTrace()
                     }
-                }, Response.ErrorListener { error -> error.printStackTrace() })
+                }, Response.ErrorListener { error -> error.printStackTrace()
+                    agregarProb.text="Hola33"})
 
             mqueue.add(request)
 
