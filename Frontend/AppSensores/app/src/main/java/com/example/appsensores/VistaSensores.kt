@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
 import kotlinx.android.synthetic.main.another_view.view.*
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -33,9 +34,9 @@ import com.android.volley.VolleyError
 import org.json.JSONException
 
 import org.json.JSONArray
-
-
-
+import org.springframework.http.converter.StringHttpMessageConverter
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
 
 
 class VistaSensores : AppCompatActivity() {
@@ -49,7 +50,9 @@ class VistaSensores : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vista_sensores)
         setSupportActionBar(toolbar)
-        mqueue=Volley.newRequestQueue(this)
+
+        RESTTask().execute()
+        //mqueue=Volley.newRequestQueue(this)
         t1 = TableLayout(this)
 
         /* Llenar vector de sensores
@@ -94,8 +97,21 @@ class VistaSensores : AppCompatActivity() {
             val nombreSensor = TextView(this)
             val button = Button(this)
             var agregarProb= findViewById<TextView>(R.id.textView4);
-            val url="http://localhost:8080/api/sensores"
+            //val url="http://localhost:8080/api/sensores"
+            //val url = "http://localhost:8080/api/sensores";
 
+
+
+// Create a new RestTemplate instance
+            //val restTemplate = RestTemplate();
+
+// Add the String message converter
+            //restTemplate.getMessageConverters().add(StringHttpMessageConverter());
+
+// Make the HTTP GET request, marshaling the response to a String
+            //var result:String = restTemplate.getForObject(url, String::class.java,"Android")
+            //nombreSensor.text=result
+/*
             val request = JsonObjectRequest(Request.Method.GET, url,null,
                 Response.Listener { response ->
                     agregarProb.text = "Response: %s".format(response.toString())
@@ -124,8 +140,8 @@ class VistaSensores : AppCompatActivity() {
                     agregarProb.text="Hola33"})
 
             mqueue.add(request)
-
-            //nombreSensor.text="${sensores.get(i)}"
+*/
+            nombreSensor.text="${sensores.get(i)}"
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f
@@ -263,4 +279,30 @@ class VistaSensores : AppCompatActivity() {
     }
 
 
+}
+
+internal class RESTTask: AsyncTask<Void, Void, Array<Sensores>>() {
+
+    protected override fun doInBackground(vararg params:Void):Array<Sensores> {
+        try
+        {
+            val url = "http://localhost:8080/api/sensores"
+            val restTemplate = RestTemplate()
+            restTemplate.getMessageConverters().add(MappingJackson2HttpMessageConverter())
+            val sensores = restTemplate.getForObject(url, Array<Sensores>::class.java)
+            return sensores
+        }
+        catch (ex:Exception) {
+            Log.e("", ex.message)
+        }
+        return emptyArray()
+    }
+    override fun onPostExecute(sensores:Array<Sensores>) {
+        super.onPostExecute(sensores)
+        for (s in sensores)
+        {
+            Log.i("Sensor:", "###########")
+            Log.i("unidad: ",s.getUnidad().toString())
+        }
+    }
 }
