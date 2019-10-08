@@ -2,11 +2,12 @@ package com.sensores.springboot.backend.model.entity.real;
 
 import javax.persistence.*;
 import javax.swing.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
 @Embeddable
-public class Sensores_logs_pk {
+public class Sensores_logs_pk implements Serializable {
 
     public Sensores_logs_pk(){}
 

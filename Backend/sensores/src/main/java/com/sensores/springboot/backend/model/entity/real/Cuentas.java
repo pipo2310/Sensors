@@ -1,6 +1,9 @@
 package com.sensores.springboot.backend.model.entity.real;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cuentas" , schema = "public")
@@ -97,4 +100,8 @@ public class Cuentas {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+
+    @OneToMany(mappedBy = "cuentas")
+    private List<Sensores> sensoresList = new ArrayList<>();
 }

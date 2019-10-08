@@ -1,6 +1,7 @@
 package com.sensores.springboot.backend.model.entity.real;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "sensores" , schema = "public")
@@ -29,19 +30,19 @@ public class Sensores {
         this.id_cuenta = id_cuenta;
     }
 
-    public boolean isAlerta_amarilla() {
+    public double getAlerta_amarilla() {
         return alerta_amarilla;
     }
 
-    public void setAlerta_amarilla(boolean alerta_amarilla) {
+    public void setAlerta_amarilla(double alerta_amarilla) {
         this.alerta_amarilla = alerta_amarilla;
     }
 
-    public boolean isAlerta_roja() {
+    public double getAlerta_roja() {
         return alerta_roja;
     }
 
-    public void setAlerta_roja(boolean alerta_roja) {
+    public void setAlerta_roja(double alerta_roja) {
         this.alerta_roja = alerta_roja;
     }
 
@@ -58,9 +59,28 @@ public class Sensores {
 
     @Column(name = "alerta_amarilla")
     @Basic(optional = true)
-    private boolean alerta_amarilla;
+    private double alerta_amarilla;
 
     @Column(name = "alerta_roja")
     @Basic(optional = true)
-    private boolean alerta_roja;
+    private double alerta_roja;
+
+
+    /*
+    * Relación entre sensor y cuenta
+    * */
+    @MapsId("id_cuenta")
+    @JoinColumns({
+            @JoinColumn(name = "id_cuenta", referencedColumnName = "cuentas_pk")
+    })
+    @ManyToOne
+    private Cuentas cuentas;
+
+    /*
+    * Relación entre sensor y sensor Log
+    * */
+    @OneToMany(mappedBy = "sensores")
+    private List<Sensores_Logs> sensoresList = new ArrayList<>();
+
+
 }

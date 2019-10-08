@@ -19,7 +19,11 @@ INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, email, usuario, nombr
 
 --TablaSensores
 -- Tabla Cuentas
-INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (1,'ml/s', 1, true , true);
-INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (2,'mg/m3', 1, true, false);
-INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (3,'ml/s', 1, false , false);
-INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (4,'Ws', 1, false, false);
+INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (1,'ml/s', 1, 12.3 , 20.0);
+INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (2,'mg/m3', 1, 12.3 , 20.0);
+INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (3,'ml/s', 1, 12.3 , 20.0);
+INSERT INTO sensores (sensores_pk,unidad, id_cuenta, alerta_amarilla, alerta_roja) VALUES (4,'Ws', 1, 12.3 , 20.0);
+
+
+--Tabla Sensores Logs
+INSERT INTO sensores_logs (id_sensor, date_time, valor) VALUES (1, '2016-11-09T11:44:44.797' , 13.9 );

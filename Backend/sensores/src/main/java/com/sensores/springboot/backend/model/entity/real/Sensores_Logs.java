@@ -1,10 +1,11 @@
 package com.sensores.springboot.backend.model.entity.real;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sensores_logs" , schema = "public")
-public class Sensores_Logs {
+public class Sensores_Logs implements Serializable {
 
     public Sensores_Logs(){}
 
@@ -29,4 +30,14 @@ public class Sensores_Logs {
     public void setValor(double valor) {
         this.valor = valor;
     }
+
+    /*
+    * Relación entre sensores Log y sensores
+    * */
+    @MapsId("sensores_id")
+    @JoinColumns({
+            @JoinColumn(name = "id_sensor", referencedColumnName = "sensores_pk")
+    })
+    @ManyToOne
+    private Sensores sensores;
 }
