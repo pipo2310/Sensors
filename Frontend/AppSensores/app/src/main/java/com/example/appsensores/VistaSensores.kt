@@ -2,41 +2,21 @@ package com.example.appsensores
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.app.ActionBar
 import android.graphics.Color
-import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
-import android.R.attr.gravity
 import android.app.AlertDialog
-import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Typeface
 import android.view.*
-import android.widget.LinearLayout
-import androidx.core.view.setMargins
-import com.example.appsensores.R
-import com.example.appsensores.Semaforos
-import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
 import kotlinx.android.synthetic.main.another_view.view.*
-import android.graphics.drawable.Drawable
-import android.os.AsyncTask
-import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import org.json.JSONObject
-import com.android.volley.VolleyError
-import org.json.JSONException
-
-import org.json.JSONArray
-import org.springframework.http.converter.StringHttpMessageConverter
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.web.client.RestTemplate
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class VistaSensores : AppCompatActivity() {
@@ -51,16 +31,42 @@ class VistaSensores : AppCompatActivity() {
         setContentView(R.layout.activity_vista_sensores)
         setSupportActionBar(toolbar)
 
-        RESTTask().execute()
+        //RESTTask().execute()
         //mqueue=Volley.newRequestQueue(this)
         t1 = TableLayout(this)
 
         /* Llenar vector de sensores
         * */
-        val filas = 3// Obtener count de sensores
+       // val filas = 3// Obtener count de sensores
 
         val nomSensores = arrayOf("SENSOR AGUA 1", "SENSOR AGUA 2", "SENSOR ELEC 1")
 
+        val tv = findViewById<TextView>(R.id.textView)
+        val tv2 = findViewById<TextView>(R.id.textView4)
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val jsonPlaceHolderApi: JsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
+
+        val call: Call<List<Sensores>> = jsonPlaceHolderApi.getSensores()
+
+        call.enqueue(object:Callback<List<Sensores>> {
+            override fun onResponse(call:Call<List<Sensores>>, response: Response<List<Sensores>>) {
+                if (!response.isSuccessful())
+                {
+                    return
+                }
+                val sensors = response.body()
+                createTable(sensors)
+            }
+            override fun onFailure(call:Call<List<Sensores>>, t:Throwable) {
+                tv2.text = t.message
+                //tv.setText(t.message)
+            }
+        })
 
         val lp = TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         tableLayout.apply {
@@ -69,7 +75,6 @@ class VistaSensores : AppCompatActivity() {
         }
 
 
-        createTable(filas, nomSensores)
 
 
         var agregarSensor = findViewById<Button>(R.id.button2);
@@ -81,8 +86,8 @@ class VistaSensores : AppCompatActivity() {
 
     }
 
-    fun createTable(rows: Int , sensores:Array<String>){
-        for (i in 0 until rows) {
+    fun createTable(sensores:List<Sensores>){
+        for (sensor in sensores) {
 
             val row = TableRow(this)
             row.gravity = Gravity.CENTER
@@ -141,7 +146,7 @@ class VistaSensores : AppCompatActivity() {
 
             mqueue.add(request)
 */
-            nombreSensor.text="${sensores.get(i)}"
+            nombreSensor.text="ID: " + sensor.getSensoresPk()
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f
@@ -161,10 +166,10 @@ class VistaSensores : AppCompatActivity() {
             params2.gravity=Gravity.CENTER_VERTICAL
             eliminar.setLayoutParams(params2)
             divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
-            eliminar.id=i
+            eliminar.id=sensor.getSensoresPk().toInt()
             eliminar.setBackgroundColor(Color.parseColor("#00ff0000"))
             eliminar.setOnClickListener {
-                accionDeEliminar(eliminar.id,"${sensores.get(i)}")
+                accionDeEliminar(eliminar.id)
             }
 
             // frame.set
@@ -185,24 +190,24 @@ class VistaSensores : AppCompatActivity() {
             //actualizar.setImageResource(R.drawable.editbutton)
 
             actualizar.setLayoutParams(params)
-            actualizar.id=i*1000
+            //actualizar.id=i*1000
             //actualizar.apply {layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
             //    TableRow.LayoutParams.WRAP_CONTENT)
-             //   id=i*1000
-           // }
+            //   id=i*1000
+            // }
             actualizar.setBackgroundColor(Color.parseColor("#00ff0000"))
             actualizar.setBackgroundResource(R.drawable.edit32)
 
 
             actualizar.setOnClickListener {
-                accionDeActualizar("Sensor:  ${sensores.get(i)}  ")
+                //accionDeActualizar("Sensor:  ${sensores.get(i)}  ")
             }
 
             //button.apply {
-             //   layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-              //      TableRow.LayoutParams.WRAP_CONTENT)
+            //   layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            //      TableRow.LayoutParams.WRAP_CONTENT)
             //    text = "Sensor:  ${sensores.get(i)}  "
-          //  }
+            //  }
             frame.addView(nombreSensor)
             frame.addView(eliminar)
             frame.addView(actualizar)
@@ -227,10 +232,10 @@ class VistaSensores : AppCompatActivity() {
 
     }
 
-    fun accionDeEliminar(id: Int, text: String) {
+    fun accionDeEliminar(id: Int) {
 
         val mDialog = LayoutInflater.from(this).inflate(R.layout.another_view, null);
-        mDialog.deleteText.setText("¿Está seguro que desea eliminar $text ?")
+        mDialog.deleteText.setText("¿Está seguro que desea eliminar el sensor "+id)
 
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialog)
@@ -279,30 +284,4 @@ class VistaSensores : AppCompatActivity() {
     }
 
 
-}
-
-internal class RESTTask: AsyncTask<Void, Void, Array<Sensores>>() {
-
-    protected override fun doInBackground(vararg params:Void):Array<Sensores> {
-        try
-        {
-            val url = "http://localhost:8080/api/sensores"
-            val restTemplate = RestTemplate()
-            restTemplate.getMessageConverters().add(MappingJackson2HttpMessageConverter())
-            val sensores = restTemplate.getForObject(url, Array<Sensores>::class.java)
-            return sensores
-        }
-        catch (ex:Exception) {
-            Log.e("", ex.message)
-        }
-        return emptyArray()
-    }
-    override fun onPostExecute(sensores:Array<Sensores>) {
-        super.onPostExecute(sensores)
-        for (s in sensores)
-        {
-            Log.i("Sensor:", "###########")
-            Log.i("unidad: ",s.getUnidad().toString())
-        }
-    }
 }

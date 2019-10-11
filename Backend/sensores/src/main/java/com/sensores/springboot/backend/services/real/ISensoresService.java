@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ISensoresService {
     public List<Sensores> findAll();
+
+    public Sensores save(Sensores sensores);
 }

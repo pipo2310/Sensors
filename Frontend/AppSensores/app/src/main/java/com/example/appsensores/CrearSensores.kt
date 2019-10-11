@@ -4,12 +4,17 @@ package com.example.appsensores
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_crear_sensores.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
@@ -32,6 +37,28 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
             // var tipo = spinner.getSelectedItem().toString()
             //var tipo = findViewById<EditText>(R.id.tipo);
             var unidad = findViewById<EditText>(R.id.editText5);
+
+            val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val jsonPlaceHolderApi: JsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
+
+            val call: Call<Sensores> = jsonPlaceHolderApi.saveSensores(7, "ml/s", "123214321421", 13.5f, 13.89f)
+
+            call.enqueue(object:Callback<Sensores> {
+                override fun onResponse(call: Call<Sensores>?, response: Response<Sensores>?) {
+                    if (!response!!.isSuccessful()) {
+                        Log.e("Cod", response.body().toString());
+                        return
+                    }
+                    Log.e("--------------Siuuuu", "Bien");
+                }
+                override fun onFailure(call: Call<Sensores>?, t: Throwable?) {
+                    Log.e("###########Error", "Unable to submit post to API.");
+                }
+            })
 
             intent = Intent(this, VistaSensores::class.java)
             startActivity(intent);

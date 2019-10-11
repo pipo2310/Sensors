@@ -16,4 +16,11 @@ public class SensoresServiceImpl implements ISensoresService{
     public List<Sensores> findAll() {
         return (List<Sensores>)this.iSensoresDao.findAll();
     }
+
+    @Override
+    public Sensores save(Sensores sensores) {
+        return iSensoresDao.save(sensores);
+    }
+
+
 }
