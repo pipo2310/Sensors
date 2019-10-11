@@ -15,11 +15,12 @@ public interface JsonPlaceHolderApi {
 
     @POST("sensores")
     @FormUrlEncoded
-    Call<Sensores> saveSensores(@Field("sensoresPk") Long sensoresPk,
-                            @Field("unidad") String unidad,
-                            @Field("id_cuenta") String id_cuenta,
-                            @Field("alerta_amarilla") float alerta_amarilla,
-                            @Field("alerta_roja") float alerta_roja
-                            );
+    Call<Sensores> saveSensores(@Field("nombre") String nombre,
+                                @Field("unidad") String unidad,
+                                @Field("id_cuenta") Long id_cuenta,
+                                @Field("alerta_amarilla") float alerta_amarilla,
+                                @Field("alerta_roja") float alerta_roja,
+                                @Field("tipo") int tipo
+                                );
 
 }
