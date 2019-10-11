@@ -46,10 +46,29 @@ public class Sensores {
         this.alerta_roja = alerta_roja;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Id
     @Column(name = "sensores_pk")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long sensoresPk;
+
+    @Column(name = "nombre")
+    private String nombre;
 
     @Column(name = "unidad")
     private String unidad;
@@ -65,10 +84,24 @@ public class Sensores {
     @Basic(optional = true)
     private double alerta_roja;
 
+    @Column(name = "tipo")
+    private int tipo;
+
 
     /*
-    * Relación entre sensor y cuenta
+    * Relación entre sensor y tipo de sensor
     * */
+    @MapsId("tipo")
+    @JoinColumns({
+            @JoinColumn(name = "tipo", referencedColumnName = "id_tipo")
+    })
+    @ManyToOne
+    private TipoSensor tipoSensor;
+
+
+    /*
+     * Relación entre sensor y cuenta
+     * */
     @MapsId("id_cuenta")
     @JoinColumns({
             @JoinColumn(name = "id_cuenta", referencedColumnName = "cuentas_pk")
