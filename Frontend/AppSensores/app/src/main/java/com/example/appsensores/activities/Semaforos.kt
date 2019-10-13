@@ -1,20 +1,13 @@
-package com.example.appsensores
+package com.example.appsensores.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.net.Uri
-import android.view.View
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
-import androidx.core.graphics.toColor
-import kotlin.concurrent.thread
-import androidx.constraintlayout.solver.widgets.WidgetContainer.getBounds
+import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 

@@ -1,4 +1,4 @@
-package com.example.appsensores;
+package com.example.appsensores.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +13,11 @@ public class Sensor {
 
     // @JsonProperty("unidad")
     @Expose
-    private String nombreSensor;
+    private String nombre;
+
+
+    @Expose
+    private int tipo;
 
     @Expose
     private String unidad;
@@ -26,6 +30,7 @@ public class Sensor {
     // @JsonProperty("alerta_roja")
     @Expose
     private double alerta_roja;
+
     @SerializedName("body")
     @Expose
     private String text;
@@ -36,6 +41,14 @@ public class Sensor {
 
     public void setSensoresPk(Long sensoresPk) {
         this.sensoresPk = sensoresPk;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
     public String getUnidad() {
@@ -70,12 +83,12 @@ public class Sensor {
         this.alerta_roja = alerta_roja;
     }
 
-    public String getNombreSensor() {
-        return nombreSensor;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreSensor(String nombreSensor) {
-        this.nombreSensor = nombreSensor;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getText() {
@@ -84,7 +97,7 @@ public class Sensor {
 
     @Override
     public String toString() {
-        return "Sensores{" +
+        return "Sensors{" +
                 "sensoresPk='" + sensoresPk +
                 ", unidad='" + unidad +
                 ", id_cuenta=" + id_cuenta +

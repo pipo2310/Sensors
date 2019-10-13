@@ -1,4 +1,4 @@
-package com.example.appsensores
+package com.example.appsensores.activities
 
 
 import android.content.Intent
@@ -9,6 +9,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.example.appsensores.*
+import com.example.appsensores.models.Sensor
+import com.example.appsensores.services.SensoresService
+import com.example.appsensores.services.ServiceBuilder
 import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,19 +47,39 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-            val jsonPlaceHolderApi: JsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
+           // val jsonPlaceHolderApi: SensoresService = retrofit.create(SensoresService::class.java)
 
-            val call: Call<Sensor> = jsonPlaceHolderApi.saveSensores(7,"Sensor Gas 44",1,"mg/m3",1,25.0,50.0)
+            val sensoresService: SensoresService =
+                ServiceBuilder.buildService(
+                    SensoresService::class.java
+                )
+            val sensorAAGregar= Sensor()
+            sensorAAGregar.id_cuenta=1
+            sensorAAGregar.isAlerta_amarilla=25.0
+            sensorAAGregar.isAlerta_roja=100.0
+            sensorAAGregar.nombre="Sensor Gas 44"
+            sensorAAGregar.unidad="mg/m3"
+            sensorAAGregar.tipo=1
+
+            //val call: Call<Sensor> = jsonPlaceHolderApi.crearSensor(Sensor("Sensor Gas 44",1,"mg/m3",1,25.0,50.0))
+            val call: Call<Sensor> = sensoresService.crearSensor(sensorAAGregar)
 
             call.enqueue(object:Callback<Sensor> {
-                override fun onResponse(call: Call<Sensor>?, response: Response<Sensor>?) {
-                    if (!response!!.isSuccessful()) {
-                        Log.e("Cod", response.body().toString());
+                override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
+                    if (response.isSuccessful()) {
+                        finish()
+                        Toast.makeText(this@CrearSensores,
+                            "Se pudo crear",Toast.LENGTH_SHORT).show()
                         return
+                    }else{
+                        Toast.makeText(this@CrearSensores,
+                            "No se pudo crear",Toast.LENGTH_SHORT).show()
                     }
                     Log.e("--------------Siuuuu", "Bien");
                 }
                 override fun onFailure(call: Call<Sensor>?, t: Throwable?) {
+                    Toast.makeText(this@CrearSensores,
+                        "No se pudo crear",Toast.LENGTH_SHORT).show()
                     Log.e("###########Error", "Unable to submit post to API.");
                 }
             })

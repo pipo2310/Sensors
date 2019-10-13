@@ -3,8 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="54f839ca-a294-48a1-b8e2-2c3698625b8d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/model/entity/real/Sensores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/model/entity/real/Sensores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/CrearSensores.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CreateSensors.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/JsonPlaceHolderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/services/SensoresService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/ModificarLimites.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/ModificarLimites.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/ModificarSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/ModificarSensores.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/RetrofitClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/services/RetrofitClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/Semaforos.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/Semaforos.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/Sensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/models/Sensor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/Sensores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/ServiceBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/services/ServiceBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/VistaSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/VistaSensores.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_crear_sensores.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_crear_sensores.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_create_sensors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_create_sensors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_modificar_limites.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_modificar_limites.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_modificar_sensores.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_modificar_sensores.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_semaforos.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_semaforos.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_vista_sensores.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/res/layout/activity_vista_sensores.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +75,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570900006597</updated>
-      <workItem from="1570900008168" duration="11994000" />
+      <workItem from="1570900008168" duration="12183000" />
+      <workItem from="1570975452870" duration="8585000" />
     </task>
     <servers />
   </component>
@@ -68,7 +88,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

@@ -1,4 +1,4 @@
-package com.example.appsensores
+package com.example.appsensores.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,12 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.appsensores.*
+import com.example.appsensores.models.Sensor
+import com.example.appsensores.services.SensoresService
+import com.example.appsensores.services.ServiceBuilder
 import kotlinx.android.synthetic.main.activity_crear_sensores.*
 import retrofit2.Call
-import com.example.appsensores.Sensor
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -36,11 +39,26 @@ class ModificarSensores : AppCompatActivity() {
             //nombre.text
             //tipo.text
             //unidad.text
-            val jsonPlaceHolderApi:JsonPlaceHolderApi=ServiceBuilder.buildService(JsonPlaceHolderApi::class.java)
-            val requestCall: Call<Sensor> = jsonPlaceHolderApi.actualizarSensores(2,"Sensor de Gas 1000",1,"mg/m3",1,10.0,100.0)
+            val sensoresService: SensoresService =
+                ServiceBuilder.buildService(
+                    SensoresService::class.java
+                )
+
+            //val requestCall: Call<Sensor> = jsonPlaceHolderApi.actualizarSensores(3,"Sensor de Gas 1000",1,"mg/m3",1,10.0,100.0)
+            val sensorAActualizar= Sensor()
+            sensorAActualizar.nombre="Sensor de Gas 1000"
+            sensorAActualizar.unidad="mg/m3"
+            sensorAActualizar.isAlerta_roja=100.0
+            sensorAActualizar.isAlerta_amarilla=10.0
+            sensorAActualizar.tipo=1
+            sensorAActualizar.id_cuenta=1
+
+            val requestCall: Call<Sensor> = sensoresService.updateSensores(sensorAActualizar,3)
+
             requestCall.enqueue(object: Callback<Sensor>{
                 override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
                     if (response.isSuccessful()){
+                        finish()
                         Log.e("Hola","HOlanss");
                         Toast.makeText(this@ModificarSensores,
                             "Sensor Actualizado Exitosamente",Toast.LENGTH_SHORT).show()

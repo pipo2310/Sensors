@@ -1,4 +1,4 @@
-package com.example.appsensores
+package com.example.appsensores.services
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

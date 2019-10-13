@@ -27,7 +27,6 @@ public class SensoresController {
     @PutMapping("/sensores/{id}")
     public Sensores update(@RequestBody Sensores sensores,@PathVariable Long id){
         Sensores sensorActual = iSensoresService.findById(id);
-
         sensorActual.setNombre(sensores.getNombre());
         sensorActual.setId_cuenta(sensores.getId_cuenta());
         sensorActual.setAlerta_amarilla(sensores.getAlerta_amarilla());

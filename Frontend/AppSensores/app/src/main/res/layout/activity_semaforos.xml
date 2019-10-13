@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Semaforos" android:background="#F2F2F2" android:id="@+id/pantalla">
+        tools:context=".activities.Semaforos" android:background="#F2F2F2" android:id="@+id/pantalla">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
