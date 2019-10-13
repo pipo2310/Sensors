@@ -64,7 +64,7 @@ public class Sensores {
 
     @Id
     @Column(name = "sensores_pk")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sensoresPk;
 
     @Column(name = "nombre")

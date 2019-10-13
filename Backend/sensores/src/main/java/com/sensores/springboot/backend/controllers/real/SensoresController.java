@@ -23,4 +23,23 @@ public class SensoresController {
     public Sensores create(@RequestBody Sensores sensores) {
         return iSensoresService.save(sensores);
     }
+
+    @PutMapping("/sensores/{id}")
+    public Sensores update(@RequestBody Sensores sensores,@PathVariable Long id){
+        Sensores sensorActual = iSensoresService.findById(id);
+
+        sensorActual.setNombre(sensores.getNombre());
+        sensorActual.setId_cuenta(sensores.getId_cuenta());
+        sensorActual.setAlerta_amarilla(sensores.getAlerta_amarilla());
+        sensorActual.setAlerta_roja(sensores.getAlerta_roja());
+        sensorActual.setTipo(sensores.getTipo());
+        sensorActual.setUnidad(sensores.getUnidad());
+
+        return iSensoresService.save(sensorActual);
+    }
+
+    @DeleteMapping("/sensores/{id}")
+    public void delete(@PathVariable Long id){
+        iSensoresService.delete(id);
+    }
 }

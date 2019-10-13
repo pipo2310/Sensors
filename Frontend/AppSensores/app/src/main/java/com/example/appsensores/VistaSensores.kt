@@ -51,10 +51,10 @@ class VistaSensores : AppCompatActivity() {
 
         val jsonPlaceHolderApi: JsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
 
-        val call: Call<List<Sensores>> = jsonPlaceHolderApi.getSensores()
+        val call: Call<List<Sensor>> = jsonPlaceHolderApi.getSensores()
 
-        call.enqueue(object:Callback<List<Sensores>> {
-            override fun onResponse(call:Call<List<Sensores>>, response: Response<List<Sensores>>) {
+        call.enqueue(object:Callback<List<Sensor>> {
+            override fun onResponse(call:Call<List<Sensor>>, response: Response<List<Sensor>>) {
                 if (!response.isSuccessful())
                 {
                     return
@@ -62,7 +62,7 @@ class VistaSensores : AppCompatActivity() {
                 val sensors = response.body()
                 createTable(sensors)
             }
-            override fun onFailure(call:Call<List<Sensores>>, t:Throwable) {
+            override fun onFailure(call:Call<List<Sensor>>, t:Throwable) {
                 tv2.text = t.message
                 //tv.setText(t.message)
             }
@@ -86,7 +86,7 @@ class VistaSensores : AppCompatActivity() {
 
     }
 
-    fun createTable(sensores:List<Sensores>){
+    fun createTable(sensores:List<Sensor>){
         for (sensor in sensores) {
 
             val row = TableRow(this)
@@ -166,10 +166,11 @@ class VistaSensores : AppCompatActivity() {
             params2.gravity=Gravity.CENTER_VERTICAL
             eliminar.setLayoutParams(params2)
             divisionFrame.setBackgroundColor(Color.parseColor("#7BD451"))
-            eliminar.id=sensor.getSensoresPk().toInt()
+            val id:Long=sensor.getSensoresPk()
+            //eliminar.id=.toInt()
             eliminar.setBackgroundColor(Color.parseColor("#00ff0000"))
             eliminar.setOnClickListener {
-                accionDeEliminar(eliminar.id)
+                accionDeEliminar(id)
             }
 
             // frame.set
@@ -200,7 +201,7 @@ class VistaSensores : AppCompatActivity() {
 
 
             actualizar.setOnClickListener {
-                //accionDeActualizar("Sensor:  ${sensores.get(i)}  ")
+                accionDeActualizar()
             }
 
             //button.apply {
@@ -224,15 +225,15 @@ class VistaSensores : AppCompatActivity() {
 
     }
 
-    fun accionDeActualizar(s: String) {
+    fun accionDeActualizar() {
         intent = Intent(this, ModificarSensores::class.java)
-        intent.putExtra("nombre",s)
+        //intent.putExtra("nombre",s)
         //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
         startActivity(intent);
 
     }
 
-    fun accionDeEliminar(id: Int) {
+    fun accionDeEliminar(id: Long) {
 
         val mDialog = LayoutInflater.from(this).inflate(R.layout.another_view, null);
         mDialog.deleteText.setText("¿Está seguro que desea eliminar el sensor "+id)
@@ -249,9 +250,36 @@ class VistaSensores : AppCompatActivity() {
         }
 
         mDialog.button_elimina.setOnClickListener {
+            val jsonPlaceHolderApi:JsonPlaceHolderApi=ServiceBuilder.buildService(JsonPlaceHolderApi::class.java)
+            val requestCall: Call<Unit> = jsonPlaceHolderApi.borrarSensores(id)
+            requestCall.enqueue(object: Callback<Unit>{
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@VistaSensores,
+                            "Se borro exitosamente",Toast.LENGTH_SHORT).show()
+                }else{
+                        Toast.makeText(this@VistaSensores,
+                            "No se pudo borrar",Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Unit>?, t: Throwable?) {
+                    Toast.makeText(this@VistaSensores,
+                        "No se pudo borrar",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+            )
             //parametro para eliminar: text
             //Deberia hacer refresh de la pagina y poner que se elimino exitosamente
             //mAlertDialog.dismiss()
+            mAlertDialog.dismiss()
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
         }
 
 
