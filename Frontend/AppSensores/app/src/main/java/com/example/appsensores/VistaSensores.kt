@@ -146,7 +146,7 @@ class VistaSensores : AppCompatActivity() {
 
             mqueue.add(request)
 */
-            nombreSensor.text="ID: " + sensor.getSensoresPk()
+            nombreSensor.text="ID: " + sensor.sensoresPk
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
             nombreSensor.textSize=18f

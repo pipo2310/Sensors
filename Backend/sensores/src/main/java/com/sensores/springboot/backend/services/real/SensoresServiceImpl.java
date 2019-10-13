@@ -25,7 +25,7 @@ public class SensoresServiceImpl implements ISensoresService{
         return iSensoresDao.findById(id).orElse(null);
     }
 
-    @Override
+	@Override
     @Transactional
     public Sensores save(Sensores sensores) {
         return iSensoresDao.save(sensores);
