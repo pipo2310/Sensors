@@ -45,13 +45,10 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
 
             val jsonPlaceHolderApi: JsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
 
-
             val call: Call<Sensor> = jsonPlaceHolderApi.saveSensores(7,"Sensor Gas 44",1,"mg/m3",1,25.0,50.0)
 
-           
-
-            call.enqueue(object:Callback<Sensores> {
-                override fun onResponse(call: Call<Sensores>, response: Response<Sensores>) {
+            call.enqueue(object:Callback<Sensor> {
+                override fun onResponse(call: Call<Sensor>?, response: Response<Sensor>?) {
                     if (!response!!.isSuccessful()) {
                         Log.e("Cod", response.body().toString());
                         return

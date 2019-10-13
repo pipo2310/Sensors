@@ -12,6 +12,7 @@ public class Sensores implements Serializable {
     @Id
     @Column(name = "sensores_pk")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long sensoresPk;
 
     @Column(name = "nombre")
     private String nombre;

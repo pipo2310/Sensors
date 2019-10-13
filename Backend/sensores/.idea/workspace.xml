@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54f839ca-a294-48a1-b8e2-2c3698625b8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/model/entity/real/Sensores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/model/entity/real/Sensores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/ICuentasService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/ICuentasService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/ISensoresService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/ISensoresService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/SensoresServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/services/real/SensoresServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/CrearSensores.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/JsonPlaceHolderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/JsonPlaceHolderApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/ModificarSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/ModificarSensores.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/VistaSensores.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/VistaSensores.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +56,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570900006597</updated>
-      <workItem from="1570900008168" duration="10886000" />
+      <workItem from="1570900008168" duration="11994000" />
     </task>
     <servers />
   </component>
