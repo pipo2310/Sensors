@@ -55,7 +55,7 @@ public interface SensoresService {
     );
 
     @DELETE("sensores/{sensoresPk}")
-    Call<Unit> borrarSensores(@Path("sensoresPk") Long sensoresPk
+    Call<Integer> borrarSensores(@Path("sensoresPk") Long sensoresPk
     );
 
 }

@@ -27,13 +27,14 @@ class VistaSensores : AppCompatActivity() {
     lateinit var t1: TableLayout
 
 
-    lateinit var mqueue:RequestQueue
+    //lateinit var mqueue:RequestQueue
     val tableLayout by lazy{ TableLayout(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vista_sensores)
         setSupportActionBar(toolbar)
+        //recuperarSensores()
 
         var agregarSensor = findViewById<Button>(R.id.button2);
         agregarSensor.setOnClickListener {
@@ -47,9 +48,21 @@ class VistaSensores : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         recuperarSensores()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+
     }
 
     fun recuperarSensores() {
+        lateinit var t1: TableLayout
+
+
+        //lateinit var mqueue:RequestQueue
+        val tableLayout by lazy{ TableLayout(this) }
 
        // t1 = TableLayout(this)
         t1 = TableLayout(this)
@@ -105,6 +118,7 @@ class VistaSensores : AppCompatActivity() {
             val button = Button(this)
             var agregarProb= findViewById<TextView>(R.id.textView4);
 
+
             nombreSensor.text="" + sensor.nombre
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
@@ -126,7 +140,7 @@ class VistaSensores : AppCompatActivity() {
             val id:Long=sensor.getSensoresPk()
             eliminar.setBackgroundColor(Color.parseColor("#00ff0000"))
             eliminar.setOnClickListener {
-                accionDeEliminar(id)
+                accionDeEliminar(sensor.sensoresPk)
             }
 
 
@@ -143,7 +157,7 @@ class VistaSensores : AppCompatActivity() {
             actualizar.setBackgroundColor(Color.parseColor("#00ff0000"))
             actualizar.setBackgroundResource(R.drawable.edit32)
             actualizar.setOnClickListener {
-                accionDeActualizar()
+                accionDeActualizar(sensor.nombre,sensor.tipo,sensor.unidad,sensor.sensoresPk,sensor.id_cuenta)
             }
 
             frame.addView(nombreSensor)
@@ -158,11 +172,18 @@ class VistaSensores : AppCompatActivity() {
 
     }
 
-    fun accionDeActualizar() {
+    fun accionDeActualizar(name:String,type:Int,unit:String,sensorPk:Long,idcuenta:Long) {
         intent = Intent(this, ModificarSensores::class.java)
+        intent.putExtra("nombre",name)
+        intent.putExtra("id",sensorPk)
+        intent.putExtra("tipo",type)
+        intent.putExtra("unidad",unit)
+        intent.putExtra("id_cuenta",idcuenta)
         //intent.putExtra("nombre",s)
         //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
+
         startActivity(intent);
+        finish()
 
     }
 
@@ -185,13 +206,15 @@ class VistaSensores : AppCompatActivity() {
         mDialog.button_elimina.setOnClickListener {
             val sensoresService: SensoresService = ServiceBuilder.buildService(
                 SensoresService::class.java)
-            val requestCall: Call<Unit> = sensoresService.borrarSensores(id)
-            requestCall.enqueue(object: Callback<Unit>{
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                    if (response.isSuccessful){
+            val requestCall: Call<Int> = sensoresService.borrarSensores(id)
+            requestCall.enqueue(object: Callback<Int>{
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    if (response.isSuccessful()){
                         Toast.makeText(this@VistaSensores,
                             "Se borro exitosamente",Toast.LENGTH_SHORT).show()
-                       // recuperarSensores()
+                        finish()
+                        startActivity(getIntent())
+                        //recuperarSensores()
                 }else{
                         Toast.makeText(this@VistaSensores,
                             "No se pudo borrar",Toast.LENGTH_SHORT).show()
@@ -200,7 +223,7 @@ class VistaSensores : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Unit>?, t: Throwable?) {
+                override fun onFailure(call: Call<Int>, t: Throwable) {
                     Toast.makeText(this@VistaSensores,
                         "No se pudo borrar",Toast.LENGTH_SHORT).show()
                     //recuperarSensores()

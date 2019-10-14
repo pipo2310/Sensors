@@ -38,7 +38,8 @@ public class SensoresController {
     }
 
     @DeleteMapping("/sensores/{id}")
-    public void delete(@PathVariable Long id){
+    public int delete(@PathVariable Long id){
         iSensoresService.delete(id);
+        return 1;
     }
 }

@@ -54,12 +54,26 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
                     SensoresService::class.java
                 )
             val sensorAAGregar= Sensor()
+            val nombreAdd= findViewById<EditText>(R.id.editText2);
+            val unidadAdd= findViewById<EditText>(R.id.editText5);
+            val tipoAdd=findViewById<Spinner>(R.id.spinner);
+            val type:String=tipoAdd.selectedItem.toString()
+            if (type=="Agua"){
+                sensorAAGregar.tipo=3
+            }else if (type=="Electricidad"){
+                sensorAAGregar.tipo=2
+
+            }else if (type=="Gas"){
+                sensorAAGregar.tipo=1
+            }
+
+
+
             sensorAAGregar.id_cuenta=1
-            sensorAAGregar.isAlerta_amarilla=25.0
-            sensorAAGregar.isAlerta_roja=100.0
-            sensorAAGregar.nombre="Sensor Gas 44"
-            sensorAAGregar.unidad="mg/m3"
-            sensorAAGregar.tipo=1
+            //sensorAAGregar.isAlerta_amarilla=25.0
+            //sensorAAGregar.isAlerta_roja=100.0
+            sensorAAGregar.nombre=nombreAdd.text.toString()
+            sensorAAGregar.unidad=unidadAdd.text.toString()
 
             //val call: Call<Sensor> = jsonPlaceHolderApi.crearSensor(Sensor("Sensor Gas 44",1,"mg/m3",1,25.0,50.0))
             val call: Call<Sensor> = sensoresService.crearSensor(sensorAAGregar)

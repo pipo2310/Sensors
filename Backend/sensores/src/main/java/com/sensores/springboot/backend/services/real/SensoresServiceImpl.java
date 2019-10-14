@@ -33,8 +33,10 @@ public class SensoresServiceImpl implements ISensoresService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public int delete(Long id) {
+
         iSensoresDao.deleteById(id);
+        return 1;
     }
 
 }

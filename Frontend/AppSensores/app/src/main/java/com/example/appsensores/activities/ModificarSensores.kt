@@ -25,14 +25,29 @@ class ModificarSensores : AppCompatActivity() {
         setContentView(R.layout.activity_modificar_sensores)
         setSupportActionBar(toolbar)
 
-       // val b = intent.extras
-        //val id = b!!.getString("nombre")
-        var nombre = findViewById<EditText>(R.id.editText2);
-        var tipo = findViewById<EditText>(R.id.tipo);
-        var unidad = findViewById<EditText>(R.id.editText5);
-        //nombre.hint=id
-        //tipo.hint=id
-       // unidad.hint=id
+        val b = intent.extras
+        val name = b!!.getString("nombre")
+        val unit = b!!.getString("unidad")
+        val type = b!!.getInt("tipo")
+        val id = b!!.getLong("id")
+        val id_cuenta = b!!.getLong("id_cuenta")
+        val nombre = findViewById<EditText>(R.id.editText2);
+        val tipo = findViewById<EditText>(R.id.tipo);
+        val unidad = findViewById<EditText>(R.id.editText5);
+
+        nombre.setText(name)
+        unidad.setText(unit)
+        if(type==1){
+            tipo.setText("Gas")
+
+        }else if (type==2){
+            tipo.setText("Electricidad")
+        }else if(type==3){
+            tipo.setText("Agua")
+        }
+
+
+
         var modificar=findViewById<Button>(R.id.button)
         modificar.setOnClickListener {
             //Prametros para la llamda a la base de update
@@ -46,14 +61,22 @@ class ModificarSensores : AppCompatActivity() {
 
             //val requestCall: Call<Sensor> = jsonPlaceHolderApi.actualizarSensores(3,"Sensor de Gas 1000",1,"mg/m3",1,10.0,100.0)
             val sensorAActualizar= Sensor()
-            sensorAActualizar.nombre="Sensor de Gas 1000"
-            sensorAActualizar.unidad="mg/m3"
-            sensorAActualizar.isAlerta_roja=100.0
-            sensorAActualizar.isAlerta_amarilla=10.0
-            sensorAActualizar.tipo=1
-            sensorAActualizar.id_cuenta=1
 
-            val requestCall: Call<Sensor> = sensoresService.updateSensores(sensorAActualizar,3)
+            sensorAActualizar.nombre=nombre.text.toString()
+            sensorAActualizar.unidad=unidad.text.toString()
+            sensorAActualizar.id_cuenta=id_cuenta
+           // sensorAActualizar.isAlerta_roja=100.0
+            //sensorAActualizar.isAlerta_amarilla=10.0
+            if (tipo.text.toString()=="Agua"){
+                sensorAActualizar.tipo=3
+            }else if (tipo.text.toString()=="Electricidad"){
+                sensorAActualizar.tipo=2
+
+            }else if (tipo.text.toString()=="Gas"){
+                sensorAActualizar.tipo=1
+            }
+
+            val requestCall: Call<Sensor> = sensoresService.updateSensores(sensorAActualizar,id)
 
             requestCall.enqueue(object: Callback<Sensor>{
                 override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
