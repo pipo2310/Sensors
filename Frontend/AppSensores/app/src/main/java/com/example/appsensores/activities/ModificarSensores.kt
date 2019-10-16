@@ -50,10 +50,7 @@ class ModificarSensores : AppCompatActivity() {
 
         var modificar=findViewById<Button>(R.id.button)
         modificar.setOnClickListener {
-            //Prametros para la llamda a la base de update
-            //nombre.text
-            //tipo.text
-            //unidad.text
+
             val sensoresService: SensoresService =
                 ServiceBuilder.buildService(
                     SensoresService::class.java
@@ -76,12 +73,15 @@ class ModificarSensores : AppCompatActivity() {
                 sensorAActualizar.tipo=1
             }
 
+            intent = Intent(this, VistaSensores::class.java)
             val requestCall: Call<Sensor> = sensoresService.updateSensores(sensorAActualizar,id)
+
 
             requestCall.enqueue(object: Callback<Sensor>{
                 override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
                     if (response.isSuccessful()){
                         finish()
+                        startActivity(intent);
                         Log.e("Hola","HOlanss");
                         Toast.makeText(this@ModificarSensores,
                             "Sensor Actualizado Exitosamente",Toast.LENGTH_SHORT).show()
@@ -96,13 +96,11 @@ class ModificarSensores : AppCompatActivity() {
                     "No se pudo actualizar",Toast.LENGTH_SHORT).show()}
             }
             )
-            intent = Intent(this, VistaSensores::class.java)
-            //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
-            startActivity(intent);
+
+
+
         }
-        //nombre.setText(id)
-        //tipo.setText(id)
-        //unidad.setText(id)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

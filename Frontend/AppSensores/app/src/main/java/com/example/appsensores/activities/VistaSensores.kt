@@ -58,13 +58,7 @@ class VistaSensores : AppCompatActivity() {
     }
 
     fun recuperarSensores() {
-        lateinit var t1: TableLayout
 
-
-        //lateinit var mqueue:RequestQueue
-        val tableLayout by lazy{ TableLayout(this) }
-
-       // t1 = TableLayout(this)
         t1 = TableLayout(this)
 
         //recuperarSensores()
@@ -94,8 +88,7 @@ class VistaSensores : AppCompatActivity() {
                 createTable(sensors)
             }
             override fun onFailure(call:Call<List<Sensor>>, t:Throwable) {
-                //tv2.text = t.message
-                //tv.setText(t.message)
+
             }
         })
 
@@ -115,8 +108,8 @@ class VistaSensores : AppCompatActivity() {
             val eliminar =ImageButton(this)
             val actualizar = ImageButton(this)
             val nombreSensor = TextView(this)
-            val button = Button(this)
-            var agregarProb= findViewById<TextView>(R.id.textView4);
+
+
 
 
             nombreSensor.text="" + sensor.nombre
@@ -173,17 +166,17 @@ class VistaSensores : AppCompatActivity() {
     }
 
     fun accionDeActualizar(name:String,type:Int,unit:String,sensorPk:Long,idcuenta:Long) {
+
         intent = Intent(this, ModificarSensores::class.java)
         intent.putExtra("nombre",name)
         intent.putExtra("id",sensorPk)
         intent.putExtra("tipo",type)
         intent.putExtra("unidad",unit)
         intent.putExtra("id_cuenta",idcuenta)
-        //intent.putExtra("nombre",s)
-        //pasar los 3 elementos del objeto como extras separados y recuperarlos del otro lado con el "" que sea pertinente
+
 
         startActivity(intent);
-        finish()
+
 
     }
 
@@ -211,39 +204,31 @@ class VistaSensores : AppCompatActivity() {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.isSuccessful()){
                         Toast.makeText(this@VistaSensores,
-                            "Se borro exitosamente",Toast.LENGTH_SHORT).show()
+                            "Sensor eliminado exitosamente",Toast.LENGTH_SHORT).show()
                         finish()
                         startActivity(getIntent())
-                        //recuperarSensores()
+
                 }else{
                         Toast.makeText(this@VistaSensores,
-                            "No se pudo borrar",Toast.LENGTH_SHORT).show()
-                        //recuperarSensores()
+                            "No se pudo eliminar",Toast.LENGTH_SHORT).show()
+
 
                     }
                 }
 
                 override fun onFailure(call: Call<Int>, t: Throwable) {
                     Toast.makeText(this@VistaSensores,
-                        "No se pudo borrar",Toast.LENGTH_SHORT).show()
-                    //recuperarSensores()
+                        "No se pudo eliminar",Toast.LENGTH_SHORT).show()
+
                 }
             }
 
 
             )
-            //parametro para eliminar: text
-            //Deberia hacer refresh de la pagina y poner que se elimino exitosamente
-            //mAlertDialog.dismiss()
+
             mAlertDialog.dismiss()
-            //finish();
-            //overridePendingTransition(0, 0);
 
-            //startActivity(getIntent());
-            //overridePendingTransition(0, 0);
         }
-
-
 
 
     }

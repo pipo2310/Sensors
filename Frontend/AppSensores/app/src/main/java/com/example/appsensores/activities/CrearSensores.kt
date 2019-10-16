@@ -74,6 +74,7 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
             //sensorAAGregar.isAlerta_roja=100.0
             sensorAAGregar.nombre=nombreAdd.text.toString()
             sensorAAGregar.unidad=unidadAdd.text.toString()
+            intent = Intent(this, VistaSensores::class.java)
 
             //val call: Call<Sensor> = jsonPlaceHolderApi.crearSensor(Sensor("Sensor Gas 44",1,"mg/m3",1,25.0,50.0))
             val call: Call<Sensor> = sensoresService.crearSensor(sensorAAGregar)
@@ -82,24 +83,25 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
                 override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
                     if (response.isSuccessful()) {
                         finish()
+                        startActivity(intent);
                         Toast.makeText(this@CrearSensores,
-                            "Se pudo crear",Toast.LENGTH_SHORT).show()
+                            "Sensor creado exitosamente",Toast.LENGTH_SHORT).show()
                         return
                     }else{
                         Toast.makeText(this@CrearSensores,
-                            "No se pudo crear",Toast.LENGTH_SHORT).show()
+                            "No se pudo crear el sensor",Toast.LENGTH_SHORT).show()
                     }
                     Log.e("--------------Siuuuu", "Bien");
                 }
                 override fun onFailure(call: Call<Sensor>?, t: Throwable?) {
                     Toast.makeText(this@CrearSensores,
-                        "No se pudo crear",Toast.LENGTH_SHORT).show()
+                        "No se pudo crear el sensor",Toast.LENGTH_SHORT).show()
                     Log.e("###########Error", "Unable to submit post to API.");
                 }
             })
 
-            intent = Intent(this, VistaSensores::class.java)
-            startActivity(intent);
+
+
         }
 
 
