@@ -1,18 +1,27 @@
-package com.example.appsensores
+package com.example.appsensores.activities
 
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_create_sensors.*
+import com.example.appsensores.*
+import com.example.appsensores.models.Sensor
+import com.example.appsensores.services.SensoresService
+import com.example.appsensores.services.ServiceBuilder
+import kotlinx.android.synthetic.main.activity_crear_sensores.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
-class CreateSensors : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
+class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     //var spinner: Spinner? = null;
     //var textView_msg: TextView? = null;
@@ -21,7 +30,7 @@ class CreateSensors : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_crear_sensores);
         setSupportActionBar(toolbar)
         var agregarProb= findViewById<Button>(R.id.button);
         agregarProb.setOnClickListener {
@@ -33,8 +42,66 @@ class CreateSensors : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
             //var tipo = findViewById<EditText>(R.id.tipo);
             var unidad = findViewById<EditText>(R.id.editText5);
 
+            val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+           // val jsonPlaceHolderApi: SensoresService = retrofit.create(SensoresService::class.java)
+
+            val sensoresService: SensoresService =
+                ServiceBuilder.buildService(
+                    SensoresService::class.java
+                )
+            val sensorAAGregar= Sensor()
+            val nombreAdd= findViewById<EditText>(R.id.editText2);
+            val unidadAdd= findViewById<EditText>(R.id.editText5);
+            val tipoAdd=findViewById<Spinner>(R.id.spinner);
+            val type:String=tipoAdd.selectedItem.toString()
+            if (type=="Agua"){
+                sensorAAGregar.tipo=3
+            }else if (type=="Electricidad"){
+                sensorAAGregar.tipo=2
+
+            }else if (type=="Gas"){
+                sensorAAGregar.tipo=1
+            }
+
+
+
+            sensorAAGregar.id_cuenta=1
+            //sensorAAGregar.isAlerta_amarilla=25.0
+            //sensorAAGregar.isAlerta_roja=100.0
+            sensorAAGregar.nombre=nombreAdd.text.toString()
+            sensorAAGregar.unidad=unidadAdd.text.toString()
             intent = Intent(this, VistaSensores::class.java)
-            startActivity(intent);
+
+            //val call: Call<Sensor> = jsonPlaceHolderApi.crearSensor(Sensor("Sensor Gas 44",1,"mg/m3",1,25.0,50.0))
+            val call: Call<Sensor> = sensoresService.crearSensor(sensorAAGregar)
+
+            call.enqueue(object:Callback<Sensor> {
+                override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
+                    if (response.isSuccessful()) {
+                        finish()
+                        startActivity(intent);
+                        Toast.makeText(this@CrearSensores,
+                            "Sensor creado exitosamente",Toast.LENGTH_SHORT).show()
+                        return
+                    }else{
+                        Toast.makeText(this@CrearSensores,
+                            "No se pudo crear el sensor",Toast.LENGTH_SHORT).show()
+                    }
+                    Log.e("--------------Siuuuu", "Bien");
+                }
+                override fun onFailure(call: Call<Sensor>?, t: Throwable?) {
+                    Toast.makeText(this@CrearSensores,
+                        "No se pudo crear el sensor",Toast.LENGTH_SHORT).show()
+                    Log.e("###########Error", "Unable to submit post to API.");
+                }
+            })
+
+
+
         }
 
 

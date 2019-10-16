@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fondo"
-        tools:context=".VistaSensores">
+        tools:context=".activities.VistaSensores">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
