@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cuentas")
 public class CuentasController {
 
     @Autowired
     ICuentasService iCuentasService;
 
-    @GetMapping("/cuentas")
+    @GetMapping("/listar_cuentas")
     public List<Cuentas> index(){
         return this.iCuentasService.findAll();
     }

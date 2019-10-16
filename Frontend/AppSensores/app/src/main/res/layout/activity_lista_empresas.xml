@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.ListaEmpresas">
+
+        <include android:id="@+id/navbar" layout="@layout/activity_main" tools:layout_editor_absoluteX="88dp"
+                 tools:layout_editor_absoluteY="58dp"></include>
+        <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
+                android:text="Lista de Empresas" android:textSize="22sp"
+                app:fontFamily="sans-serif-black" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.023"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@+id/navbar"
+                app:layout_constraintVertical_bias="0.022"/>
+
+        <LinearLayout
+                android:id="@+id/tablaContainer"
+                android:layout_width="395dp"
+                android:layout_height="542dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button3">
+
+                <TableLayout
+                        android:id="@+id/tabla1"
+                        android:layout_width="match_parent" android:layout_height="match_parent">
+                </TableLayout>
+
+        </LinearLayout>
+        <Button
+                android:id="@+id/button3"
+                android:layout_width="149dp"
+                android:layout_height="50dp" android:layout_marginTop="76dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:text="Crear Empresa" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.966" app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/navbar"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

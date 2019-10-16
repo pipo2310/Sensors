@@ -109,9 +109,6 @@ class VistaSensores : AppCompatActivity() {
             val actualizar = ImageButton(this)
             val nombreSensor = TextView(this)
 
-
-
-
             nombreSensor.text="" + sensor.nombre
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL

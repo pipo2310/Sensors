@@ -9,8 +9,6 @@ public class Sensor {
     @Expose
     private Long sensoresPk;
 
-
-
     // @JsonProperty("unidad")
     @Expose
     private String nombre;

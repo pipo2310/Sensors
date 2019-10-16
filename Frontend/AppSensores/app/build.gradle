@@ -50,4 +50,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
     // Logging
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.google.android:flexbox:1.1.0'
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview-selection:1.0.0"
 }

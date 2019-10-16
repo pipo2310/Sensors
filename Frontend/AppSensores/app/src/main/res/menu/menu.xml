@@ -12,5 +12,9 @@
           android:title="Semaforos"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+    <item android:id="@+id/empresas"
+          android:title="Empresas"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
 
 </menu>
