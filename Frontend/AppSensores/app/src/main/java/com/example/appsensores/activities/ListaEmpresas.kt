@@ -1,5 +1,6 @@
 package com.example.appsensores.activities
 
+import android.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -20,6 +21,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.widget.RelativeLayout
+
+
 
 class ListaEmpresas : AppCompatActivity() {
     var listaEmpresas: List<Cuenta> = listOf(Cuenta())
@@ -63,25 +67,28 @@ class ListaEmpresas : AppCompatActivity() {
 
     fun crearTabla(){
         var tabla: TableLayout = findViewById<TableLayout>(R.id.tabla1)
-        val layoutManager = FlexboxLayoutManager(this)
+        // val layoutManager = FlexboxLayoutManager(this)
         var encabezados = TableRow(this)
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.SPACE_BETWEEN
-        var recyclerView : RecyclerView = RecyclerView(this)
-        recyclerView.layoutManager = layoutManager
+        //layoutManager.flexDirection = FlexDirection.ROW
+        //layoutManager.justifyContent = JustifyContent.SPACE_BETWEEN
+        //var recyclerView : RecyclerView = RecyclerView(this)
+        //recyclerView.layoutManager = layoutManager
+        //var layoutParams = encabezados.layoutParams
+        //layoutParams.width = tabla.width
         val tv = TextView(this)
         tv.text = "Nombre"
-        recyclerView.addView(tv)
+        val lp = ViewGroup.LayoutParams(450, 100)
+        //lp.width = 250;
+        tv.setLayoutParams(lp);
+        //var layoutParamsTv = tv.layoutParams
+        //layoutParamsTv.width = 1
+        //tv.layoutParams = layoutParamsTv
+        encabezados.addView(tv)
+        //recyclerView.addView(tv)
         val tv2 = TextView(this)
         tv2.text = "Editar"
-        recyclerView.addView(tv2)
-        encabezados.addView(recyclerView)
-        val divLikeContent = ArrayList<String>()
-        divLikeContent.add("Route")
-        divLikeContent.add("Safety")
-        divLikeContent.add("Smell")
-        val adapter = DivLikeAdapter(divLikeContent)
-        recyclerView.adapter = adapter
+        //recyclerView.addView(tv2)
+        encabezados.addView(tv2)
         tabla.addView(encabezados)
 
         for (cuenta in listaEmpresas){
