@@ -3,9 +3,7 @@ package com.sensores.springboot.backend.controllers.real;
 import com.sensores.springboot.backend.model.entity.real.Cuentas;
 import com.sensores.springboot.backend.services.real.ICuentasService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +17,62 @@ public class CuentasController {
     @GetMapping("/listar_cuentas")
     public List<Cuentas> index(){
         return this.iCuentasService.findAll();
+    }
+
+    /**
+     * Metodo para insertar una nueva Cuenta en la base de datos
+     * @param cuentas cuenta que se desea insertar
+     * @return Retorna la nueva cuenta insertada
+     */
+    @PostMapping("/insertar_cuenta")
+    public Cuentas insertarCuenta(@RequestBody Cuentas cuentas){
+        try{
+            // Se inserta y retorna la cuenta nueva
+            return iCuentasService.save(cuentas);
+        }catch (Exception ex){
+            // Falta error
+            return null;
+        }
+
+    }
+
+    /**
+     * Metodo para eliminar una cuenta de la base de datos
+     * @param cuentaId id de la cuenta que se quiere borrar
+     * @return Retorna la cuenta eliminada
+     */
+    @DeleteMapping("borrar_cuenta_por_id")
+    public Cuentas borrarCuentaPorId(@RequestParam long cuentaId){
+        // Obtenemos la cuenta de la base de datos
+        Cuentas cuenta = iCuentasService.findById(cuentaId);
+        // Se verifica si la cuenta existe
+        if (cuenta != null){
+            // retornamos la cuenta eliminada
+            try{
+                iCuentasService.deleteById(cuentaId);
+                return cuenta;
+            }catch (Exception ex){
+                // Falta error
+                return null;
+            }
+        }else {
+            // Falta error
+            return null;
+        }
+    }
+
+    /**
+     * Metodo para buscar una cuenta de la base de datos
+     * @param cuentaId id de la cuenta que se quiere buscar
+     * @return Retorna la cuenta que se encontró
+     */
+    @GetMapping("cuenta_por_id")
+    public Cuentas buscarCuentaPorId(@RequestParam long cuentaId){
+        try{
+            return iCuentasService.findById(cuentaId);
+        }catch (Exception ex){
+            // Falta error
+            return null;
+        }
     }
 }
