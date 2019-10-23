@@ -30,6 +30,10 @@ INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nom
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('m1/s', 1, 12.3 , 20.0, 3 , 'Sensor de Agua 2');
 
 --Tabla Sensores Logs
+INSERT INTO sensores_logs VALUES ('2010-10-10 09:43:21.043412', 3 ,12.3);
+INSERT INTO sensores_logs VALUES ('2019-10-10 09:43:21.043412', 3 ,11.3);
 
+INSERT INTO sensores_logs VALUES ('2019-08-10 09:43:21.043412', 4 ,9.5);
+INSERT INTO sensores_logs VALUES ('2019-10-20 09:43:21.043412', 4 ,6.1);
 
 
