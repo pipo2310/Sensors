@@ -61,34 +61,44 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         //generarHistoricosAno()
         //generarHistoricosMes()
-        generarHistoricosSemana()
+        //generarHistoricosSemana()
+        generarHistoricosDefault()
 
 
     }
 
+    fun generarHistoricosDefault() {
 
-
-    fun generarHistoricosSemana() {
         val points = arrayOf(
-            Point(1.0, 178.0),
-            Point(3.0, 179.0),
-            Point(5.0, 179.0),
-            Point(7.0, 181.0),
-            Point(9.0, 180.0),
-            Point(11.0, 182.0),
-            Point(13.0, 182.0)
+            Point(1.0, 0.0),
+            Point(2.0, 0.0),
+            Point(3.0, 0.0),
+            Point(4.0, 0.0),
+            Point(5.0, 0.0),
+            Point(6.0, 0.0),
+            Point(7.0, 0.0),
+            Point(8.0, 0.0),
+            Point(9.0, 0.0),
+            Point(10.0, 0.0),
+            Point(11.0, 0.0),
+            Point(12.0, 0.0)
         )
         val xLabels = arrayOf(
-            Label(1.0, "L"),
-            Label(3.0, "K"),
+            Label(1.0, "E"),
+            Label(2.0, "F"),
+            Label(3.0, "M"),
+            Label(4.0, "A"),
             Label(5.0, "M"),
+            Label(6.0, "J"),
             Label(7.0, "J"),
-            Label(9.0, "V"),
-            Label(11.0, "S"),
-            Label(13.0, "D")
+            Label(8.0, "A"),
+            Label(9.0, "S"),
+            Label(10.0, "O"),
+            Label(11.0, "N"),
+            Label(12.0, "D")
         )
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 14.0, 165.0, 191.0)
+            .setWorldCoordinates(-2.0, 13.0, 165.0, 191.0)
             .setAxes(0.0, 167.0)
             .setXLabels(xLabels)
             .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
@@ -98,40 +108,14 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         val graphView = findViewById<GraphView>(R.id.graph_view)
         graphView.setGraph(graph)
-        setTitle("Historicos Semanales")
+        setTitle("Historicos Anuales")
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
     }
 
-    fun generarHistoricosMes() {
-        val points = arrayOf(
-            Point(1.0, 178.0),
-            Point(4.0, 181.0),
-            Point(7.0, 182.0),
-            Point(10.0, 185.0)
-        )
-        val xLabels = arrayOf(
-            Label(1.0, "S1"),
-            Label(4.0, "S2"),
-            Label(7.0, "S3"),
-            Label(10.0, "S4")
-        )
-        val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 11.0, 165.0, 191.0)
-            .setAxes(0.0, 167.0)
-            .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
-            .addFunction({ x -> 170.0 }, Color.GREEN)
-            .addLineGraph(points, Color.RED)
-            .build()
 
-        val graphView = findViewById<GraphView>(R.id.graph_view)
-        graphView.setGraph(graph)
-        setTitle("Historicos Mensuales")
-        val textView = findViewById<TextView>(R.id.graph_view_label)
-        textView.setText("Graph of Axes")
 
-    }
+
 
     fun generarHistoricosAno() {
 
@@ -162,21 +146,101 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
+    fun generarHistoricosMes() {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
+
+
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesMes(3)
+
+        call.enqueue(object: Callback<Collection<Medicion>> {
+            override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
+                if (!response.isSuccessful())
+                {
+                    return
+                }
+                val medicionesMes = response.body()
+                llenarGraficoMes(medicionesMes)
+
+            }
+            override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
+
+            }
+        })
+
+
+    }
+
+    fun generarHistoricosSemana() {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
+
+
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesSemana(3)
+
+        call.enqueue(object: Callback<Collection<Medicion>> {
+            override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
+                if (!response.isSuccessful())
+                {
+                    return
+                }
+                val medicionesSemana = response.body()
+                llenarGraficoSemana(medicionesSemana)
+
+            }
+            override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
+
+            }
+        })
+
+    }
+
+
     fun llenarGraficoAno(mediciones:Collection<Medicion>) {
+        val medicionesAno= arrayOf(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0)
+        for (medicion in mediciones){
+
+            when(medicion.metrica){
+                "January"-> medicionesAno.set(0,medicion.valor)
+                "February "-> medicionesAno.set(1,medicion.valor)
+                "March "-> medicionesAno.set(2,medicion.valor)
+                "April "-> medicionesAno.set(3,medicion.valor)
+                "May "-> medicionesAno.set(4,medicion.valor)
+                "June "-> medicionesAno.set(5,medicion.valor)
+                "July "-> medicionesAno.set(6,medicion.valor)
+                "August"-> medicionesAno.set(7,medicion.valor)
+                "September "-> medicionesAno.set(8,medicion.valor)
+                "October "-> medicionesAno.set(9,medicion.valor)
+                "November "-> medicionesAno.set(10,medicion.valor)
+                "December "-> medicionesAno.set(11,medicion.valor)
+                else ->{
+                    println("No sirve")}
+            }
+
+        }
+
 
         val points = arrayOf(
-            Point(1.0, 178.0),
-            Point(2.0, 179.0),
-            Point(3.0, 179.0),
-            Point(4.0, 181.0),
-            Point(5.0, 180.0),
-            Point(6.0, 182.0),
-            Point(7.0, 182.0),
-            Point(8.0, 184.0),
-            Point(9.0, 183.0),
-            Point(10.0, 185.0),
-            Point(11.0, 185.0),
-            Point(12.0, 186.0)
+            Point(1.0, medicionesAno.get(0)),
+            Point(2.0, medicionesAno.get(1)),
+            Point(3.0, medicionesAno.get(2)),
+            Point(4.0, medicionesAno.get(3)),
+            Point(5.0, medicionesAno.get(4)),
+            Point(6.0, medicionesAno.get(5)),
+            Point(7.0, medicionesAno.get(6)),
+            Point(8.0, medicionesAno.get(7)),
+            Point(9.0, medicionesAno.get(8)),
+            Point(10.0, medicionesAno.get(9)),
+            Point(11.0, medicionesAno.get(10)),
+            Point(12.0, medicionesAno.get(11))
         )
         val xLabels = arrayOf(
             Label(1.0, "E"),
@@ -206,6 +270,107 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         setTitle("Historicos Anuales")
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
+    }
+
+    fun llenarGraficoMes(mediciones:Collection<Medicion>){
+
+        val medicionesMes= arrayOf(1.0,1.0,1.0,1.0)
+        for (medicion in mediciones){
+
+            when(medicion.metrica){
+                "1eek"-> medicionesMes.set(0,medicion.valor)
+                "2eek"-> medicionesMes.set(1,medicion.valor)
+                "3eek"-> medicionesMes.set(2,medicion.valor)
+                "4eek"-> medicionesMes.set(3,medicion.valor)
+
+                else ->{
+                    println("No sirve")}
+            }
+
+        }
+
+        val points = arrayOf(
+            Point(1.0, medicionesMes.get(0)),
+            Point(4.0, medicionesMes.get(1)),
+            Point(7.0, medicionesMes.get(2)),
+            Point(10.0, medicionesMes.get(3))
+        )
+        val xLabels = arrayOf(
+            Label(1.0, "S1"),
+            Label(4.0, "S2"),
+            Label(7.0, "S3"),
+            Label(10.0, "S4")
+        )
+        val graph = Graph.Builder()
+            .setWorldCoordinates(-2.0, 11.0, 165.0, 191.0)
+            .setAxes(0.0, 167.0)
+            .setXLabels(xLabels)
+            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
+            .addFunction({ x -> 170.0 }, Color.GREEN)
+            .addLineGraph(points, Color.RED)
+            .build()
+
+        val graphView = findViewById<GraphView>(R.id.graph_view)
+        graphView.setGraph(graph)
+        setTitle("Historicos Mensuales")
+        val textView = findViewById<TextView>(R.id.graph_view_label)
+        textView.setText("Graph of Axes")
+
+    }
+
+    fun llenarGraficoSemana(mediciones:Collection<Medicion>){
+
+        val medicionesSemana= arrayOf(1.0,1.0,1.0,1.0,1.0,1.0,1.0)
+        for (medicion in mediciones){
+
+            when(medicion.metrica){
+                "Monday"-> medicionesSemana.set(0,medicion.valor)
+                "Tuesday"-> medicionesSemana.set(1,medicion.valor)
+                "Wednesday"-> medicionesSemana.set(2,medicion.valor)
+                "Thursday"-> medicionesSemana.set(3,medicion.valor)
+                "Friday"-> medicionesSemana.set(4,medicion.valor)
+                "Saturday"-> medicionesSemana.set(5,medicion.valor)
+                "Sunday"-> medicionesSemana.set(6,medicion.valor)
+
+                else ->{
+                    println("No sirve")}
+            }
+
+        }
+
+        val points = arrayOf(
+            Point(1.0, medicionesSemana.get(0)),
+            Point(3.0, medicionesSemana.get(1)),
+            Point(5.0, medicionesSemana.get(2)),
+            Point(7.0, medicionesSemana.get(3)),
+            Point(9.0, medicionesSemana.get(4)),
+            Point(11.0, medicionesSemana.get(5)),
+            Point(13.0, medicionesSemana.get(6))
+        )
+        val xLabels = arrayOf(
+            Label(1.0, "L"),
+            Label(3.0, "K"),
+            Label(5.0, "M"),
+            Label(7.0, "J"),
+            Label(9.0, "V"),
+            Label(11.0, "S"),
+            Label(13.0, "D")
+        )
+        val graph = Graph.Builder()
+            .setWorldCoordinates(-2.0, 14.0, 165.0, 191.0)
+            .setAxes(0.0, 167.0)
+            .setXLabels(xLabels)
+            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
+            .addFunction({ x -> 170.0 }, Color.GREEN)
+            .addLineGraph(points, Color.RED)
+            .build()
+
+        val graphView = findViewById<GraphView>(R.id.graph_view)
+        graphView.setGraph(graph)
+        setTitle("Historicos Semanales")
+        val textView = findViewById<TextView>(R.id.graph_view_label)
+        textView.setText("Graph of Axes")
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
