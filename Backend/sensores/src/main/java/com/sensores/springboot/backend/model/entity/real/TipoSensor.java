@@ -24,6 +24,10 @@ public class TipoSensor {
     @Column(name = "alerta_roja_global")
     private double alerta_roja_global;
 
+    @Column(name = "costo")
+    @Basic(optional = true)
+    private double costo;
+
 
     public int getId_tipo() {
         return id_tipo;
@@ -55,6 +59,14 @@ public class TipoSensor {
 
     public void setAlerta_roja_global(double alerta_roja_global) {
         this.alerta_roja_global = alerta_roja_global;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
     }
 
     @OneToMany(mappedBy = "tipoSensor")
