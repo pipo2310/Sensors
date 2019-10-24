@@ -19,7 +19,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.example.appsensores.models.Medicion
+import com.example.appsensores.services.MedicionesService
 import kotlinx.android.synthetic.main.activity_historicos.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
@@ -110,7 +117,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(10.0, "S4")
         )
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 13.0, 165.0, 191.0)
+            .setWorldCoordinates(-2.0, 11.0, 165.0, 191.0)
             .setAxes(0.0, 167.0)
             .setXLabels(xLabels)
             .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
@@ -127,6 +134,36 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
     }
 
     fun generarHistoricosAno() {
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
+
+
+        val call: Call<List<Medicion>> = medicionesService.getMedicionesAno(3)
+
+        call.enqueue(object: Callback<List<Medicion>> {
+            override fun onResponse(call: Call<List<Medicion>>, response: Response<List<Medicion>>) {
+                if (!response.isSuccessful())
+                {
+                    return
+                }
+                val medicionesAno = response.body()
+                llenarGraficoAno(medicionesAno)
+
+            }
+            override fun onFailure(call: Call<List<Medicion>>, t:Throwable) {
+
+            }
+        })
+
+    }
+
+    fun llenarGraficoAno(mediciones:List<Medicion>) {
+
         val points = arrayOf(
             Point(1.0, 178.0),
             Point(2.0, 179.0),

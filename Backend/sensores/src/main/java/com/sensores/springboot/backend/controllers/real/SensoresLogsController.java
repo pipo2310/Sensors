@@ -23,7 +23,7 @@ public class SensoresLogsController {
     @GetMapping("/sensoresLogs")
     public List<Sensores_Logs> index() {return this.iSensoresLogsService.findAll();}
 
-   @GetMapping("/sensoresLogs_mes")
+    @GetMapping("/sensoresLogs_mes")
     public Collection<Medicion> index2(@RequestParam int tipo) {return this.iSensoresLogsService.getMesesHistoricos(tipo);}
 
     @GetMapping("/sensoresLogs_semana")

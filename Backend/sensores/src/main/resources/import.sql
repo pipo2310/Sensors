@@ -37,3 +37,4 @@ INSERT INTO sensores_logs VALUES ('2019-08-10 09:43:21.043412', 4 ,9.5);
 INSERT INTO sensores_logs VALUES ('2019-10-20 09:43:21.043412', 4 ,6.1);
 
 
+
