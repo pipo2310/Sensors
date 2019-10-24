@@ -205,10 +205,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
 
     fun llenarGraficoAno(mediciones:Collection<Medicion>) {
-        val medicionesAno= arrayOf(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0)
+        val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
-            when(medicion.metrica){
+            when(medicion.metrica.split(" ").get(0)){
                 "January"-> medicionesAno.set(0,medicion.valor)
                 "February "-> medicionesAno.set(1,medicion.valor)
                 "March "-> medicionesAno.set(2,medicion.valor)
@@ -277,7 +277,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val medicionesMes= arrayOf(1.0,1.0,1.0,1.0)
         for (medicion in mediciones){
 
-            when(medicion.metrica){
+            when(medicion.metrica.split(" ").get(0)){
                 "1eek"-> medicionesMes.set(0,medicion.valor)
                 "2eek"-> medicionesMes.set(1,medicion.valor)
                 "3eek"-> medicionesMes.set(2,medicion.valor)
@@ -320,10 +320,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun llenarGraficoSemana(mediciones:Collection<Medicion>){
 
-        val medicionesSemana= arrayOf(1.0,1.0,1.0,1.0,1.0,1.0,1.0)
+        val medicionesSemana= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
-            when(medicion.metrica){
+            when(medicion.metrica.split(" ").get(0)){
                 "Monday"-> medicionesSemana.set(0,medicion.valor)
                 "Tuesday"-> medicionesSemana.set(1,medicion.valor)
                 "Wednesday"-> medicionesSemana.set(2,medicion.valor)
@@ -338,7 +338,9 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         }
 
+
         val points = arrayOf(
+
             Point(1.0, medicionesSemana.get(0)),
             Point(3.0, medicionesSemana.get(1)),
             Point(5.0, medicionesSemana.get(2)),
@@ -357,11 +359,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(13.0, "D")
         )
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 14.0, 165.0, 191.0)
-            .setAxes(0.0, 167.0)
+            .setWorldCoordinates(-2.0, 14.0, -3.0, 20.0)
+            .setAxes(0.0, 0.0)
             .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
-            .addFunction({ x -> 170.0 }, Color.GREEN)
+            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            //.addFunction({ x -> 2.0 }, Color.GREEN)
             .addLineGraph(points, Color.RED)
             .build()
 
