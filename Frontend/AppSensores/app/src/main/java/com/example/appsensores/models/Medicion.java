@@ -5,25 +5,25 @@ import com.google.gson.annotations.Expose;
 public class Medicion {
 
     @Expose
-    private String nombre;
+    private String metrica;
 
     @Expose
-    private int tipo;
+    private double valor;
 
-    public String getNombre() {
-        return nombre;
+    public String getMetrica() {
+        return metrica;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setMetrica(String metrica) {
+        this.metrica = metrica;
     }
 
-    public int getType() {
-        return tipo;
+    public double getValor() {
+        return valor;
     }
 
-    public void setType(int tipo) {
-        this.tipo = tipo;
+    public void setValore(double valor) {
+        this.valor = valor;
     }
 
 

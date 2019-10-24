@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c1dbe95-3231-451c-86e5-6efd5de5191a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresLogsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sensores/springboot/backend/controllers/real/SensoresLogsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/Historicos.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/AppSensores/app/src/main/java/com/example/appsensores/activities/Historicos.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1571779869772</updated>
       <workItem from="1571779871959" duration="27217000" />
-      <workItem from="1571935009280" duration="4096000" />
+      <workItem from="1571935009280" duration="5124000" />
     </task>
     <servers />
   </component>

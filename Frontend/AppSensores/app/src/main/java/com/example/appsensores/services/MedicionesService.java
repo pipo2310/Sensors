@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface MedicionesService {
 
     @GET("sensoresLogs_mes")
-    Call<List<Medicion>> getMedicionesAno(@Query("tipo") int tipo);
+    Call<Collection<Medicion>> getMedicionesAno(@Query("tipo") int tipo);
 
     @GET("sensoresLogs_semana")
     Call<Collection<Medicion>> getMedicionesMes(@Query("tipo") int tipo);

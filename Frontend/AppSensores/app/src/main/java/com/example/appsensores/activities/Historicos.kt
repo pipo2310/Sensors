@@ -143,10 +143,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
 
 
-        val call: Call<List<Medicion>> = medicionesService.getMedicionesAno(3)
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesAno(3)
 
-        call.enqueue(object: Callback<List<Medicion>> {
-            override fun onResponse(call: Call<List<Medicion>>, response: Response<List<Medicion>>) {
+        call.enqueue(object: Callback<Collection<Medicion>> {
+            override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
                 if (!response.isSuccessful())
                 {
                     return
@@ -155,14 +155,14 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                 llenarGraficoAno(medicionesAno)
 
             }
-            override fun onFailure(call: Call<List<Medicion>>, t:Throwable) {
+            override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
 
             }
         })
 
     }
 
-    fun llenarGraficoAno(mediciones:List<Medicion>) {
+    fun llenarGraficoAno(mediciones:Collection<Medicion>) {
 
         val points = arrayOf(
             Point(1.0, 178.0),
