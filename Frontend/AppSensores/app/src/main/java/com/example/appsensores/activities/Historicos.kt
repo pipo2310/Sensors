@@ -210,17 +210,17 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
             when(medicion.metrica.split(" ").get(0)){
                 "January"-> medicionesAno.set(0,medicion.valor)
-                "February "-> medicionesAno.set(1,medicion.valor)
-                "March "-> medicionesAno.set(2,medicion.valor)
-                "April "-> medicionesAno.set(3,medicion.valor)
-                "May "-> medicionesAno.set(4,medicion.valor)
-                "June "-> medicionesAno.set(5,medicion.valor)
-                "July "-> medicionesAno.set(6,medicion.valor)
+                "February"-> medicionesAno.set(1,medicion.valor)
+                "March"-> medicionesAno.set(2,medicion.valor)
+                "April"-> medicionesAno.set(3,medicion.valor)
+                "May"-> medicionesAno.set(4,medicion.valor)
+                "June"-> medicionesAno.set(5,medicion.valor)
+                "July"-> medicionesAno.set(6,medicion.valor)
                 "August"-> medicionesAno.set(7,medicion.valor)
-                "September "-> medicionesAno.set(8,medicion.valor)
-                "October "-> medicionesAno.set(9,medicion.valor)
-                "November "-> medicionesAno.set(10,medicion.valor)
-                "December "-> medicionesAno.set(11,medicion.valor)
+                "September"-> medicionesAno.set(8,medicion.valor)
+                "October"-> medicionesAno.set(9,medicion.valor)
+                "November"-> medicionesAno.set(10,medicion.valor)
+                "December"-> medicionesAno.set(11,medicion.valor)
                 else ->{
                     println("No sirve")}
             }
@@ -257,11 +257,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(12.0, "D")
         )
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 13.0, 165.0, 191.0)
-            .setAxes(0.0, 167.0)
+            .setWorldCoordinates(-2.0, 13.0, -3.0, 20.0)
+            .setAxes(0.0, 0.0)
             .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
-            .addFunction({ x -> 170.0 }, Color.GREEN)
+            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            //.addFunction({ x -> 170.0 }, Color.GREEN)
             .addLineGraph(points, Color.RED)
             .build()
 
@@ -274,7 +274,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun llenarGraficoMes(mediciones:Collection<Medicion>){
 
-        val medicionesMes= arrayOf(1.0,1.0,1.0,1.0)
+        val medicionesMes= arrayOf(0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
             when(medicion.metrica.split(" ").get(0)){
@@ -302,11 +302,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(10.0, "S4")
         )
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 11.0, 165.0, 191.0)
-            .setAxes(0.0, 167.0)
+            .setWorldCoordinates(-2.0, 11.0, -3.0, 20.0)
+            .setAxes(0.0, 0.0)
             .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(170.0, 175.0, 180.0, 185.0, 190.0))
-            .addFunction({ x -> 170.0 }, Color.GREEN)
+            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            //.addFunction({ x -> 170.0 }, Color.GREEN)
             .addLineGraph(points, Color.RED)
             .build()
 
