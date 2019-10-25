@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar)
+        var agregarProb= findViewById<Button>(R.id.button3);
+        agregarProb.setOnClickListener {
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent);
+        }
+
         /*
         var prob= findViewById<Button>(R.id.prueba);
         prueba.setOnClickListener {
