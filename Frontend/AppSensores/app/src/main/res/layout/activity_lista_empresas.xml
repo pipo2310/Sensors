@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.lista.CrearEmpresa">
+    tools:context=".activities.CrearEmpresa">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tolbarLy"
@@ -41,33 +41,24 @@
                     app:layout_constraintTop_toTopOf="@+id/toolbar" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/crearEmpresa"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@drawable/boton"
-            android:layout_width="149dp"
-            android:layout_height="50dp" android:layout_marginTop="76dp"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:text="Crear Empresa" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.966" app:layout_constraintStart_toStartOf="@+id/tituloE"
-            app:layout_constraintTop_toTopOf="@+id/tolbarLy"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             android:id="@+id/dataLy"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/buttonLy"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tolbarLy">
 
                 <ScrollView
                     android:id="@+id/listaEmpresas"
-                    android:layout_width="match_parent"
+                    android:layout_width="350dp"
                     android:layout_height="match_parent"
-                    app:layout_constraintRight_toRightOf="parent">
+                    android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="0dp">
 
 
                         <TableLayout
@@ -78,4 +69,26 @@
                 </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonLy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tolbarLy">
+                <Button
+                    android:id="@+id/crearEmpresa"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="149dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/boton" android:text="Crear Empresa"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

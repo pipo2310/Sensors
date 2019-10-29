@@ -1,4 +1,4 @@
-package com.example.appsensores.activities.lista
+package com.example.appsensores.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

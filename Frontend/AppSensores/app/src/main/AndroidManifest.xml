@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.lista.CrearEmpresa"></activity>
+        <activity android:name=".activities.CrearEmpresa"></activity>
         <activity android:name=".activities.ListaEmpresas"></activity>
         <activity android:name=".activities.ModificarSensores"></activity>
         <activity android:name=".activities.CrearSensores"></activity>
