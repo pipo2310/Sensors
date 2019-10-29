@@ -27,6 +27,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DateFormat
+import java.util.*
 
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
@@ -206,56 +208,77 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun llenarGraficoAno(mediciones:Collection<Medicion>) {
         val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
+        val annos= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
             when(medicion.metrica.split(" ").get(0)){
-                "January"-> medicionesAno.set(0,medicion.valor)
-                "February"-> medicionesAno.set(1,medicion.valor)
-                "March"-> medicionesAno.set(2,medicion.valor)
-                "April"-> medicionesAno.set(3,medicion.valor)
-                "May"-> medicionesAno.set(4,medicion.valor)
-                "June"-> medicionesAno.set(5,medicion.valor)
-                "July"-> medicionesAno.set(6,medicion.valor)
-                "August"-> medicionesAno.set(7,medicion.valor)
-                "September"-> medicionesAno.set(8,medicion.valor)
-                "October"-> medicionesAno.set(9,medicion.valor)
-                "November"-> medicionesAno.set(10,medicion.valor)
-                "December"-> medicionesAno.set(11,medicion.valor)
+                "January"-> {
+                    medicionesAno.set(0,medicion.valor)
+                    annos.set(0,medicion.anno)
+                }
+                "February"-> {
+                    medicionesAno.set(1,medicion.valor)
+                    annos.set(1,medicion.anno)
+                }
+                "March"-> {
+                    medicionesAno.set(2,medicion.valor)
+                    annos.set(2,medicion.anno)}
+                "April"-> {
+                    medicionesAno.set(3,medicion.valor)
+                    annos.set(3,medicion.anno)}
+                "May"-> {
+                    medicionesAno.set(4,medicion.valor)
+                    annos.set(4,medicion.anno)}
+                "June"-> {
+                    medicionesAno.set(5,medicion.valor)
+                    annos.set(5,medicion.anno)}
+                "July"-> {
+                    medicionesAno.set(6,medicion.valor)
+                    annos.set(6,medicion.anno)}
+                "August"->{
+                    medicionesAno.set(7,medicion.valor)
+                    annos.set(7,medicion.anno)}
+                "September"-> {
+                    medicionesAno.set(8,medicion.valor)
+                    annos.set(8,medicion.anno)}
+                "October"->{
+                    medicionesAno.set(9,medicion.valor)
+                    annos.set(9,medicion.anno)}
+                "November"-> {
+                    medicionesAno.set(10,medicion.valor)
+                    annos.set(10,medicion.anno)}
+                "December"->{
+                    medicionesAno.set(11,medicion.valor)
+                    annos.set(11,medicion.anno)}
                 else ->{
                     println("No sirve")}
             }
 
+
+
+        }
+
+        val listaDeMeses = arrayOf("E","F","M","A","M","J","J","A","S","O","N","D")
+        var contador = ( Calendar.getInstance().get(Calendar.MONTH) ) + 1
+        var i = 0
+
+        var points = arrayListOf<Point>()
+        var xLabels = arrayListOf<Label>()
+
+        while(i < 12){
+
+            if(contador == 12){
+                contador = 0
+            }
+
+            points.add( Point((i+1).toDouble(), medicionesAno.get(contador)) )
+            xLabels.add( Label ( (i+1).toDouble(), listaDeMeses.get(contador) ) )
+
+            contador++
+            i++
         }
 
 
-        val points = arrayOf(
-            Point(1.0, medicionesAno.get(0)),
-            Point(2.0, medicionesAno.get(1)),
-            Point(3.0, medicionesAno.get(2)),
-            Point(4.0, medicionesAno.get(3)),
-            Point(5.0, medicionesAno.get(4)),
-            Point(6.0, medicionesAno.get(5)),
-            Point(7.0, medicionesAno.get(6)),
-            Point(8.0, medicionesAno.get(7)),
-            Point(9.0, medicionesAno.get(8)),
-            Point(10.0, medicionesAno.get(9)),
-            Point(11.0, medicionesAno.get(10)),
-            Point(12.0, medicionesAno.get(11))
-        )
-        val xLabels = arrayOf(
-            Label(1.0, "E"),
-            Label(2.0, "F"),
-            Label(3.0, "M"),
-            Label(4.0, "A"),
-            Label(5.0, "M"),
-            Label(6.0, "J"),
-            Label(7.0, "J"),
-            Label(8.0, "A"),
-            Label(9.0, "S"),
-            Label(10.0, "O"),
-            Label(11.0, "N"),
-            Label(12.0, "D")
-        )
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 13.0, -3.0, 20.0)
             .setAxes(0.0, 0.0)
@@ -338,33 +361,37 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         }
 
+        val listaDeDias = arrayOf("L","K","M","J","V","S","D")
+        var contador = ( Calendar.getInstance().get(Calendar.DAY_OF_WEEK) ) - 1
+        var i = 0
+        var ticks = 1
 
-        val points = arrayOf(
+        var pointsDays = arrayListOf<Point>()
+        var xLabelsDays = arrayListOf<Label>()
 
-            Point(1.0, medicionesSemana.get(0)),
-            Point(3.0, medicionesSemana.get(1)),
-            Point(5.0, medicionesSemana.get(2)),
-            Point(7.0, medicionesSemana.get(3)),
-            Point(9.0, medicionesSemana.get(4)),
-            Point(11.0, medicionesSemana.get(5)),
-            Point(13.0, medicionesSemana.get(6))
-        )
-        val xLabels = arrayOf(
-            Label(1.0, "L"),
-            Label(3.0, "K"),
-            Label(5.0, "M"),
-            Label(7.0, "J"),
-            Label(9.0, "V"),
-            Label(11.0, "S"),
-            Label(13.0, "D")
-        )
+        while(i < 7){
+
+            if(contador == 7){
+                contador = 0
+            }
+
+            pointsDays.add( Point((ticks).toDouble(), medicionesSemana.get(contador)) )
+            xLabelsDays.add( Label ( (ticks).toDouble(), listaDeDias.get(contador) ) )
+
+            contador++
+            i++
+            ticks+=2
+        }
+
+
+
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 14.0, -3.0, 20.0)
             .setAxes(0.0, 0.0)
-            .setXLabels(xLabels)
+            .setXLabels(xLabelsDays)
             .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
             //.addFunction({ x -> 2.0 }, Color.GREEN)
-            .addLineGraph(points, Color.RED)
+            .addLineGraph(pointsDays, Color.RED)
             .build()
 
         val graphView = findViewById<GraphView>(R.id.graph_view)

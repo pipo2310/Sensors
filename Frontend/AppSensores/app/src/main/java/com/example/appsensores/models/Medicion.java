@@ -10,6 +10,9 @@ public class Medicion {
     @Expose
     private double valor;
 
+    @Expose
+    private double anno;
+
     public String getMetrica() {
         return metrica;
     }
@@ -26,5 +29,11 @@ public class Medicion {
         this.valor = valor;
     }
 
+    public double getAnno() {
+        return anno;
+    }
 
+    public void setAnno(double anno) {
+        this.anno = anno;
+    }
 }

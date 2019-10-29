@@ -1,8 +1,5 @@
 package com.sensores.springboot.backend.model.entity.real;
 
-import com.sensores.springboot.backend.model.entity.foo.Medicion;
-import org.hibernate.annotations.SQLDelete;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,15 +9,16 @@ import java.io.Serializable;
         classes = {
                 @ConstructorResult(targetClass = Medicion.class,
                 columns = {
+                        @ColumnResult(name = "year"),
                         @ColumnResult(name = "Month"),
-                        @ColumnResult(name = "Promedio")
+                        @ColumnResult(name = "Promedio"),
                 })
         }
 )
 
-@NamedNativeQuery(name = "Sensores_Logs.obtenerMeses" , query = "select to_char(date_time, 'Month' ) as Month,avg(sl.valor) as Promedio " +
+@NamedNativeQuery(name = "Sensores_Logs.obtenerMeses" , query = "select EXTRACT(YEAR FROM date_time) as year,to_char(date_time, 'Month' ) as Month,avg(sl.valor) as Promedio " +
         "        from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk" +
-        "        where date_trunc('day', now() - interval '1 year') <= sl.date_time AND s.tipo = :tipo GROUP BY Month", resultSetMapping = "mapeoMeses")
+        "        where date_trunc('day', now() - interval '1 year') <= sl.date_time AND s.tipo = :tipo GROUP BY year,Month", resultSetMapping = "mapeoMeses")
 
 
 
@@ -28,28 +26,30 @@ import java.io.Serializable;
         classes = {
                 @ConstructorResult(targetClass = Medicion.class,
                         columns = {
+                                @ColumnResult(name = "year"),
                                 @ColumnResult(name = "Week"),
                                 @ColumnResult(name = "Promedio")
                         })
         })
-@NamedNativeQuery(name = "Sensores_Logs.obtenerSemanas", query = "select  to_char(date_time , 'Week' ) as Week,avg(sl.valor) as Promedio\n" +
+@NamedNativeQuery(name = "Sensores_Logs.obtenerSemanas", query = "select EXTRACT(YEAR FROM date_time) as year, to_char(date_time , 'Week' ) as Week,avg(sl.valor) as Promedio\n" +
         "        from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk\n" +
-        "        where date_trunc('day', now() - interval '1 month') <= sl.date_time\n" +
-        "        AND s.tipo = :tipo  GROUP BY Week" , resultSetMapping = "mapeoSemanas")
+        "        where date_trunc('day', now() - interval '1 month') <= sl.date_time AND sl.date_time <= date_trunc('day', now())" +
+        "        AND s.tipo = :tipo  GROUP BY year, Week" , resultSetMapping = "mapeoSemanas")
 
 
 @SqlResultSetMapping( name = "mapeoDias",
         classes = {
                 @ConstructorResult(targetClass = Medicion.class,
                         columns = {
+                                @ColumnResult(name = "year"),
                                 @ColumnResult(name = "Day"),
                                 @ColumnResult(name = "Promedio")
                         })
         })
-@NamedNativeQuery(name = "Sensores_Logs.obtenerDias", query = "select  to_char(\"date_time\" , 'Day' ) as Day,avg(sl.valor) as Promedio" +
+@NamedNativeQuery(name = "Sensores_Logs.obtenerDias", query = "select EXTRACT(YEAR FROM date_time) as year, to_char(\"date_time\" , 'Day' ) as Day,avg(sl.valor) as Promedio" +
         "        from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk" +
-        "        where date_trunc('day', now() - interval '1 week') <= sl.date_time" +
-        "        AND s.tipo = :tipo  GROUP BY day" , resultSetMapping = "mapeoDias")
+        "        where date_trunc('Hour', now() - interval '1 week') <= sl.date_time AND sl.date_time <= date_trunc('Hour', now())" +
+        "        AND s.tipo = :tipo  GROUP BY year, day" , resultSetMapping = "mapeoDias")
 
 
 
