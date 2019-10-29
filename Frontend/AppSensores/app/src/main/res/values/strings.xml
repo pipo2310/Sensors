@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">Sensores</string>
+    <string-array name="unidades_agua">
+        <item>/litro</item>
+    </string-array>
+    <string-array name="unidades_elec">
+        <item>/kilowatt-hora</item>
+    </string-array>
+    <string-array name="unidades_gas">
+        <item>/psi</item>
+    </string-array>
 </resources>

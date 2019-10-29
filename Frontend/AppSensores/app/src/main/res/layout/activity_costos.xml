@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".activities.Costos">
+
+
+    <EditText
+        android:id="@+id/costo_gas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
+        android:ems="10"
+        android:hint="costo en colones"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/unidad_gas"
+        app:layout_constraintEnd_toStartOf="@+id/unidad_gas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/unidad_gas" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#3B77D2"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="664dp"
+        android:background="#7BD75A"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+    <Button
+        android:id="@+id/btn_aceptar"
+        android:layout_width="124dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginLeft="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:layout_marginBottom="87dp"
+        android:background="#7BD451"
+        android:text="Aceptar"
+        android:onClick="sendFeedback"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/unidad_agua"
+        app:layout_constraintTop_toBottomOf="@+id/unidad_electricidad" />
+
+    <TextView
+        android:id="@+id/Agua"
+        android:layout_width="72dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginBottom="20dp"
+        android:text="Agua"
+        android:textColor="#0A0A0A"
+        android:textSize="22sp"
+        app:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/unidad_agua"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+    <Spinner
+        android:id="@+id/unidad_agua"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:layout_marginBottom="41dp"
+        android:entries="@array/unidades_agua"
+        app:layout_constraintBottom_toTopOf="@+id/Gas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/costo_agua"
+        app:layout_constraintTop_toBottomOf="@+id/Agua" />
+
+    <EditText
+        android:id="@+id/costo_agua"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:ems="10"
+        android:hint="costo en colones"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/unidad_agua"
+        app:layout_constraintEnd_toStartOf="@+id/unidad_agua"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/unidad_agua" />
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Modificar Costos"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Electricidad"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="17dp"
+        android:text="Electricidad"
+        android:textColor="#0A0A0A"
+        android:textSize="22sp"
+        app:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/unidad_electricidad"
+        app:layout_constraintEnd_toEndOf="@+id/costo_elec"
+        app:layout_constraintStart_toStartOf="@+id/costo_elec"
+        app:layout_constraintTop_toBottomOf="@+id/unidad_gas" />
+
+    <EditText
+        android:id="@+id/costo_elec"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginRight="38dp"
+        android:ems="10"
+        android:hint="costo en colones"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/unidad_electricidad"
+        app:layout_constraintEnd_toStartOf="@+id/unidad_electricidad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/unidad_electricidad" />
+
+    <TextView
+        android:id="@+id/Gas"
+        android:layout_width="55dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginBottom="21dp"
+        android:text="Gas"
+        android:textColor="#0A0A0A"
+        android:textSize="22sp"
+        app:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/unidad_gas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unidad_agua" />
+
+    <Spinner
+        android:id="@+id/unidad_electricidad"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginRight="69dp"
+        android:layout_marginBottom="90dp"
+        android:entries="@array/unidades_elec"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/btn_aceptar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/costo_elec"
+        app:layout_constraintTop_toBottomOf="@+id/Electricidad" />
+
+    <Spinner
+        android:id="@+id/unidad_gas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginRight="69dp"
+        android:layout_marginBottom="46dp"
+        android:entries="@array/unidades_gas"
+        app:layout_constraintBottom_toTopOf="@+id/Electricidad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/costo_gas"
+        app:layout_constraintTop_toBottomOf="@+id/Gas" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
