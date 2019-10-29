@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import java.util.List;
 
 public interface CuentasService {
-    @GET("listar_cuentas")
+    @GET("cuentas")
     Call<List<Cuenta>> getCuentas();
 }
