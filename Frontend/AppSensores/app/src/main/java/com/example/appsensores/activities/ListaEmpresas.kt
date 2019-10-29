@@ -51,6 +51,7 @@ class ListaEmpresas : AppCompatActivity() {
             override fun onResponse(call:Call<List<Cuenta>>, response: Response<List<Cuenta>>) {
                 if (!response.isSuccessful())
                 {
+                    mostrarMensaje("*Error al contactar con la base de datos*")
                     return
                 }
                 listaEmpresas = response.body()
@@ -66,7 +67,7 @@ class ListaEmpresas : AppCompatActivity() {
             }
             override fun onFailure(call:Call<List<Cuenta>>, t:Throwable) {
                 // Mostrar Error
-                mostrarMensaje("Error en al contactar con la base de datos")
+                mostrarMensaje("Error al contactar con la base de datos")
             }
         })
 
@@ -151,7 +152,6 @@ class ListaEmpresas : AppCompatActivity() {
 
         // Se crea la fila
         var fila = TableRow(this)
-        fila.setBackgroundColor(Color.parseColor("#000000"))
 
         // Se crea el textView para el mensaje
         var mensaje = TextView(this)
@@ -161,7 +161,7 @@ class ListaEmpresas : AppCompatActivity() {
         mensaje.setTypeface(null, Typeface.BOLD)
 
         // Se agrega el textView a la fila
-        fila.addView(mensaje, 800, 80)
+        fila.addView(mensaje, 800, 200)
 
         // Se muestra mensaje en la tabla
         tabla.addView(fila)
