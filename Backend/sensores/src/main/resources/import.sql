@@ -18,9 +18,9 @@ INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, email, usuario, nombr
 
 
 --Tabla Tipo Sensor
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global) VALUES (1, 'Gas', 12.3 , 19.5);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global) VALUES (2, 'Electricidad', 12.3 , 19.5);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global) VALUES (3, 'Agua', 12.3 , 19.5);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (1, 'Gas', 12.3 , 19.5, NULL);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (2, 'Electricidad', 12.3 , 19.5,NULL);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (3, 'Agua', 12.3 , 19.5,NULL);
 
 --TablaSensores
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('mg/m3', 1, 12.3 , 20.0, 1, 'Sensor de Gas 1');

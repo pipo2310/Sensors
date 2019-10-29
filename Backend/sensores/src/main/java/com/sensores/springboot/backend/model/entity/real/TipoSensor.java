@@ -25,8 +25,7 @@ public class TipoSensor {
     private double alerta_roja_global;
 
     @Column(name = "costo")
-    @Basic(optional = true)
-    private double costo;
+    private Double costo;
 
 
     public int getId_tipo() {
@@ -61,11 +60,11 @@ public class TipoSensor {
         this.alerta_roja_global = alerta_roja_global;
     }
 
-    public double getCosto() {
+    public Double getCosto() {
         return costo;
     }
 
-    public void setCosto(double costo) {
+    public void setCosto(Double costo) {
         this.costo = costo;
     }
 
