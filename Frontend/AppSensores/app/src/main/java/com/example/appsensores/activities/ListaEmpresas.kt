@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import com.example.appsensores.R
-import com.example.appsensores.activities.lista.CrearEmpresa
-import com.example.appsensores.activities.lista.CustomAdapter
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
 import retrofit2.Call
@@ -16,7 +14,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.appsensores.activities.lista.DataItem
 
 
 class ListaEmpresas : AppCompatActivity() {
@@ -78,6 +75,7 @@ class ListaEmpresas : AppCompatActivity() {
         // Se crea la fila
         var fila = TableRow(this)
 
+        /*
         // Se crea el textView para el encabezado de nombre de la empresa
         var nombreE = TextView(this)
         nombreE.text = "Nombre Empresa"
@@ -107,19 +105,24 @@ class ListaEmpresas : AppCompatActivity() {
 
         // Se agrega la fila a la tabla
         tabla.addView(fila)
+        */
 
         for (cuenta in listaEmpresas) {
             // Se crea la fila
             fila = TableRow(this)
 
+            val frame = FrameLayout(this)
+
             // Se crea el textView para el encabezado de Editar
+            var nombreE = TextView(this)
             nombreE = TextView(this)
             nombreE.text = cuenta.nombre
             nombreE.setTextSize(24.0f)
             nombreE.setPadding(50, 0, 0, 0)
             // Se agrega el textView a la fila
-            fila.addView(nombreE, 200, 100)
+            frame.addView(nombreE, tabla.layoutParams.width, 100)
 
+            /*
             // Se crea el boton de editar
             val editarBtn = ImageButton(this)
             editarBtn.setBackgroundColor(Color.parseColor("#00ff0000"))
@@ -128,7 +131,7 @@ class ListaEmpresas : AppCompatActivity() {
             }
             editarBtn.setImageResource(R.drawable.edit32)
             // Se agrega el boton de editar a la fila
-            fila.addView(editarBtn, 100, 100)
+            fila.addView(editarBtn, 250, 100)
 
             // Se crea el boton de eliminar
             val borrarBtn = ImageButton(this)
@@ -138,7 +141,11 @@ class ListaEmpresas : AppCompatActivity() {
             }
             borrarBtn.setImageResource(R.drawable.delete32)
             // Se agrega el boton de eliminar a la fila
-            fila.addView(borrarBtn, 100, 100)
+            fila.addView(borrarBtn, 250, 100)
+            */
+
+            // Se agrega el frame a la fila
+            fila.addView(frame)
 
             // Se agrega la fila a la tabla
             tabla.addView(fila)
