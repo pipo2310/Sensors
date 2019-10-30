@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }else if (item.itemId == R.id.empresas)
         {
-            intent = Intent(this, ListaEmpresas::class.java)
+            intent = Intent(this, ListaDeEmpresas::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
         }else{
