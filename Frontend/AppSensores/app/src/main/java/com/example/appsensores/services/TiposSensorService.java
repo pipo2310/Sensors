@@ -17,11 +17,11 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface TiposSensorService {
-    @GET("tiposensor")
+    @GET("tipo_sensor")
     Call<List<TipoSensor>> getTiposSensor();
 
     @FormUrlEncoded
-    @PUT("tiposensor/update")
+    @PUT("tipo_sensor/update")
     Call<List<TipoSensor>> putTiposSensor();
 
 }

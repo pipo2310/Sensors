@@ -1,5 +1,6 @@
 package com.example.appsensores.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -10,6 +11,7 @@ import com.example.appsensores.models.Medicion
 import com.example.appsensores.models.TipoSensor
 import com.example.appsensores.services.MedicionesService
 import com.example.appsensores.services.TiposSensorService
+import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,18 +30,12 @@ class Costos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.appsensores.R.layout.activity_costos)
+        setSupportActionBar(toolbar)
+
+        intent = Intent(this, Costos::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
         getData()
-
-        costo_agua = tipos_sensores[2].costo
-        costo_gas = tipos_sensores[0].costo
-        costo_elec = tipos_sensores[1].costo
-
-
-        findViewById<EditText>(R.id.costo_agua).setText(costo_agua.toString())
-        findViewById<EditText>(R.id.costo_elec).setText(costo_elec.toString())
-        findViewById<EditText>(R.id.costo_gas).setText(costo_gas.toString())
-
     }
 
     fun sendFeedback(button: View) {
@@ -74,6 +70,13 @@ class Costos : AppCompatActivity() {
                     return
                 }
                 tipos_sensores = response.body()
+                costo_agua = tipos_sensores[2].costo
+                costo_gas = tipos_sensores[0].costo
+                costo_elec = tipos_sensores[1].costo
+                findViewById<EditText>(R.id.costo_agua).setText(costo_agua.toString())
+                findViewById<EditText>(R.id.costo_elec).setText(costo_elec.toString())
+                findViewById<EditText>(R.id.costo_gas).setText(costo_gas.toString())
+
 
             }
 
