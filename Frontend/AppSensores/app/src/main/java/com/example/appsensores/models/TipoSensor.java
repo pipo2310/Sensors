@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class TipoSensor {
 
-    @SerializedName("id_tipo")
+    @SerializedName("id")
     private Integer id_tipo;
     @SerializedName("alerta_amarilla_global")
     private Float alerta_amarilla_global;

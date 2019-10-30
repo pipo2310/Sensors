@@ -15,13 +15,14 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface TiposSensorService {
     @GET("tipo_sensor")
     Call<List<TipoSensor>> getTiposSensor();
 
-    @FormUrlEncoded
-    @PUT("tipo_sensor/update")
-    Call<List<TipoSensor>> putTiposSensor();
+    @PUT("tipo_sensor/{id}")
+    Call<TipoSensor> updateTipoSensor(@Path("id") Integer id, @Body TipoSensor tiposensor);
+
 
 }

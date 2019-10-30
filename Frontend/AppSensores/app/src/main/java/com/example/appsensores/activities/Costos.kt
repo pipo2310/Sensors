@@ -25,30 +25,45 @@ class Costos : AppCompatActivity() {
     var costo_agua = 0.0F
     var costo_elec = 0.0F
     var costo_gas = 0.0F
-
+    var index_agua = 0
+    var index_elec = 0
+    var index_gas = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.appsensores.R.layout.activity_costos)
+        setContentView(R.layout.activity_costos)
         setSupportActionBar(toolbar)
 
         intent = Intent(this, Costos::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
         getData()
+
+
     }
 
     fun sendFeedback(button: View) {
-        val costo_aguaField = findViewById(com.example.appsensores.R.id.costo_agua) as EditText
+        val costo_aguaField = findViewById(R.id.costo_agua) as EditText
         costo_agua = costo_aguaField.text.toString().toFloat()
-        val costo_elecField = findViewById(com.example.appsensores.R.id.costo_elec) as EditText
+        val costo_elecField = findViewById(R.id.costo_elec) as EditText
         costo_elec = costo_elecField.text.toString().toFloat()
-        val costo_gasField = findViewById(com.example.appsensores.R.id.costo_gas) as EditText
+        val costo_gasField = findViewById(R.id.costo_gas) as EditText
         costo_gas = costo_gasField.text.toString().toFloat()
 
-        putData()
+        if (tipos_sensores[index_agua].costo != costo_agua){
+            tipos_sensores[index_agua].costo = costo_agua
+            putData(tipos_sensores[index_agua],tipos_sensores[index_agua].id_tipo)
+        }
 
-        
+        if (tipos_sensores[index_gas].costo != costo_gas){
+            tipos_sensores[index_gas].costo = costo_gas
+            putData(tipos_sensores[index_gas],tipos_sensores[index_gas].id_tipo)
+        }
+
+        if (tipos_sensores[index_elec].costo != costo_elec){
+            tipos_sensores[index_elec].costo = costo_elec
+            putData(tipos_sensores[index_elec],tipos_sensores[index_elec].id_tipo)
+        }
 
     }
 
@@ -70,13 +85,25 @@ class Costos : AppCompatActivity() {
                     return
                 }
                 tipos_sensores = response.body()
-                costo_agua = tipos_sensores[2].costo
-                costo_gas = tipos_sensores[0].costo
-                costo_elec = tipos_sensores[1].costo
-                findViewById<EditText>(R.id.costo_agua).setText(costo_agua.toString())
-                findViewById<EditText>(R.id.costo_elec).setText(costo_elec.toString())
-                findViewById<EditText>(R.id.costo_gas).setText(costo_gas.toString())
 
+                index_agua = tipos_sensores.firstIndexOrNull { it.nombre == "Agua"}
+                index_elec = tipos_sensores.firstIndexOrNull { it.nombre == "Electricidad"}
+                index_gas = tipos_sensores.firstIndexOrNull { it.nombre == "Gas"}
+
+                if (tipos_sensores[index_agua].costo != null){
+                    costo_agua = tipos_sensores[index_agua].costo
+                    findViewById<EditText>(R.id.costo_agua).setText(costo_agua.toString())
+                } else findViewById<EditText>(R.id.costo_agua).setText("0")
+
+                if (tipos_sensores[index_elec].costo != null){
+                    costo_elec = tipos_sensores[index_elec].costo
+                    findViewById<EditText>(R.id.costo_elec).setText(costo_elec.toString())
+                } else findViewById<EditText>(R.id.costo_elec).setText("0")
+
+                if (tipos_sensores[index_gas].costo != null){
+                    costo_gas = tipos_sensores[index_gas].costo
+                    findViewById<EditText>(R.id.costo_gas).setText(costo_gas.toString())
+                } else findViewById<EditText>(R.id.costo_gas).setText("0")
 
             }
 
@@ -87,7 +114,7 @@ class Costos : AppCompatActivity() {
 
     }
 
-    private fun putData(){
+    private fun putData(tipo_sensor: TipoSensor, id: Int){
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -95,22 +122,26 @@ class Costos : AppCompatActivity() {
 
         val tiposensorService: TiposSensorService = retrofit.create(TiposSensorService::class.java)
 
-        val call: Call<List<TipoSensor>> = tiposensorService.putTiposSensor()
+        val call: Call<TipoSensor> = tiposensorService.updateTipoSensor(id, tipo_sensor)
 
-        call.enqueue(object: Callback<List<TipoSensor>> {
-            override fun onResponse(call: Call<List<TipoSensor>>, response: Response<List<TipoSensor>>) {
+        call.enqueue(object: Callback<TipoSensor> {
+            override fun onResponse(call: Call<TipoSensor>, response: Response<TipoSensor>) {
                 if (!response.isSuccessful())
                 {
                     return
                 }
-
             }
 
-            override fun onFailure(call: Call<List<TipoSensor>>?, t: Throwable?) {
-
+            override fun onFailure(call: Call<TipoSensor>?, t: Throwable?) {
             }
         })
 
+    }
+
+    private fun <T> Iterable<T>.firstIndexOrNull(predicate: (T) -> Boolean): Int {
+        return this.mapIndexed { index, item -> Pair(index, item) }
+            .first() { predicate(it.second) }
+            .first
     }
 
 
