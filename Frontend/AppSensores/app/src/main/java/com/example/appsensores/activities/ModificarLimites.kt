@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
@@ -97,6 +98,11 @@ class ModificarLimites : AppCompatActivity() {
             startActivity(Intent(this, IniciarSesion::class.java))
         }else if(item.itemId == R.id.historicos){
             intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }else if (item.itemId == R.id.empresas)
+        {
+            intent = Intent(this, ListaDeEmpresas::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
         }
         else{

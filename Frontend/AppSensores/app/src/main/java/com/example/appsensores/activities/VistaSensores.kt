@@ -109,9 +109,6 @@ class VistaSensores : AppCompatActivity() {
             val actualizar = ImageButton(this)
             val nombreSensor = TextView(this)
 
-
-
-
             nombreSensor.text="" + sensor.nombre
             nombreSensor.setPadding(50,0,0,0)
             nombreSensor.gravity= Gravity.LEFT or Gravity.CENTER_VERTICAL
@@ -262,6 +259,11 @@ class VistaSensores : AppCompatActivity() {
             startActivity(Intent(this, IniciarSesion::class.java))
         }else if(item.itemId == R.id.historicos){
             intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }else if (item.itemId == R.id.empresas)
+        {
+            intent = Intent(this, ListaDeEmpresas::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
         }
         else{

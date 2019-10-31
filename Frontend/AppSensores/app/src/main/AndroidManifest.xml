@@ -20,6 +20,14 @@
         <activity android:name=".activities.VistaSensores" />
         <activity android:name=".activities.ModificarLimites" />
         <activity android:name=".activities.Semaforos" />
+        <activity android:name=".activities.DetallesEmpresa"></activity>
+        <activity android:name=".activities.ModificarEmpresa" />
+        <activity
+            android:name=".activities.ListaDeEmpresas"
+            android:label="@string/title_activity_lista_de_empresas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.CrearEmpresa" />
+        <activity android:name=".activities.ListaEmpresas" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

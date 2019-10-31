@@ -1,4 +1,5 @@
 <resources>
+    <string name="title_activity_lista_de_empresas">Lista De Empresas</string>
     <string name="app_name">Sensores</string>
     <string-array name="unidades_agua">
         <item>/litro</item>

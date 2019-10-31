@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import android.widget.Button
 import com.example.appsensores.R
 import com.google.firebase.auth.FirebaseAuth
@@ -62,30 +63,7 @@ class MainActivity : AppCompatActivity() {
         //Button agregarProb = clearFindViewByIdCache(R.id.button);
 */
     }
-/*
-    override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
-
-        var unit=findViewById<EditText>(R.id.editText5);
-        if (position==0){
-            unit.setText("mL/s")
-            tipo="mL/s"
-        }else if (position==1){
-            unit.setText("mg/m3")
-            tipo="mg/m3"
-        }else if (position==2){
-            unit.setText("Ws")
-            tipo="Ws"
-        }
-        //Con position se sabe cual selecciono
-        //if es 0 es litros si es 1 watts y si 2 es lo que sea que se mide el gas jeje
-        //textView_msg!!.text = "Selected : "+list_of_items[position]
-    }
-
-    override fun onNothingSelected(arg0: AdapterView<*>) {
-
-    }
-*/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
@@ -116,8 +94,12 @@ class MainActivity : AppCompatActivity() {
         }else if(item.itemId == R.id.historicos){
             intent = Intent(this, Historicos::class.java)
             startActivity(intent)
-        }
-        else{
+        }else if (item.itemId == R.id.empresas)
+        {
+            intent = Intent(this, ListaDeEmpresas::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else{
             super.onOptionsItemSelected(item)
         }
         return true

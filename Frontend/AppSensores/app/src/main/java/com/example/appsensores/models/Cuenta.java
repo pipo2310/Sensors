@@ -1,50 +1,45 @@
-package com.sensores.springboot.backend.model.entity.real;
+package com.example.appsensores.models;
 
-import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@Entity
-@Table(name = "cuentas" , schema = "public")
-public class Cuentas {
+public class Cuenta {
+    @Expose
+    private Long cuentasPk;
 
-    @Id
-    @Column(name = "cuentas_pk")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long cuentasPk;
-
-    @Column(name = "es_admin")
+    @Expose
     private boolean esAdmin;
 
-    @Column(name = "telefono")
-    @Basic(optional = true)
+    @Expose
     private String telefono;
 
-    @Column(name = "clave")
+    @Expose
     private String clave;
 
-    @Column(name = "seccion")
+    @Expose
     private String seccion;
 
-    @Column(name = "email")
+    @Expose
     private String email;
 
-    @Column(name = "usuario")
+    @Expose
     private String usuario;
 
-    @Column(name = "nombre")
+    @Expose
     private String nombre;
 
-    @Column(name = "codigo")
-    @Basic(optional = true)
+    @Expose
     private String codigo;
 
-    public long getCuentasPk() {
+    @SerializedName("body")
+    @Expose
+    private String text;
+
+    public Long getCuentasPk() {
         return cuentasPk;
     }
 
-    public void setCuentasPk(long cuentasPk) {
+    public void setCuentasPk(Long cuentasPk) {
         this.cuentasPk = cuentasPk;
     }
 
@@ -104,6 +99,14 @@ public class Cuentas {
         this.codigo = codigo;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public String getSeccion() {
         return seccion;
     }
@@ -111,7 +114,4 @@ public class Cuentas {
     public void setSeccion(String seccion) {
         this.seccion = seccion;
     }
-
-    @OneToMany(mappedBy = "cuentas")
-    private List<Sensores> sensoresList = new ArrayList<>();
 }

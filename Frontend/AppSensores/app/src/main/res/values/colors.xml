@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#1074C7</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorAzul">#3B77D2</color>>
@@ -9,4 +9,5 @@
     <color name="colorVerdeMedio">#2B8402</color>>
     <color name="colorVerdeOscuro">#2D8603</color>>
     <color name="fondo">#F2F2F2</color>
+    <color name="navbar">#1074C7</color>
 </resources>
