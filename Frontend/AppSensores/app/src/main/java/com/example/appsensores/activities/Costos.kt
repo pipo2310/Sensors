@@ -34,6 +34,7 @@ class Costos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_costos)
+        toolbar.title = "Modificar Costos"
         setSupportActionBar(toolbar)
 
         intent = Intent(this, Costos::class.java)
