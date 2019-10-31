@@ -30,8 +30,8 @@ stages:
     - unzip -qq /tmp/sdk-tools-linux.zip -d Frontend/AppSensores/.android
 
     # Set up environment variables
-    - export ANDROID_HOME=$PWD/Frontend/AppSensores/.android
-    - export PATH=$PATH:$PWD/Frontend/AppSensores/.android/platform-tools/
+    - export ANDROID_HOME=$PWD/.android
+    - export PATH=$PATH:$PWD/.android/platform-tools/
 
     # Install platform tools and Android SDK for the compile target
     - echo y | Frontend/AppSensores/.android/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
