@@ -18,7 +18,7 @@ stages:
       - .android/
 
   before_script:
-    - cd Frontend/AppSensores/
+    - cd Frontend/AppSensores
     # Extract the SDK version that we're building against
     - export ANDROID_COMPILE_SDK=`egrep '^[[:blank:]]+compileSdkVersion'  app/build.gradle | awk '{print $2}'`
 
@@ -31,13 +31,13 @@ stages:
     - unzip /tmp/sdk-tools-linux.zip -d .android
 
     # Set up environment variables
-     - export ANDROID_HOME=$PWD/.android
-     - export PATH=$PATH:$PWD/.android/platform-tools/
+    - export ANDROID_HOME=$PWD/.android
+    - export PATH=$PATH:$PWD/.android/platform-tools/
 
     # Install platform tools and Android SDK for the compile target
     - echo y | .android/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
 
-    - chmod +x gradlew
+    - chmod +x ./gradlew
 
 build_debug:
   <<: *build_template_def
@@ -45,14 +45,14 @@ build_debug:
     - develop
 
   script:
-    - gradlew assembleDebug
+    - ./gradlew assembleDebug
 
 build_release:
   <<: *build_template_def
   only:
     - master
   script:
-    - gradlew assembleRelease
+    - ./gradlew assembleRelease
 
 ####################################################################################################
 # UNIT TESTING
