@@ -1,16 +1,16 @@
 image: openjdk:8-jdk
 
 stages:
-  - build
-  - test
-  - package
+  - buildFrontEnd
+  - testFrontEnd
+  - packageFrontEnd
 
 
 ####################################################################################################
-# BUILD
+# BUILD FRONTEND
 #
 .build_template: &build_template_def
-  stage: build
+  stage: buildFrontEnd
   artifacts:
     expire_in: 4 hours
     paths:
@@ -59,18 +59,19 @@ build_release:
 #
 
 unit_test:
-  stage: test
+  stage: testFrontEnd
   only:
     - master
     - develop
 
   before_script:
-    - export ANDROID_HOME=$PWD/Frontend/AppSensores/.android
-    - export PATH=$PATH:$PWD/Frontend/AppSensores/.android/platform-tools/
-    - chmod +x /Frontend/AppSensores/gradlew
+    - cd Frontend/AppSensores
+    - export ANDROID_HOME=$PWD/.android
+    - export PATH=$PATH:$PWD/.android/platform-tools/
+    - chmod +x gradlew
 
   script:
-    - /Frontend/AppSensores/gradlew test
+    - ./gradlew test
 
 
 ####################################################################################################
@@ -79,42 +80,43 @@ unit_test:
 
 .package_template: &package_template_def
   before_script:
+    - cd Frontend/AppSensores
     - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
     - export VERSION_CODE=`egrep '^[[:blank:]]+versionCode[[:blank:]]'  app/build.gradle | awk '{print $2}'`
     - mkdir -p deliverables
 
     # Store some information about the build
-    - touch /Frontend/AppSensores/deliverables/info.txt
-    - echo "Build date          $(date)"                >> /Frontend/AppSensores/deliverables/info.txt
-    - echo "App version name    ${VERSION_NAME}"        >> /Frontend/AppSensores/deliverables/info.txt
-    - echo "App version code    ${VERSION_CODE}"        >> /Frontend/AppSensores/deliverables/info.txt
-    - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> /Frontend/AppSensores/deliverables/info.txt
-    - echo "Git commit          ${CI_COMMIT_SHA}"       >> /Frontend/AppSensores/deliverables/info.txt
-    - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> /Frontend/AppSensores/deliverables/info.txt
+    - touch ./deliverables/info.txt
+    - echo "Build date          $(date)"                >> ./deliverables/info.txt
+    - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
+    - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
+    - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> ./deliverables/info.txt
+    - echo "Git commit          ${CI_COMMIT_SHA}"       >> ./deliverables/info.txt
+    - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> ./deliverables/info.txt
 
 
 package_develop:
   <<: *package_template_def
-  stage: package
+  stage: packageFrontEnd
   environment: Development
   only:
     - develop
   script:
-    - mv /Frontend/AppSensores/app/build/outputs/apk/debug/app-debug.apk /Frontend/AppSensores/deliverables/sensores-v$VERSION_NAME-$VERSION_CODE-debug.apk
+    - mv app/build/outputs/apk/debug/app-debug.apk ./deliverables/sensores-v$VERSION_NAME-$VERSION_CODE-debug.apk
   artifacts:
     expire_in: 3 days
     paths:
-      - Frontend/AppSensores/deliverables
+      - deliverables
 
 package_release:
   <<: *package_template_def
-  stage: package
+  stage: packageFrontEnd
   environment: Release
   only:
     - master
   script:
-    - mv Frontend/AppSensores/app/build/outputs/apk/reslease/app-release-unsigned.apk Frontend/AppSensores//deliverables/NameOfTheApp-v$VERSION_NAME-$VERSION_CODE-release.apk
+    - mv app/build/outputs/apk/release/app-release-unsigned.apk ./deliverables/sensores-v$VERSION_NAME-$VERSION_CODE-release.apk
   artifacts:
     expire_in: 4 weeks
     paths:
-      - Frontend/AppSensores/deliverables
+      - deliverables
