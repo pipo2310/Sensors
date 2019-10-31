@@ -36,7 +36,7 @@ stages:
     # Install platform tools and Android SDK for the compile target
     # - echo y | Frontend/AppSensores/.android/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
 
-    # - chmod +x Frontend/AppSensores/gradlew
+    - chmod +x Frontend/AppSensores/gradlew
 
 build_debug:
   <<: *build_template_def
