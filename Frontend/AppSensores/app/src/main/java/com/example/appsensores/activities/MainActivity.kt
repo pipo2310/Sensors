@@ -104,19 +104,16 @@ class MainActivity : AppCompatActivity() {
         if(item.itemId == R.id.sensores){
             intent = Intent(this, VistaSensores::class.java)
             startActivity(intent)
-            finish()
         }else if (item.itemId == R.id.semaforos)
         {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-            finish()
         }else if (item.itemId == R.id.costos)
         {
             intent = Intent(this, Costos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-            finish()
         }else if(item.itemId == R.id.cerrar_sesion){
             finishAffinity()
             setResult(R.id.cerrar_sesion)

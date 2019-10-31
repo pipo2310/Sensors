@@ -375,30 +375,6 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean{
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if(item.itemId == R.id.sensores){
-            intent = Intent(this, VistaSensores::class.java)
-            startActivity(intent)
-        }else if (item.itemId == R.id.semaforos)
-        {
-            intent = Intent(this, Semaforos::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            startActivity(intent)
-        }else{
-            super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
        if (arg0!!.id == R.id.spinner3) {
@@ -432,5 +408,38 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     override fun onNothingSelected(arg0: AdapterView<*>) {
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        if(item.itemId == R.id.sensores){
+            intent = Intent(this, VistaSensores::class.java)
+            startActivity(intent)
+        }else if (item.itemId == R.id.semaforos)
+        {
+            intent = Intent(this, Semaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if (item.itemId == R.id.costos)
+        {
+            intent = Intent(this, Costos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
+        }else{
+            super.onOptionsItemSelected(item)
+        }
+        return true
     }
 }

@@ -249,8 +249,17 @@ class VistaSensores : AppCompatActivity() {
         }else if (item.itemId == R.id.semaforos)
         {
             intent = Intent(this, Semaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-
+        }else if (item.itemId == R.id.costos)
+        {
+            intent = Intent(this, Costos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
         }else{
             super.onOptionsItemSelected(item)
         }

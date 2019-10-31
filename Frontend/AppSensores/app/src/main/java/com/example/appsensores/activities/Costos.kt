@@ -3,6 +3,8 @@ package com.example.appsensores.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 
 import android.view.View
 import android.widget.EditText
@@ -144,5 +146,36 @@ class Costos : AppCompatActivity() {
             .first
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        if(item.itemId == R.id.sensores){
+            intent = Intent(this, VistaSensores::class.java)
+            startActivity(intent)
+        }else if (item.itemId == R.id.semaforos)
+        {
+            intent = Intent(this, Semaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if (item.itemId == R.id.costos)
+        {
+            intent = Intent(this, Costos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
+        }else{
+            super.onOptionsItemSelected(item)
+        }
+        return true
+    }
 }
