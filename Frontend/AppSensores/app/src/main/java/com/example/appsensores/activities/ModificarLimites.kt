@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 

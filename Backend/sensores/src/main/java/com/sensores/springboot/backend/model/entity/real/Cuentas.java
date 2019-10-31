@@ -24,6 +24,9 @@ public class Cuentas {
     @Column(name = "clave")
     private String clave;
 
+    @Column(name = "seccion")
+    private String seccion;
+
     @Column(name = "email")
     private String email;
 
@@ -101,6 +104,13 @@ public class Cuentas {
         this.codigo = codigo;
     }
 
+    public String getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
+    }
 
     @OneToMany(mappedBy = "cuentas")
     private List<Sensores> sensoresList = new ArrayList<>();

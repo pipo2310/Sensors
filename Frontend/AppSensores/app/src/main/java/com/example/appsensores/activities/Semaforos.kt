@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.*
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*

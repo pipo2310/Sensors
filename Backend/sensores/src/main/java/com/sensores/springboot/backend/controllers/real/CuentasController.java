@@ -26,6 +26,7 @@ public class CuentasController {
      */
     @PostMapping("/insertar_cuenta")
     public Cuentas insertarCuenta(@RequestBody Cuentas cuentas){
+        cuentas.setEsAdmin(false);
         try{
             // Se inserta y retorna la cuenta nueva
             return iCuentasService.save(cuentas);
@@ -34,6 +35,30 @@ public class CuentasController {
             return null;
         }
 
+    }
+
+    /**
+     * Metodo para insertar una nueva Cuenta en la base de datos
+     * @param cuentas cuenta que se desea insertar
+     * @return Retorna la nueva cuenta insertada
+     */
+    @PutMapping("/actualizar_cuenta")
+    public Cuentas actualizarCuenta(@RequestBody Cuentas cuentas){
+        // Obtenemos la cuenta de la base de datos
+        Cuentas cuenta = iCuentasService.findById(cuentas.getCuentasPk());
+        // Se verifica si la cuenta existe
+        if (cuenta != null){
+            try{
+                // Se inserta y retorna la cuenta nueva
+                return iCuentasService.save(cuentas);
+            }catch (Exception ex){
+                // Falta error
+                return null;
+            }
+        }else {
+            // Falta error
+            return null;
+        }
     }
 
     /**

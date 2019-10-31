@@ -17,6 +17,9 @@ public class Cuenta {
     private String clave;
 
     @Expose
+    private String seccion;
+
+    @Expose
     private String email;
 
     @Expose
@@ -102,5 +105,13 @@ public class Cuenta {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 }

@@ -11,33 +11,71 @@ import com.example.appsensores.R
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
 import com.example.appsensores.services.ServiceBuilder
-import kotlinx.android.synthetic.main.activity_crear_sensores.*
+import kotlinx.android.synthetic.main.activity_lista_de_empresas.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CrearEmpresa : AppCompatActivity() {
+class ModificarEmpresa : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_crear_empresa)
-        toolbar.title = "Crear Empresa"
+        setContentView(R.layout.activity_modificar_empresa)
+        toolbar.title = "Modificar Cuenta"
         setSupportActionBar(toolbar)
 
-        val nombreEmpresa = findViewById<EditText>(R.id.nombreEmpresa)
-        val usuario = findViewById<EditText>(R.id.usuario)
-        val telefono = findViewById<EditText>(R.id.telefono)
-        val email = findViewById<EditText>(R.id.email)
-        val clave = findViewById<EditText>(R.id.clave)
-        val codigo = findViewById<EditText>(R.id.codigo)
-        val seccion = findViewById<EditText>(R.id.seccionEmpresa)
+        val invalido = -1.toLong()
+        var idEmpresa = invalido
+        idEmpresa = intent.getLongExtra("idEmpresa", idEmpresa)
+        if(idEmpresa == invalido) {
+            intent = Intent(this, ListaDeEmpresas::class.java)
+            startActivity(intent)
+        }else {
+            val cuentasService: CuentasService = ServiceBuilder.buildService(
+                CuentasService::class.java)
 
-        val btnCrear = findViewById<Button>(R.id.crearE)
-        btnCrear.setOnClickListener {
-            btnCrear.isClickable = false
-            var cuenta = Cuenta()
+            val call: Call<Cuenta> = cuentasService.getCuenta(idEmpresa)
+
+            call.enqueue(object: Callback<Cuenta> {
+                override fun onResponse(call: Call<Cuenta>, response: Response<Cuenta>) {
+                    if (!response.isSuccessful())
+                    {
+                        // Mensaje de Error
+                        return
+                    }
+
+                    val cuenta = response.body()
+                    llenarCampos(cuenta)
+                }
+                override fun onFailure(call: Call<Cuenta>, t:Throwable) {
+                    // Mensaje de Error
+                    startActivity(intent)
+                }
+            })
+        }
+    }
+
+    fun llenarCampos(cuenta :Cuenta){
+        val nombreEmpresa = findViewById<EditText>(R.id.nombreEmpresa)
+        nombreEmpresa.setText(cuenta.nombre.toString())
+        val usuario = findViewById<EditText>(R.id.usuario)
+        usuario.setText(cuenta.usuario)
+        val telefono = findViewById<EditText>(R.id.telefono)
+        telefono.setText(cuenta.telefono)
+        val email = findViewById<EditText>(R.id.email)
+        email.setText(cuenta.email)
+        val clave = findViewById<EditText>(R.id.clave)
+        clave.setText(cuenta.clave)
+        val codigo = findViewById<EditText>(R.id.codigo)
+        codigo.setText(cuenta.codigo)
+        val seccion = findViewById<EditText>(R.id.seccionEmpresa)
+        seccion.setText(cuenta.seccion)
+
+        val btnActualizar = findViewById<Button>(R.id.actualizarE)
+        btnActualizar.setOnClickListener {
+            btnActualizar.isClickable = false
             cuenta.nombre = nombreEmpresa.text.toString()
             cuenta.usuario = usuario.text.toString()
             cuenta.telefono = telefono.text.toString()
@@ -49,7 +87,7 @@ class CrearEmpresa : AppCompatActivity() {
             val cuentasService: CuentasService = ServiceBuilder.buildService(
                 CuentasService::class.java)
 
-            val call: Call<Cuenta> = cuentasService.insertCuenta(cuenta)
+            val call: Call<Cuenta> = cuentasService.updateCuenta(cuenta)
 
             intent = Intent(this, ListaDeEmpresas::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
@@ -59,15 +97,16 @@ class CrearEmpresa : AppCompatActivity() {
                     if (!response.isSuccessful())
                     {
                         // Mensaje de Error
-                        btnCrear.isClickable = true
+                        btnActualizar.isClickable = true
                         return
                     }
                     val cuenta = response.body()
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                     startActivity(intent)
                 }
                 override fun onFailure(call: Call<Cuenta>, t:Throwable) {
                     // Mensaje de Error
-                    btnCrear.isClickable = true
+                    btnActualizar.isClickable = true
 
                 }
             })

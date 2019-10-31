@@ -51,34 +51,31 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/nombreEmpresa"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Nombre"
                     android:textSize="20sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/seccionEmpresa"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Seccion"
                     android:textSize="20sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/codigo"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Codigo"
                     android:textSize="20sp" />
 
                 <TextView
@@ -91,59 +88,32 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Nombre Usuario"
                     android:textSize="20sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/telefono"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Telefono"
                     android:textSize="20sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="60dp"
-                    android:hint="Email"
                     android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/clave"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="60dp"
-                    android:hint="Contraseña"
-                    android:inputType="textPassword"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/crearE"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:background="@drawable/boton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="Crear"
-                    android:textSize="18sp"
-                    android:layout_gravity="end"
-                    android:layout_margin="10dp" />
 
             </LinearLayout>
 
