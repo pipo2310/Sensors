@@ -68,6 +68,8 @@ unit_test:
     - pwd
     - cd Frontend/AppSensores
     - pwd
+    - ls
+    - more build.gradle
     - export ANDROID_HOME=$PWD/.android
     - export PATH=$PATH:$PWD/.android/platform-tools/
     - chmod +x gradlew
