@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.example.appsensores.*
+import com.example.appsensores.R
 import com.example.appsensores.models.Sensor
 import com.example.appsensores.services.SensoresService
 import com.example.appsensores.services.ServiceBuilder
@@ -34,13 +35,13 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
         setSupportActionBar(toolbar)
         var agregarProb= findViewById<Button>(R.id.button);
         agregarProb.setOnClickListener {
-            var nombre = findViewById<EditText>(R.id.editText2);
+            //var nombre = findViewById<EditText>(R.id.editText2);
             ;
             //Tipo se cambia cuando se selecciona
             //tipo.selec.toString()
             // var tipo = spinner.getSelectedItem().toString()
             //var tipo = findViewById<EditText>(R.id.tipo);
-            var unidad = findViewById<EditText>(R.id.editText5);
+            //var unidad = findViewById<EditText>(R.id.editText5);
 
             val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/api/")
@@ -54,8 +55,8 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
                     SensoresService::class.java
                 )
             val sensorAAGregar= Sensor()
-            val nombreAdd= findViewById<EditText>(R.id.editText2);
-            val unidadAdd= findViewById<EditText>(R.id.editText5);
+            val nombreAdd= findViewById<EditText>(R.id.nombreSensor);
+            val unidadAdd= findViewById<EditText>(R.id.unidad);
             val tipoAdd=findViewById<Spinner>(R.id.spinner);
             val type:String=tipoAdd.selectedItem.toString()
             if (type=="Agua"){
@@ -106,10 +107,11 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
 
 
 
-        spinner!!.setOnItemSelectedListener(this)
+        //spinner!!.setOnItemSelectedListener(this)
 
         // Create an ArrayAdapter using a simple spinner layout and languages array
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
+      //  val adapt = ArrayAdapter.createFromResource(this, R.array.context_names , R.layout.spinner_recursos)
         // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
@@ -121,7 +123,7 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
     }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
-        var unit=findViewById<EditText>(R.id.editText5);
+        var unit=findViewById<EditText>(R.id.unidad);
         if (position==0){
             unit.setText("mL/s")
             tipo="mL/s"
@@ -159,7 +161,11 @@ class CrearSensores : AppCompatActivity(),AdapterView.OnItemSelectedListener  {
             intent = Intent(this, Semaforos::class.java)
             startActivity(intent)
 
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true

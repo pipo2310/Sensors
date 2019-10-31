@@ -86,7 +86,11 @@ class ModificarLimites : AppCompatActivity() {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true

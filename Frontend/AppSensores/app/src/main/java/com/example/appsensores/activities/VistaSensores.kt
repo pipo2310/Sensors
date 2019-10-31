@@ -251,7 +251,11 @@ class VistaSensores : AppCompatActivity() {
             intent = Intent(this, Semaforos::class.java)
             startActivity(intent)
 
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true

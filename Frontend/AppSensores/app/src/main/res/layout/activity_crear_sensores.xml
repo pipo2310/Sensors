@@ -1,4 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activities.CrearSensores">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tolbarLy"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dataLy"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#1074C7"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+                android:id="@+id/tituloE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crear Sensor"
+                android:textSize="22sp"
+                app:fontFamily="sans-serif-black"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintStart_toStartOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="@+id/toolbar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dataLy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tolbarLy">
+
+        <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/seccion1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Sensor"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                <EditText
+                        android:id="@+id/nombreSensor"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:hint="Nombre"
+                        android:textSize="24sp" />
+
+                <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/spinner_background"
+
+
+                />
+
+        <EditText
+                android:id="@+id/unidad"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:hint="Unidad"
+                android:textSize="24sp" />
+
+
+
+        <Button
+                android:id="@+id/button"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/boton"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Crear"
+                android:textSize="18sp"
+                android:layout_gravity="right"
+                android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,6 +155,7 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.077"/>
 
+
     <EditText
             android:id="@+id/editText5"
             android:layout_width="321dp"
@@ -55,6 +179,7 @@
             android:textSize="20sp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.059"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.344"/>
+
     <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
@@ -97,7 +222,7 @@
             app:layout_constraintVertical_bias="0.27"/>
     <Button
             android:id="@+id/button"
-            style="?android:attr/borderlessButtonStyle"
+            gradient_spinner="?android:attr/borderlessButtonStyle"
             android:layout_width="152dp"
 
             android:layout_height="50dp" android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
@@ -108,7 +233,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
 
             app:layout_constraintVertical_bias="0.967"
-    />
+            />
     <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -133,3 +258,5 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/editText2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+-->

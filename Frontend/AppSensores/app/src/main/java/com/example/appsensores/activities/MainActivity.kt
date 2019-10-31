@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar)
-        var agregarProb= findViewById<Button>(R.id.button3);
-        agregarProb.setOnClickListener {
-            intent = Intent(this, Historicos::class.java)
-            startActivity(intent);
-        }
+        //var agregarProb= findViewById<Button>(R.id.button3);
+        //agregarProb.setOnClickListener {
+          //  intent = Intent(this, Historicos::class.java)
+            //startActivity(intent);
+        //}
 
         /*
         var prob= findViewById<Button>(R.id.prueba);
@@ -103,7 +103,11 @@ class MainActivity : AppCompatActivity() {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true
