@@ -1,4 +1,25 @@
 <resources>
-    <string name="app_name"></string>
     <string name="title_activity_lista_de_empresas">Lista De Empresas</string>
+    <string name="app_name">Sensores</string>
+    <string-array name="unidades_agua">
+        <item>/litro</item>
+    </string-array>
+    <string-array name="unidades_elec">
+        <item>/kilowatt-hora</item>
+    </string-array>
+    <string-array name="unidades_gas">
+        <item>/psi</item>
+    </string-array>
+    <string name="nombre_usuario">Nombre de Usuario</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="iniciar_sesion_google">Iniciar Sesión con Google</string>
+    <string name="sign_out">Cerrar Sesión</string>
+
+    <string name="google_status_fmt">Usuario Google: %s</string>
+    <string name="firebase_status_fmt">Usuario Firebase: %s</string>
+    <string name="signed_out">Sesión cerrada</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="olvido_contrasena">Olvidó su Contraseña?</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="logo_de_la_empresa">Logo de la empresa</string>
 </resources>
