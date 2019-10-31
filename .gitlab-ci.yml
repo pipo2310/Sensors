@@ -27,7 +27,7 @@ stages:
 
     # Fetch the specified SDK tools version to build with
     - wget --quiet --output-document=/tmp/sdk-tools-linux.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
-    - unzip /tmp/sdk-tools-linux.zip -d Frontend/AppSensores/.android
+    - unzip -qq /tmp/sdk-tools-linux.zip -d Frontend/AppSensores/.android
 
     # Set up environment variables
     - export ANDROID_HOME=$PWD/Frontend/AppSensores/.android
