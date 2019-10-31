@@ -65,7 +65,9 @@ unit_test:
     - develop
 
   before_script:
+    - pwd
     - cd Frontend/AppSensores
+    - pwd
     - export ANDROID_HOME=$PWD/.android
     - export PATH=$PATH:$PWD/.android/platform-tools/
     - chmod +x gradlew
