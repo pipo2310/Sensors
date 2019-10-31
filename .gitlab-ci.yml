@@ -19,7 +19,7 @@ stages:
 
   before_script:
     # Extract the SDK version that we're building against
-    - export ANDROID_COMPILE_SDK=`egrep '^[[:blank:]]+compileSdkVersion'  /Frontend/AppSensores/app/build.gradle | awk '{print $2}'`
+    - export ANDROID_COMPILE_SDK=`egrep '^[[:blank:]]+compileSdkVersion'  Frontend/AppSensores/app/build.gradle | awk '{print $2}'`
 
     # Explict output for logging purpose only
     - echo $ANDROID_SDK_TOOLS
@@ -27,16 +27,16 @@ stages:
 
     # Fetch the specified SDK tools version to build with
     - wget --quiet --output-document=/tmp/sdk-tools-linux.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
-    - unzip /tmp/sdk-tools-linux.zip -d /Frontend/AppSensores/.android
+    - unzip /tmp/sdk-tools-linux.zip -d Frontend/AppSensores/.android
 
     # Set up environment variables
     - export ANDROID_HOME=$PWD/Frontend/AppSensores/.android
     - export PATH=$PATH:$PWD/Frontend/AppSensores/.android/platform-tools/
 
     # Install platform tools and Android SDK for the compile target
-    - echo y | /Frontend/AppSensores/.android/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
+    - echo y | Frontend/AppSensores/.android/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}"
 
-    - chmod +x /Frontend/AppSensores/gradlew
+    - chmod +x Frontend/AppSensores/gradlew
 
 build_debug:
   <<: *build_template_def
@@ -44,14 +44,14 @@ build_debug:
     - develop
 
   script:
-    - /Frontend/AppSensores/gradlew assembleDebug
+    - Frontend/AppSensores/gradlew assembleDebug
 
 build_release:
   <<: *build_template_def
   only:
     - master
   script:
-    - /Frontend/AppSensores/gradlew assembleRelease
+    - Frontend/AppSensores/gradlew assembleRelease
 
 ####################################################################################################
 # UNIT TESTING
