@@ -27,10 +27,6 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        agregarProb.setOnClickListener {
-
-        }
-
         /*
         var prob= findViewById<Button>(R.id.prueba);
         prueba.setOnClickListener {
