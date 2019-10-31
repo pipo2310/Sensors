@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import com.example.appsensores.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,16 +15,21 @@ class MainActivity : AppCompatActivity() {
     //var spinner: Spinner? = null;
     //var textView_msg: TextView? = null;
     //var tipo=""
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar)
         var agregarProb= findViewById<Button>(R.id.button3);
+
+        if(FirebaseAuth.getInstance().currentUser == null){
+            intent = Intent(this, IniciarSesion::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         agregarProb.setOnClickListener {
-            intent = Intent(this, Historicos::class.java)
-            startActivity(intent);
+
         }
 
         /*
@@ -98,16 +104,23 @@ class MainActivity : AppCompatActivity() {
         if(item.itemId == R.id.sensores){
             intent = Intent(this, VistaSensores::class.java)
             startActivity(intent)
+            finish()
         }else if (item.itemId == R.id.semaforos)
         {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+            finish()
         }else if (item.itemId == R.id.costos)
         {
             intent = Intent(this, Costos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+            finish()
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
         }else{
             super.onOptionsItemSelected(item)
         }
