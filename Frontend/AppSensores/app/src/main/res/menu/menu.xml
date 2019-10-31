@@ -9,12 +9,15 @@
       android:orderInCategory="100"
       app:showAsAction="never"/>
     <item android:id="@+id/semaforos"
-          android:title="Semaforos"
+          android:title="Semáforos"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/costos"
         android:title="Costos"
         android:orderInCategory="100"
         app:showAsAction="never"/>
-
+    <item android:id="@+id/cerrar_sesion"
+        android:title="@string/cerrar_sesion"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
 </menu>
