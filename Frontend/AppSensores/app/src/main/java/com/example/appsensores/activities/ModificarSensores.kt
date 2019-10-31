@@ -121,6 +121,10 @@ class ModificarSensores : AppCompatActivity() {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
         }else if (item.itemId == R.id.costos)
         {
             intent = Intent(this, Costos::class.java)

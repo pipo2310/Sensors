@@ -160,7 +160,11 @@ class Semaforos : AppCompatActivity() {
             finishAffinity()
             setResult(R.id.cerrar_sesion)
             startActivity(Intent(this, IniciarSesion::class.java))
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true

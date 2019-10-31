@@ -20,16 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar)
-        var agregarProb= findViewById<Button>(R.id.button3);
 
         if(FirebaseAuth.getInstance().currentUser == null){
             intent = Intent(this, IniciarSesion::class.java)
             startActivity(intent)
             finish()
-        }
-
-        agregarProb.setOnClickListener {
-
         }
 
         /*
@@ -118,7 +113,11 @@ class MainActivity : AppCompatActivity() {
             finishAffinity()
             setResult(R.id.cerrar_sesion)
             startActivity(Intent(this, IniciarSesion::class.java))
-        }else{
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
+        }
+        else{
             super.onOptionsItemSelected(item)
         }
         return true
