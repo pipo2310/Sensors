@@ -151,6 +151,15 @@ class Semaforos : AppCompatActivity() {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+        }else if (item.itemId == R.id.costos)
+        {
+            intent = Intent(this, Costos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
         }else if(item.itemId == R.id.historicos){
             intent = Intent(this, Historicos::class.java)
             startActivity(intent)

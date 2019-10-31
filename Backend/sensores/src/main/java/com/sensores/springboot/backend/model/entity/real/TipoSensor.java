@@ -10,7 +10,7 @@ public class TipoSensor {
 
     @Id
     @Column(name = "id_tipo")
-    private int id_tipo;
+    private int id;
 
 
     @Column(name = "nombre")
@@ -25,15 +25,16 @@ public class TipoSensor {
     private double alerta_roja_global;
 
     @Column(name = "costo")
-    private Double costo;
+    @Basic()
+    private Float costo;
 
 
-    public int getId_tipo() {
-        return id_tipo;
+    public int getId() {
+        return id;
     }
 
-    public void setId_tipo(int id_tipo) {
-        this.id_tipo = id_tipo;
+    public void setId(int id_tipo) {
+        this.id = id_tipo;
     }
 
     public String getNombre() {
@@ -60,16 +61,17 @@ public class TipoSensor {
         this.alerta_roja_global = alerta_roja_global;
     }
 
-    public Double getCosto() {
+    public Float getCosto() {
         return costo;
     }
 
-    public void setCosto(Double costo) {
+    public void setCosto(Float costo) {
         this.costo = costo;
     }
 
     @OneToMany(mappedBy = "tipoSensor")
     private List<Sensores> tipoSensoresList = new ArrayList<>();
+
 
 
 }
