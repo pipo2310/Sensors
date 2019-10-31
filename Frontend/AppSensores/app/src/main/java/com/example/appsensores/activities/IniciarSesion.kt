@@ -49,6 +49,7 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
 
     public override fun onStart() {
         super.onStart()
+        signOut()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         updateUI(currentUser)
@@ -82,6 +83,8 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
                 updateUI(null)
                 // [END_EXCLUDE]
             }
+        }else{
+            signOut()
         }
     }
 
@@ -132,13 +135,27 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "Por favor llene los campos", Toast.LENGTH_SHORT).show()
         }
 
-
+        auth.currentUser?.sendEmailVerification()
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                    }
+                }
     }
 
     private fun forgotPassword(){
         // TODO: utilizar firebase para ello
         //TODO: enviar un correo electrónico al usuario que lo requiera, para cambiar la contraseña, hacer tambíen vista para cambiar la contraseña al recivir un código
         println("password send to email")
+        var user = findViewById<EditText>(R.id.nombre_usuario_editText).text.toString()
+        //TODO:Obtener email de la base dependiendo de la entrada del usuario
+        var email = user
+        auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                    }
+                }
     }
 
     private fun signOut() {
@@ -152,7 +169,6 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            signOut()
             intent = Intent(this, MainActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
@@ -172,5 +188,6 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
     companion object {
         private const val TAG = "GoogleActivity"
         private const val RC_SIGN_IN = 9001
+        private const val RC_SIGN_OUT = 9002
     }
 }
