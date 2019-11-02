@@ -15,10 +15,14 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface SensoresService {
     @GET("sensores")
     Call<List<Sensor>> getSensores();
+
+    @GET("sensores/sensor_por_id")
+    Call<Sensor> getSensor(@Query("sensorId") Long sensorId);
 
     @FormUrlEncoded
     @POST("sensores")
@@ -57,5 +61,7 @@ public interface SensoresService {
     @DELETE("sensores/{sensoresPk}")
     Call<Integer> borrarSensores(@Path("sensoresPk") Long sensoresPk
     );
+
+
 
 }

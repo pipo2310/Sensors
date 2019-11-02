@@ -21,7 +21,7 @@ public class SensoresServiceImpl implements ISensoresService{
 
     @Override
     @Transactional(readOnly = true)
-    public Sensores findById(Long id) {
+    public Sensores findById(long id) {
         return iSensoresDao.findById(id).orElse(null);
     }
 

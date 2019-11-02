@@ -11,11 +11,11 @@ import android.graphics.Typeface
 import android.view.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
 import kotlinx.android.synthetic.main.another_view.view.*
-import com.android.volley.RequestQueue
 import com.example.appsensores.R
 import com.example.appsensores.models.Sensor
 import com.example.appsensores.services.SensoresService
 import com.example.appsensores.services.ServiceBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +24,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class VistaSensores : AppCompatActivity() {
+    var listaSensores: List<Sensor> = listOf(Sensor())
+    val header: MutableList<String> = ArrayList()
+    val body: MutableList<MutableList<Long>> = ArrayList()
     lateinit var t1: TableLayout
 
 
@@ -36,7 +39,8 @@ class VistaSensores : AppCompatActivity() {
         setSupportActionBar(toolbar)
         //recuperarSensores()
 
-        var agregarSensor = findViewById<Button>(R.id.button2);
+
+        var agregarSensor = findViewById<FloatingActionButton>(R.id.crearSensor);
         agregarSensor.setOnClickListener {
             intent = Intent(this, CrearSensores::class.java)
             startActivity(intent);
@@ -59,15 +63,15 @@ class VistaSensores : AppCompatActivity() {
 
     fun recuperarSensores() {
 
-        t1 = TableLayout(this)
+       // t1 = TableLayout(this)
 
         //recuperarSensores()
 
-        val lp = TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        tableLayout.apply {
-            layoutParams = lp
-            isShrinkAllColumns = true
-        }
+        //val lp = TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        //tableLayout.apply {
+          //  layoutParams = lp
+          //  isShrinkAllColumns = true
+       // }
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
@@ -84,14 +88,37 @@ class VistaSensores : AppCompatActivity() {
                 {
                     return
                 }
-                val sensors = response.body()
-                createTable(sensors)
+                listaSensores=response.body()
+                if(listaSensores.isNotEmpty()){
+                    // Si hay empresas mostramos la lista de ellas
+                    crearTabla()
+                }else{
+                    // Si no hay empresas mostramos un mensaje indicandolo
+                    //mostrarMensaje("No hay empresas que mostrar")
+                }
+
+                //val sensors = response.body()
+                //createTable(sensors)
             }
             override fun onFailure(call:Call<List<Sensor>>, t:Throwable) {
 
             }
         })
 
+    }
+
+    fun crearTabla() {
+        header.clear()
+        body.clear()
+        for (sensor in listaSensores) {
+            val atributos: MutableList<Long> = ArrayList()
+            header.add(sensor.nombre)
+            atributos.add(sensor.sensoresPk)
+            atributos.add(sensor.sensoresPk)
+            atributos.add(sensor.sensoresPk)
+            body.add(atributos)
+        }
+        expandableListView.setAdapter(ExpandableListAdapterSensores(this, expandableListView, header, body))
     }
 
     fun createTable(sensores:List<Sensor>){
@@ -158,7 +185,7 @@ class VistaSensores : AppCompatActivity() {
 
             tableLayout.addView(row)
         }
-        linearLayout.addView(tableLayout)
+        //linearLayout.addView(tableLayout)
 
     }
 

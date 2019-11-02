@@ -19,6 +19,21 @@ public class SensoresController {
         return this.iSensoresService.findAll();
     }
 
+    /**
+     * Metodo para buscar una cuenta de la base de datos
+     * @param sensorId id de la cuenta que se quiere buscar
+     * @return Retorna la cuenta que se encontró
+     */
+    @GetMapping("/sensores/sensor_por_id")
+    public Sensores buscarSensorPorId(@RequestParam long sensorId){
+        try{
+            return iSensoresService.findById(sensorId);
+        }catch (Exception ex){
+            // Falta error
+            return null;
+        }
+    }
+
     @PostMapping("/sensores")
     public Sensores create(@RequestBody Sensores sensores) {
         return iSensoresService.save(sensores);

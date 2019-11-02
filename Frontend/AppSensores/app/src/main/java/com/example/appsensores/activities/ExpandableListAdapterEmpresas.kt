@@ -20,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ExpandableListAdapter(var context: Context, var expandableListView : ExpandableListView, var header : MutableList<String>, var body : MutableList<MutableList<Long>>)  : BaseExpandableListAdapter() {
+class ExpandableListAdapterEmpresas(var context: Context, var expandableListView : ExpandableListView, var header : MutableList<String>, var body : MutableList<MutableList<Long>>)  : BaseExpandableListAdapter() {
     override fun getGroup(groupPosition: Int): String {
         return header[groupPosition]
     }
