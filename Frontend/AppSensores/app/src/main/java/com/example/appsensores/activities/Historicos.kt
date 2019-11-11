@@ -1,6 +1,9 @@
 package com.example.appsensores.activities
 
+import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.appsensores.R
@@ -11,16 +14,20 @@ import com.softmoore.android.graphlib.GraphView;
 import com.softmoore.android.graphlib.Label;
 import com.softmoore.android.graphlib.Point;
 
-import android.widget.TextView
-
 import android.graphics.Color
+import android.net.Uri
+import android.os.Environment
+import android.os.StrictMode
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.*
 import com.example.appsensores.models.Medicion
 import com.example.appsensores.services.MedicionesService
+import com.itextpdf.text.Document
+import com.itextpdf.text.Image
+import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.android.synthetic.main.activity_historicos.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,12 +36,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.DateFormat
 import java.util.*
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.DexterError
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.PermissionRequestErrorListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Date
 
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     var list_of_items2 = arrayOf("Ultima semana", "Ultimo mes", "Ultimo año");
+    private var btnSS: Button? = null
+    private var btnshare: Button? = null
+    private var btnPL: Button? = null
+    private var iv: ImageView? = null
+    private var sharePath = "no"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +86,139 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         //generarHistoricosAno()
         //generarHistoricosMes()
         //generarHistoricosSemana()
+        //var agregarSensor = findViewById<Button>(R.id.button2);
+        //agregarSensor.setOnClickListener {
+        //    takeScreenshot()
+        //}
+
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
+        requestReadPermissions()
+
+        btnSS = findViewById(R.id.btnSS)
+        btnshare = findViewById(R.id.btnShare)
+        btnPL = findViewById(R.id.btnPL)
+
+        iv = findViewById(R.id.iv)
+
+        btnSS!!.setOnClickListener { takeScreenshot() }
+
+        btnshare!!.setOnClickListener {
+            if (sharePath != "no") {
+                share(sharePath)
+            }
+        }
+
+        btnPL!!.setOnClickListener {
+            //val intent = Intent(this@MainActivity, ParticularLayoutActivity::class.java)
+            //startActivity(intent)
+        }
         generarHistoricosDefault()
 
 
+    }
+
+    private fun takeScreenshot() {
+        val now = Date()
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            val mPath = Environment.getExternalStorageDirectory().toString() + "/"  + "hola.jpg"
+
+            // create bitmap screen capture
+            val v1 = window.decorView.rootView
+            v1.isDrawingCacheEnabled = true
+            val bitmap = Bitmap.createBitmap(v1.drawingCache)
+            v1.isDrawingCacheEnabled = false
+
+            val imageFile = File(mPath)
+
+            val outputStream = FileOutputStream(imageFile)
+            val quality = 100
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            //setting screenshot in imageview
+            val filePath = imageFile.path
+
+            val ssbitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+            //iv!!.setImageBitmap(ssbitmap)
+            sharePath = filePath
+
+        } catch (e: Throwable) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun share(sharePath: String) {
+        val document = Document()
+        val directoryPath = android.os.Environment.getExternalStorageDirectory().toString()
+        PdfWriter.getInstance(document, FileOutputStream(directoryPath + "/example.pdf")) // Change pdf's name.
+        document.open()
+        val image = Image.getInstance(directoryPath + "/" + "hola.jpg") // Change image's name and extension.
+        val scaler = (((((document.getPageSize().getWidth() - document.leftMargin()
+                - document.rightMargin() - 0)) / image.getWidth())) * 100) // 0 means you have no indentation. If you have any, change it.
+        image.scalePercent(scaler)
+        image.setAlignment(Image.ALIGN_CENTER or Image.ALIGN_TOP)
+        document.add(image)
+        document.close()
+
+        val email = Intent(Intent.ACTION_SEND)
+        email.putExtra(Intent.EXTRA_EMAIL, "jruizh9813@gmail.com")
+        email.putExtra(Intent.EXTRA_SUBJECT, "Hola")
+        email.putExtra(Intent.EXTRA_TEXT,"Hola")
+        val archivo="/storage/emulated/0/hola.pdf"
+        val ur0i = Uri.parse("file://" + archivo)
+        email.putExtra(Intent.EXTRA_STREAM, ur0i)
+        email.setType("message/rfc822")
+        startActivity(email)
+        //val archivo="/storage/emulated/0/hola.pdf"
+
+        Log.d("ffff", sharePath)
+
+        //val file = File(sharePath)
+        //val uri = Uri.fromFile(file)
+        //val intent = Intent(Intent.ACTION_SEND)
+        //intent.type = "image/*"
+        //intent.putExtra(Intent.EXTRA_STREAM, uri)
+        //startActivity(intent)
+
+    }
+
+    private fun requestReadPermissions() {
+
+        Dexter.withActivity(this)
+            .withPermissions( Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    // check if all permissions are granted
+                    if (report.areAllPermissionsGranted()) {
+                        Toast.makeText(applicationContext, "All permissions are granted by user!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    // check for permanent denial of any permission
+                    if (report.isAnyPermissionPermanentlyDenied) {
+                        // show alert dialog navigating to Settings
+                        //openSettingsDialog();
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {
+                    token.continuePermissionRequest()
+                }
+            }).withErrorListener(object : PermissionRequestErrorListener {
+                override fun onError(error: DexterError) {
+                    Toast.makeText(applicationContext, "Some Error! ", Toast.LENGTH_SHORT).show()
+                }
+            })
+            .onSameThread()
+            .check()
     }
 
     fun generarHistoricosDefault() {
@@ -401,6 +553,9 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         textView.setText("Graph of Axes")
 
     }
+
+
+
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
