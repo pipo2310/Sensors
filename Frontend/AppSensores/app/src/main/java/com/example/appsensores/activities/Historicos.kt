@@ -45,7 +45,9 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import java.io.File
 import java.io.FileOutputStream
+import java.net.URI
 import java.util.Date
+import kotlin.collections.ArrayList
 
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
@@ -83,6 +85,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         // Set Adapter to Spinner
         spinner3!!.setAdapter(aaa)
 
+        val btnHHH = findViewById<Button>(R.id.button2)
+        btnHHH.setOnClickListener {
+            generarReportes()
+        }
+
         //generarHistoricosAno()
         //generarHistoricosMes()
         //generarHistoricosSemana()
@@ -102,7 +109,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         iv = findViewById(R.id.iv)
 
-        btnSS!!.setOnClickListener { takeScreenshot() }
+        btnSS!!.setOnClickListener { takeScreenshot("sss") }
 
         btnshare!!.setOnClickListener {
             if (sharePath != "no") {
@@ -119,13 +126,13 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    private fun takeScreenshot() {
+    private fun takeScreenshot(nombreArchivo:String) {
         val now = Date()
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
 
         try {
             // image naming and path  to include sd card  appending name you choose for file
-            val mPath = Environment.getExternalStorageDirectory().toString() + "/"  + "hola.jpg"
+            val mPath = Environment.getExternalStorageDirectory().toString() + "/"  +nombreArchivo+ ".jpg"
 
             // create bitmap screen capture
             val v1 = window.decorView.rootView
@@ -156,37 +163,25 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
     }
 
     private fun share(sharePath: String) {
-        val document = Document()
-        val directoryPath = android.os.Environment.getExternalStorageDirectory().toString()
-        PdfWriter.getInstance(document, FileOutputStream(directoryPath + "/example.pdf")) // Change pdf's name.
-        document.open()
-        val image = Image.getInstance(directoryPath + "/" + "hola.jpg") // Change image's name and extension.
-        val scaler = (((((document.getPageSize().getWidth() - document.leftMargin()
-                - document.rightMargin() - 0)) / image.getWidth())) * 100) // 0 means you have no indentation. If you have any, change it.
-        image.scalePercent(scaler)
-        image.setAlignment(Image.ALIGN_CENTER or Image.ALIGN_TOP)
-        document.add(image)
-        document.close()
 
-        val email = Intent(Intent.ACTION_SEND)
-        email.putExtra(Intent.EXTRA_EMAIL, "jruizh9813@gmail.com")
-        email.putExtra(Intent.EXTRA_SUBJECT, "Hola")
-        email.putExtra(Intent.EXTRA_TEXT,"Hola")
-        val archivo="/storage/emulated/0/hola.pdf"
-        val ur0i = Uri.parse("file://" + archivo)
-        email.putExtra(Intent.EXTRA_STREAM, ur0i)
-        email.setType("message/rfc822")
-        startActivity(email)
-        //val archivo="/storage/emulated/0/hola.pdf"
 
-        Log.d("ffff", sharePath)
 
-        //val file = File(sharePath)
-        //val uri = Uri.fromFile(file)
-        //val intent = Intent(Intent.ACTION_SEND)
-        //intent.type = "image/*"
-        //intent.putExtra(Intent.EXTRA_STREAM, uri)
-        //startActivity(intent)
+
+        val file = File("/storage/emulated/0/histAnnoAgua.jpg")
+        val uri = Uri.fromFile(file)
+        val file2 = File("/storage/emulated/0/histMesAgua.jpg")
+        val uri2 = Uri.fromFile(file2)
+        val file3 = File("/storage/emulated/0/histSemanaAgua.jpg")
+        val uri3 = Uri.fromFile(file3)
+        val intent = Intent()
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE)
+        intent.type = "image/jpg"
+        var uris=ArrayList<Uri>()
+        uris.add(uri)
+        uris.add(uri2)
+        uris.add(uri3)
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM,uris)
+        startActivity(intent)
 
     }
 
@@ -552,6 +547,14 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
 
+    }
+    fun generarReportes(){
+        generarHistoricosAno()
+        takeScreenshot("histAnnoAgua")
+        generarHistoricosMes()
+        takeScreenshot("histMesAgua")
+        generarHistoricosSemana()
+        takeScreenshot("histSemanaAgua")
     }
 
 
