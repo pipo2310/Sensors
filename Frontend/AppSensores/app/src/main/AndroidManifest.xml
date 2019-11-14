@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appsensores">
+          package="com.example.appsensores">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/logo"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/logo_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+            android:allowBackup="true"
+            android:icon="@mipmap/logo"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/logo_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
+        <activity android:name=".activities.DetalleSensoresSemaforos">
+        </activity>
         <activity android:name=".activities.IniciarSesion"/>
-        <activity android:name=".activities.Costos" />
-        <activity android:name=".activities.Historicos" />
-        <activity android:name=".activities.ModificarSensores" />
-        <activity android:name=".activities.CrearSensores" />
-        <activity android:name=".activities.VistaSensores" />
-        <activity android:name=".activities.ModificarLimites" />
-        <activity android:name=".activities.Semaforos" />
-        <activity android:name=".activities.DetallesEmpresa"></activity>
-        <activity android:name=".activities.ModificarEmpresa" />
+        <activity android:name=".activities.Costos"/>
+        <activity android:name=".activities.Historicos"/>
+        <activity android:name=".activities.ModificarSensores"/>
+        <activity android:name=".activities.CrearSensores"/>
+        <activity android:name=".activities.VistaSensores"/>
+        <activity android:name=".activities.ModificarLimites"/>
+        <activity android:name=".activities.Semaforos"/>
+        <activity android:name=".activities.DetallesEmpresa"/>
+        <activity android:name=".activities.ModificarEmpresa"/>
         <activity
-            android:name=".activities.ListaDeEmpresas"
-            android:label="@string/title_activity_lista_de_empresas"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.CrearEmpresa" />
-        <activity android:name=".activities.ListaEmpresas" />
+                android:name=".activities.ListaDeEmpresas"
+                android:label="@string/title_activity_lista_de_empresas"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.CrearEmpresa"/>
+        <activity android:name=".activities.ListaEmpresas"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

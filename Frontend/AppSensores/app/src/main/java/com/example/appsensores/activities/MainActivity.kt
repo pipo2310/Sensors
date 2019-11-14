@@ -99,6 +99,11 @@ class MainActivity : AppCompatActivity() {
             intent = Intent(this, ListaDeEmpresas::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
+        }else if (item.itemId == R.id.detalles)
+        {
+            intent = Intent(this, DetalleSensoresSemaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
         }else{
             super.onOptionsItemSelected(item)
         }
