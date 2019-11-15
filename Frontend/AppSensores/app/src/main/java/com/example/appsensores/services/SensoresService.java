@@ -13,7 +13,7 @@ public interface SensoresService {
     @GET("sensores")
     Call<List<Sensor>> getSensores();
 
-    @GET("sensores")
+    @GET("sensores_por_tipo")
     Call<List<Sensor>> getSensoresPorTipo(@Query("tipo") int tipo);
 
     @FormUrlEncoded
