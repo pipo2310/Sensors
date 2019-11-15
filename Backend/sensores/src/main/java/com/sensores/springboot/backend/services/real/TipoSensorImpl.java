@@ -19,4 +19,9 @@ public class TipoSensorImpl implements ITipoSensorService {
             return (List<TipoSensor>)this.iTipoDao.findAll();
     }
 
+    @Override
+    public TipoSensor findById(int id) {
+        return iTipoDao.findById(id).orElse(null);
+    }
+
 }

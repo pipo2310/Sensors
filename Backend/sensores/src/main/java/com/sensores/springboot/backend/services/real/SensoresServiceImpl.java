@@ -39,4 +39,9 @@ public class SensoresServiceImpl implements ISensoresService{
         return 1;
     }
 
+    @Override
+    public List<Sensores> sensoresPorTipo(int tipo) {
+        return iSensoresDao.sensoresPorTipo(tipo);
+    }
+
 }

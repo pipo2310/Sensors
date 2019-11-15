@@ -12,4 +12,6 @@ public interface ISensoresService {
     public Sensores findById(Long id);
 
     public int  delete(Long id);
+
+    public List<Sensores> sensoresPorTipo(int tipo);
 }

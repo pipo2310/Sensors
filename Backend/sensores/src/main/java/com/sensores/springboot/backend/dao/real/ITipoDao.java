@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface ITipoDao extends CrudRepository<TipoSensor, Integer> {
     List<TipoSensor> findAll();
-    List<TipoSensor> findById(int id);
 }

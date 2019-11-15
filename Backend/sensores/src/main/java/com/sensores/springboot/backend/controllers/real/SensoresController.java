@@ -1,7 +1,9 @@
 package com.sensores.springboot.backend.controllers.real;
 
 import com.sensores.springboot.backend.model.entity.real.Sensores;
+import com.sensores.springboot.backend.model.entity.real.TipoSensor;
 import com.sensores.springboot.backend.services.real.ISensoresService;
+import com.sensores.springboot.backend.services.real.ITipoSensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class SensoresController {
 
     @Autowired
     ISensoresService iSensoresService;
+
+    @Autowired
+    ITipoSensorService iTipoSensorService;
 
     @GetMapping("/sensores")
     public List<Sensores> index(){
@@ -41,5 +46,15 @@ public class SensoresController {
     public int delete(@PathVariable Long id){
         iSensoresService.delete(id);
         return 1;
+    }
+
+    @GetMapping("/sensores_por_tipo")
+    public List<Sensores> index2(@RequestParam int tipo){
+        TipoSensor tipoSensor = iTipoSensorService.findById(tipo);
+        if (tipoSensor != null){
+            return this.iSensoresService.sensoresPorTipo(tipo);
+        }else{
+            return null;
+        }
     }
 }
