@@ -164,9 +164,6 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     private fun share(sharePath: String) {
 
-
-
-
         val file = File("/storage/emulated/0/histAnnoAgua.jpg")
         val uri = Uri.fromFile(file)
         val file2 = File("/storage/emulated/0/histMesAgua.jpg")
@@ -266,7 +263,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
 
 
-    fun generarHistoricosAno() {
+    fun generarHistoricosAno(generarPDF:Boolean) {
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
@@ -285,7 +282,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesAno = response.body()
-                llenarGraficoAno(medicionesAno)
+                llenarGraficoAno(medicionesAno,generarPDF)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -295,7 +292,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    fun generarHistoricosMes() {
+    fun generarHistoricosMes(generarPDF:Boolean) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -313,7 +310,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesMes = response.body()
-                llenarGraficoMes(medicionesMes)
+                llenarGraficoMes(medicionesMes,generarPDF)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -324,7 +321,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    fun generarHistoricosSemana() {
+    fun generarHistoricosSemana(generarPDF:Boolean) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -342,7 +339,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesSemana = response.body()
-                llenarGraficoSemana(medicionesSemana)
+                llenarGraficoSemana(medicionesSemana,generarPDF)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -353,7 +350,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
     }
 
 
-    fun llenarGraficoAno(mediciones:Collection<Medicion>) {
+    fun llenarGraficoAno(mediciones:Collection<Medicion>,generarPDF:Boolean) {
         val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         val annos= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -402,7 +399,6 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             }
 
 
-
         }
 
         val listaDeMeses = arrayOf("E","F","M","A","M","J","J","A","S","O","N","D")
@@ -440,9 +436,13 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         setTitle("Historicos Anuales")
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
+        if(generarPDF){
+            takeScreenshot("histAnnoAgua")
+        }
+
     }
 
-    fun llenarGraficoMes(mediciones:Collection<Medicion>){
+    fun llenarGraficoMes(mediciones:Collection<Medicion>,generarPDF:Boolean){
 
         val medicionesMes= arrayOf(0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -485,10 +485,13 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         setTitle("Historicos Mensuales")
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
+        if(generarPDF){
+            takeScreenshot("histMesAgua")
+        }
 
     }
 
-    fun llenarGraficoSemana(mediciones:Collection<Medicion>){
+    fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean){
 
         val medicionesSemana= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -546,15 +549,18 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         setTitle("Historicos Semanales")
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
+        if(generarPDF){
+            takeScreenshot("histSemanaAgua")
+        }
 
     }
     fun generarReportes(){
-        generarHistoricosAno()
-        takeScreenshot("histAnnoAgua")
-        generarHistoricosMes()
-        takeScreenshot("histMesAgua")
-        generarHistoricosSemana()
-        takeScreenshot("histSemanaAgua")
+        generarHistoricosAno(true)
+        //takeScreenshot("histAnnoAgua")
+        generarHistoricosMes(true)
+        //takeScreenshot("histMesAgua")
+        generarHistoricosSemana(true)
+        //takeScreenshot("histSemanaAgua")
     }
 
 
@@ -564,11 +570,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
        if (arg0!!.id == R.id.spinner3) {
             if (position==0){
-               generarHistoricosSemana()
+               generarHistoricosSemana(false)
             }else if (position==1){
-                generarHistoricosMes()
+                generarHistoricosMes(false)
             }else if (position==2){
-                generarHistoricosAno()
+                generarHistoricosAno(false)
             }
 
         }
