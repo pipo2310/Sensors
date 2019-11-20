@@ -112,7 +112,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         //btnSS!!.setOnClickListener { takeScreenshot("sss") }
 
         btnshare!!.setOnClickListener {
-            if (sharePath != "no") {
+            if (sharePath != "n") {
                 share(sharePath)
             }
         }
@@ -164,12 +164,25 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     private fun share(sharePath: String) {
 
+
         val file = File("/storage/emulated/0/histAnnoAgua.jpg")
         val uri = Uri.fromFile(file)
         val file2 = File("/storage/emulated/0/histMesAgua.jpg")
         val uri2 = Uri.fromFile(file2)
         val file3 = File("/storage/emulated/0/histSemanaAgua.jpg")
         val uri3 = Uri.fromFile(file3)
+        val file4 = File("/storage/emulated/0/histAnnoGas.jpg")
+        val uri4 = Uri.fromFile(file4)
+        val file5 = File("/storage/emulated/0/histMesGas.jpg")
+        val uri5 = Uri.fromFile(file5)
+        val file6 = File("/storage/emulated/0/histSemanaGas.jpg")
+        val uri6 = Uri.fromFile(file6)
+        val file7 = File("/storage/emulated/0/histAnnoElectricidad.jpg")
+        val uri7 = Uri.fromFile(file7)
+        val file8 = File("/storage/emulated/0/histMesElectricidad.jpg")
+        val uri8 = Uri.fromFile(file8)
+        val file9 = File("/storage/emulated/0/histSemanaElectricidad.jpg")
+        val uri9 = Uri.fromFile(file9)
         val intent = Intent()
         intent.setAction(Intent.ACTION_SEND_MULTIPLE)
         intent.type = "image/jpg"
@@ -177,8 +190,51 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         uris.add(uri)
         uris.add(uri2)
         uris.add(uri3)
+        uris.add(uri4)
+        uris.add(uri5)
+        uris.add(uri6)
+        uris.add(uri7)
+        uris.add(uri8)
+        uris.add(uri9)
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM,uris)
         startActivity(intent)
+
+    }
+
+    private fun takeSS(v: View?,nombreArchivo:String) {
+
+
+        val now = Date()
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            val mPath = Environment.getExternalStorageDirectory().toString() + "/" + nombreArchivo + ".jpg"
+
+            // create bitmap screen capture
+            v!!.isDrawingCacheEnabled = true
+            val bitmap = Bitmap.createBitmap(v.drawingCache)
+            v.isDrawingCacheEnabled = false
+
+            val imageFile = File(mPath)
+
+            val outputStream = FileOutputStream(imageFile)
+            val quality = 100
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            //setting screenshot in imageview
+            val filePath = imageFile.path
+
+            val ssbitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+            //ivpl!!.setImageBitmap(ssbitmap)
+            //sharePath = filePath;
+
+        } catch (e: Throwable) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace()
+        }
 
     }
 
@@ -266,7 +322,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
 
 
-    fun generarHistoricosAno(generarPDF:Boolean) {
+    fun generarHistoricosAno(generarPDF:Boolean,tipoImagenes:Int) {
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.1.105:8080/api/")
@@ -276,8 +332,26 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
 
+        val tipoAdd=findViewById<Spinner>(R.id.spinner2);
+        val type:String=tipoAdd.selectedItem.toString()
+        var tipoFinal=0
 
-        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesAno(3)
+        if (type=="Agua"){
+            tipoFinal=3
+        }else if (type=="Electricidad"){
+            tipoFinal=2
+
+        }else if (type=="Gas"){
+            tipoFinal=1
+        }
+
+        if(generarPDF){
+            tipoFinal=tipoImagenes
+        }else{
+            tipoFinal=tipoFinal
+        }
+
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesAno(tipoFinal)//Tipo se saca del dropdown
 
         call.enqueue(object: Callback<Collection<Medicion>> {
             override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
@@ -286,7 +360,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesAno = response.body()
-                llenarGraficoAno(medicionesAno,generarPDF)
+                llenarGraficoAno(medicionesAno,generarPDF,tipoImagenes)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -296,7 +370,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    fun generarHistoricosMes(generarPDF:Boolean) {
+    fun generarHistoricosMes(generarPDF:Boolean,tipoImagenes:Int) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.1.105:8080/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
@@ -304,9 +378,26 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             .build()
 
         val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
+        val tipoAdd=findViewById<Spinner>(R.id.spinner2);
+        val type:String=tipoAdd.selectedItem.toString()
+        var tipoFinal:Int=0
 
+        if (type=="Agua"){
+            tipoFinal=3
+        }else if (type=="Electricidad"){
+            tipoFinal=2
 
-        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesMes(3)
+        }else if (type=="Gas"){
+            tipoFinal=1
+        }
+
+        if(generarPDF){
+            tipoFinal=tipoImagenes
+        }else{
+            tipoFinal=tipoFinal
+        }
+
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesMes(tipoFinal)
 
         call.enqueue(object: Callback<Collection<Medicion>> {
             override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
@@ -315,7 +406,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesMes = response.body()
-                llenarGraficoMes(medicionesMes,generarPDF)
+                llenarGraficoMes(medicionesMes,generarPDF,tipoImagenes)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -326,7 +417,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    fun generarHistoricosSemana(generarPDF:Boolean) {
+    fun generarHistoricosSemana(generarPDF:Boolean,tipoImagenes:Int) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.1.105:8080/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
@@ -335,8 +426,26 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         val medicionesService: MedicionesService = retrofit.create(MedicionesService::class.java)
 
+        val tipoAdd=findViewById<Spinner>(R.id.spinner2);
+        val type:String=tipoAdd.selectedItem.toString()
+        var tipoFinal:Int=0
 
-        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesSemana(3)
+        if (type=="Agua"){
+            tipoFinal=3
+        }else if (type=="Electricidad"){
+            tipoFinal=2
+
+        }else if (type=="Gas"){
+            tipoFinal=1
+        }
+
+        if(generarPDF){
+            tipoFinal=tipoImagenes
+        }else{
+            tipoFinal=tipoFinal
+        }
+        val call: Call<Collection<Medicion>> = medicionesService.getMedicionesSemana(tipoFinal)
+
 
         call.enqueue(object: Callback<Collection<Medicion>> {
             override fun onResponse(call: Call<Collection<Medicion>>, response: Response<Collection<Medicion>>) {
@@ -345,7 +454,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
                     return
                 }
                 val medicionesSemana = response.body()
-                llenarGraficoSemana(medicionesSemana,generarPDF)
+                llenarGraficoSemana(medicionesSemana,generarPDF,tipoImagenes)
 
             }
             override fun onFailure(call: Call<Collection<Medicion>>, t:Throwable) {
@@ -356,7 +465,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
     }
 
 
-    fun llenarGraficoAno(mediciones:Collection<Medicion>,generarPDF:Boolean) {
+    fun llenarGraficoAno(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int) {
         val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         val annos= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -443,12 +552,21 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
         if(generarPDF){
-            takeScreenshot("histAnnoAgua")
+            val sacarGrafico = findViewById<FrameLayout>(R.id.frameLayout2)
+            if(tipoImagenes==1){
+                takeSS(sacarGrafico,"histAnnoGas")
+            }else if(tipoImagenes==2){
+                takeSS(sacarGrafico,"histAnnoElectricidad")
+            }else if(tipoImagenes==3){
+                takeSS(sacarGrafico,"histAnnoAgua")
+            }
+
+            //takeScreenshot("histAnnoAgua")
         }
 
     }
 
-    fun llenarGraficoMes(mediciones:Collection<Medicion>,generarPDF:Boolean){
+    fun llenarGraficoMes(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int){
 
         val medicionesMes= arrayOf(0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -492,12 +610,20 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
         if(generarPDF){
-            takeScreenshot("histMesAgua")
+            val sacarGrafico = findViewById<FrameLayout>(R.id.frameLayout2)
+            if(tipoImagenes==1){
+                takeSS(sacarGrafico,"histMesGas")
+            }else if(tipoImagenes==2){
+                takeSS(sacarGrafico,"histMesElectricidad")
+            }else if(tipoImagenes==3){
+                takeSS(sacarGrafico,"histMesAgua")
+            }
+            //takeScreenshot("histMesAgua")
         }
 
     }
 
-    fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean){
+    fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int){
 
         val medicionesSemana= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
@@ -556,16 +682,32 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         val textView = findViewById<TextView>(R.id.graph_view_label)
         textView.setText("Graph of Axes")
         if(generarPDF){
-            takeScreenshot("histSemanaAgua")
+            val sacarGrafico = findViewById<FrameLayout>(R.id.frameLayout2)
+
+            if(tipoImagenes==1){
+                takeSS(sacarGrafico,"histSemanaGas")
+            }else if(tipoImagenes==2){
+                takeSS(sacarGrafico,"histSemanaElectricidad")
+            }else if(tipoImagenes==3){
+                takeSS(sacarGrafico,"histSemanaAgua")
+            }
+            //takeScreenshot("histSemanaAgua")
         }
 
     }
     fun generarReportes(){
-        generarHistoricosAno(true)
+        generarHistoricosAno(true,1)
+        generarHistoricosAno(true,2)
+        generarHistoricosAno(true,3)
         //takeScreenshot("histAnnoAgua")
-        generarHistoricosMes(true)
+        generarHistoricosMes(true,1)
+        generarHistoricosMes(true,2)
+        generarHistoricosMes(true,3)
         //takeScreenshot("histMesAgua")
-        generarHistoricosSemana(true)
+        generarHistoricosSemana(true,1)
+        generarHistoricosSemana(true,2)
+        generarHistoricosSemana(true,3)
+
         //takeScreenshot("histSemanaAgua")
     }
 
@@ -576,11 +718,55 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
        if (arg0!!.id == R.id.spinner3) {
             if (position==0){
-               generarHistoricosSemana(false)
+               generarHistoricosSemana(false,0)
             }else if (position==1){
-                generarHistoricosMes(false)
+                generarHistoricosMes(false,0)
             }else if (position==2){
-                generarHistoricosAno(false)
+                generarHistoricosAno(false,0)
+            }
+
+        }
+
+        if (arg0!!.id == R.id.spinner2) {
+            if (position==0){
+                val tipoAdd=findViewById<Spinner>(R.id.spinner3);
+                val type:String=tipoAdd.selectedItem.toString()
+
+                if (type=="Ultima semana"){
+                    generarHistoricosSemana(false,0)
+
+                }else if (type=="Ultimo mes"){
+                    generarHistoricosMes(false,0)
+
+                }else if (type=="Ultimo año"){
+                    generarHistoricosAno(false,0)
+                }
+            }else if (position==1){
+                val tipoAdd=findViewById<Spinner>(R.id.spinner3);
+                val type:String=tipoAdd.selectedItem.toString()
+
+                if (type=="Ultima semana"){
+                    generarHistoricosSemana(false,0)
+
+                }else if (type=="Ultimo mes"){
+                    generarHistoricosMes(false,0)
+
+                }else if (type=="Ultimo año"){
+                    generarHistoricosAno(false,0)
+                }
+            }else if (position==2){
+                val tipoAdd=findViewById<Spinner>(R.id.spinner3);
+                val type:String=tipoAdd.selectedItem.toString()
+
+                if (type=="Ultima semana"){
+                    generarHistoricosSemana(false,0)
+
+                }else if (type=="Ultimo mes"){
+                    generarHistoricosMes(false,0)
+
+                }else if (type=="Ultimo año"){
+                    generarHistoricosAno(false,0)
+                }
             }
 
         }
