@@ -109,7 +109,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         iv = findViewById(R.id.iv)
 
-        btnSS!!.setOnClickListener { takeScreenshot("sss") }
+        //btnSS!!.setOnClickListener { takeScreenshot("sss") }
 
         btnshare!!.setOnClickListener {
             if (sharePath != "no") {
@@ -184,6 +184,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     private fun requestReadPermissions() {
 
+
         Dexter.withActivity(this)
             .withPermissions( Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE )
             .withListener(object : MultiplePermissionsListener {
@@ -211,6 +212,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             })
             .onSameThread()
             .check()
+
+
     }
 
     fun generarHistoricosDefault() {
@@ -266,7 +269,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
     fun generarHistoricosAno(generarPDF:Boolean) {
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/")
+            .baseUrl("http://192.168.1.105:8080/api/")
+            //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -294,7 +298,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun generarHistoricosMes(generarPDF:Boolean) {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/")
+            .baseUrl("http://192.168.1.105:8080/api/")
+            //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -323,7 +328,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun generarHistoricosSemana(generarPDF:Boolean) {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/")
+            .baseUrl("http://192.168.1.105:8080/api/")
+            //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
