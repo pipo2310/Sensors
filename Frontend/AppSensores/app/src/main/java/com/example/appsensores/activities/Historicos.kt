@@ -164,7 +164,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     private fun share(sharePath: String) {
 
-
+        val destinatario:String="soporte.ecokhemia@gmail.com"
         val file = File("/storage/emulated/0/histAnnoAgua.jpg")
         val uri = Uri.fromFile(file)
         val file2 = File("/storage/emulated/0/histMesAgua.jpg")
@@ -196,6 +196,9 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         uris.add(uri7)
         uris.add(uri8)
         uris.add(uri9)
+        intent.putExtra(Intent.EXTRA_EMAIL,destinatario)//No sirve
+        intent.putExtra(Intent.EXTRA_SUBJECT,"Históricos")
+        intent.putExtra(Intent.EXTRA_TEXT,"Aquí se presentan los datos históricos de su empresa")
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM,uris)
         startActivity(intent)
 
@@ -707,6 +710,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         generarHistoricosSemana(true,1)
         generarHistoricosSemana(true,2)
         generarHistoricosSemana(true,3)
+
+        Thread.sleep(500)//Por ahi se puede ir
+        Toast.makeText(this@Historicos,
+            "Imagenes de historicos generadas exitosamente",Toast.LENGTH_SHORT).show()
 
         //takeScreenshot("histSemanaAgua")
     }

@@ -1,17 +1,28 @@
 package com.example.appsensores.activities
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 
 class Semaforos : AppCompatActivity() {
+    // Variables para notificaciones
+    private var CHANNEL_ID = "personal_notification"
+    private var NOTIFICATION_ID = 1
+
     private var progressStatus = 0
     private val handler = Handler()
     private var yellowLimit1 = 45
@@ -97,6 +108,7 @@ class Semaforos : AppCompatActivity() {
         var redLimit = redLimitParam
         var tv = findViewById<TextView>(R.id.titulo)
         val res = resources
+        //desplegarNotificacion(idSem)
         val thread = Thread {
             pb!!.max = totalLimit
             while (progressStatus < totalLimit) {
@@ -122,15 +134,77 @@ class Semaforos : AppCompatActivity() {
                 handler.post {
                     pb.progress = progressStatus
                     if (progressStatus >= yellowLimit) {
+                        //showNotification("Holaaaaaaaa")
+                        //desplegarNotificacion(idSem)
                         pb.setProgressDrawable(res.getDrawable(R.drawable.yellowprogressbar));
                     }
                     if (progressStatus >= redLimit) {
                         pb.setProgressDrawable(res.getDrawable(R.drawable.redprogressbar));
+                        //desplegarNotificacion(idSem)
                     }
                 }
             }
         }
         thread.start()
+    }
+
+
+
+    // Notificar de alertas
+    private fun showNotification(message:String) {
+        val builder = NotificationCompat.Builder(this, "default")
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle("Notification Title")
+            .setContentText(message)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            //.setContentIntent(pendingIntent)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            builder.setChannelId("YOUR_PACKAGE_NAME")
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val channel = NotificationChannel(
+                "com.example.appsensores",
+                "app",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            if (notificationManager != null)
+            {
+                notificationManager.createNotificationChannel(channel)
+            }
+        }
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+    fun desplegarNotificacion( idSem : Int){
+
+        var mensaje : String = ""
+        if(idSem == 0){ // agua
+            mensaje = "El sensor de agua sobrepasa los límites"
+        }else if(idSem == 1){ // gas
+            mensaje = "El sensor de gas sobrepasa los límites"
+        }else if(idSem == 2){ // electricidad
+            mensaje = "El sensor de electricidad sobrepasa los límites"
+        }
+/*
+        var notif = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var notify=Notification.Builder(applicationContext).setContentTitle("ALERTA EN SENSOR").setContentText(mensaje).setContentTitle("ESTUPIDA").setSmallIcon(R.drawable.ic_alerta_sensor).build()
+        notify.flags = notify.flags or Notification.FLAG_AUTO_CANCEL
+        notif.notify(0,notify)
+*/
+/*
+        var builder = NotificationCompat.Builder(this, CHANNEL_1_ID)
+        builder.setSmallIcon(R.drawable.ic_alerta_sensor)
+        builder.setContentTitle("ALERTA EN SENSOR")
+        builder.setContentText(mensaje)
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        var manejadorDeNotificaciones = NotificationManagerCompat.from(this)
+        manejadorDeNotificaciones.notify(0, builder.build())
+*/
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
