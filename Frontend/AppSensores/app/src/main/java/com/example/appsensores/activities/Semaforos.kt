@@ -1,8 +1,6 @@
 package com.example.appsensores.activities
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -161,13 +159,23 @@ class Semaforos : AppCompatActivity() {
         }else if(idSem == 2){ // electricidad
             mensaje = "El sensor de electricidad sobrepasa los límites"
         }
+        val resultIntent = Intent(this, Semaforos::class.java)
+// Create the TaskStackBuilder
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+            // Add the intent, which inflates the back stack
+            addNextIntentWithParentStack(resultIntent)
+            // Get the PendingIntent containing the entire back stack
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
         val builder = NotificationCompat.Builder(this, "default")
             .setSmallIcon(R.drawable.ic_alerta_sensor)
             .setContentTitle("ALERTA EN SENSOR")
             .setContentText(mensaje)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            //.setContentIntent(pendingIntent)
+
+            .setContentIntent(resultPendingIntent)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
