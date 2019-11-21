@@ -22,6 +22,9 @@ public class TipoSensor {
         this.costo = costo;
         this.nombre = nombre;
     }
+    public TipoSensor() {
+
+    }
 
     public Integer getId_tipo() {
         return id_tipo;

@@ -19,12 +19,13 @@ import android.net.Uri
 import android.os.Environment
 import android.os.StrictMode
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.*
+import androidx.core.view.GestureDetectorCompat
 import com.example.appsensores.models.Medicion
+import com.example.appsensores.models.TipoSensor
 import com.example.appsensores.services.MedicionesService
+import com.example.appsensores.services.TiposSensorService
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
 import com.itextpdf.text.pdf.PdfWriter
@@ -50,21 +51,119 @@ import java.util.Date
 import kotlin.collections.ArrayList
 
 
-class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
+class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, GestureDetector.OnGestureListener ,GestureDetector.OnDoubleTapListener  {
+
 
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     var list_of_items2 = arrayOf("Ultima semana", "Ultimo mes", "Ultimo año");
+    var listaTipos: List<TipoSensor> = listOf(TipoSensor())
     private var btnSS: Button? = null
     private var btnshare: Button? = null
     private var btnPL: Button? = null
     private var iv: ImageView? = null
     private var sharePath = "no"
+    private var mostrarCostos = false
+
+    lateinit var myGestureDetector : GestureDetectorCompat
+
+
+    private var costosSensores = arrayOf(1.0,1.0,1.0)
+
+
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if(myGestureDetector.onTouchEvent(event)){
+            true
+        }else{
+            super.onTouchEvent(event)
+        }
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onDown(e: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        return false
+    }
+
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onDoubleTap(e: MotionEvent?): Boolean {
+      //  Toast.makeText(this@Historicos,
+        //    "Sirvió el double tap",Toast.LENGTH_SHORT).show()
+        if(mostrarCostos == false){
+            mostrarCostos = true
+            val metrica=obtenerSensorYMetricaGrafico()
+            if(metrica==0){
+                generarHistoricosSemana(false,0)
+            }else if(metrica==1){
+                generarHistoricosMes(false,0)
+            }else{
+                generarHistoricosAno(false,0)
+            }
+
+        }else{
+            mostrarCostos = false
+            val metrica=obtenerSensorYMetricaGrafico()
+            if(metrica==0){
+                generarHistoricosSemana(false,0)
+            }else if(metrica==1){
+                generarHistoricosMes(false,0)
+            }else{
+                generarHistoricosAno(false,0)
+            }
+        }
+        return true
+    }
+
+    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
+       // Toast.makeText(this@Historicos,
+         //   "OTRO double tap",Toast.LENGTH_SHORT).show()
+
+        return false
+    }
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_historicos)
         setSupportActionBar(toolbar)
 
+        myGestureDetector = GestureDetectorCompat(this,this )
+        myGestureDetector?.setOnDoubleTapListener(this)
+
+        recuperarCostos()
         //Spinner de eleccion de tipo de recurso
         spinner2!!.setOnItemSelectedListener(this)
 
@@ -103,9 +202,9 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
         requestReadPermissions()
 
-        btnSS = findViewById(R.id.btnSS)
+        //btnSS = findViewById(R.id.btnSS)
         btnshare = findViewById(R.id.btnShare)
-        btnPL = findViewById(R.id.btnPL)
+        //btnPL = findViewById(R.id.btnPL)
 
         iv = findViewById(R.id.iv)
 
@@ -117,50 +216,59 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             }
         }
 
-        btnPL!!.setOnClickListener {
+       // btnPL!!.setOnClickListener {
             //val intent = Intent(this@MainActivity, ParticularLayoutActivity::class.java)
             //startActivity(intent)
-        }
+        //}
         generarHistoricosDefault()
 
 
     }
 
-    private fun takeScreenshot(nombreArchivo:String) {
-        val now = Date()
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
+    fun recuperarCostos(){
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.1.105:8080/api/")
+            //.baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        try {
-            // image naming and path  to include sd card  appending name you choose for file
-            val mPath = Environment.getExternalStorageDirectory().toString() + "/"  +nombreArchivo+ ".jpg"
+        val costosService: TiposSensorService = retrofit.create(TiposSensorService::class.java)
 
-            // create bitmap screen capture
-            val v1 = window.decorView.rootView
-            v1.isDrawingCacheEnabled = true
-            val bitmap = Bitmap.createBitmap(v1.drawingCache)
-            v1.isDrawingCacheEnabled = false
+        val call: Call<List<TipoSensor>> = costosService.tiposSensor
 
-            val imageFile = File(mPath)
+        call.enqueue(object:Callback<List<TipoSensor>> {
+            override fun onResponse(call:Call<List<TipoSensor>>, response: Response<List<TipoSensor>>) {
+                if (!response.isSuccessful())
+                {
+                    return
+                }
+                listaTipos=response.body()
+                if(listaTipos.isNotEmpty()){
+                    // Si hay empresas mostramos la lista de ellas
+                    //crearTabla()
+                    costosSensores[0] = listaTipos[0].costo.toDouble()
+                    costosSensores[1] = listaTipos[1].costo.toDouble()
+                    costosSensores[2] = listaTipos[2].costo.toDouble()
+                }else{
+                    // Si no hay empresas mostramos un mensaje indicandolo
+                    //mostrarMensaje("No hay empresas que mostrar")
+                }
 
-            val outputStream = FileOutputStream(imageFile)
-            val quality = 100
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
-            outputStream.flush()
-            outputStream.close()
+                //val sensors = response.body()
+                //createTable(sensors)
+            }
+            override fun onFailure(call:Call<List<TipoSensor>>, t:Throwable) {
 
-            //setting screenshot in imageview
-            val filePath = imageFile.path
+            }
+        })
 
-            val ssbitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-            //iv!!.setImageBitmap(ssbitmap)
-            sharePath = filePath
 
-        } catch (e: Throwable) {
-            // Several error may come out with file handling or DOM
-            e.printStackTrace()
-        }
+
+
 
     }
+
+
 
     private fun share(sharePath: String) {
 
@@ -305,6 +413,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(11.0, "N"),
             Label(12.0, "D")
         )
+
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 13.0, 165.0, 191.0)
             .setAxes(0.0, 167.0)
@@ -467,50 +576,89 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
+    fun obtenerCosto() : Double{
+        var costo = 1.0
+        if(mostrarCostos){
 
+            val tipoAdd=findViewById<Spinner>(R.id.spinner2);
+            val type:String=tipoAdd.selectedItem.toString()
+            var tipoFinal:Int=0
+
+            if (type=="Agua"){
+                costo = costosSensores[2]
+            }else if (type=="Electricidad"){
+                costo = costosSensores[1]
+
+            }else if (type=="Gas"){
+                costo = costosSensores[0]
+            }
+        }
+        return costo
+    }
+
+    fun obtenerSensorYMetricaGrafico():Int{
+        var metrica=0
+        val tipoAdd=findViewById<Spinner>(R.id.spinner3);
+        val type:String=tipoAdd.selectedItem.toString()
+
+
+        if (type=="Ultima semana"){
+            metrica=0
+
+        }else if (type=="Ultimo mes"){
+            metrica=1
+
+        }else if (type=="Ultimo año"){
+            metrica=2
+        }
+
+        return metrica
+    }
     fun llenarGraficoAno(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int) {
+
+        val costo = obtenerCosto()
         val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         val annos= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
             when(medicion.metrica.split(" ").get(0)){
                 "January"-> {
-                    medicionesAno.set(0,medicion.valor)
+                    medicionesAno.set(0,medicion.valor*costo)
                     annos.set(0,medicion.anno)
                 }
                 "February"-> {
-                    medicionesAno.set(1,medicion.valor)
+                    medicionesAno.set(1,medicion.valor*costo)
                     annos.set(1,medicion.anno)
                 }
                 "March"-> {
-                    medicionesAno.set(2,medicion.valor)
+                    medicionesAno.set(2,medicion.valor*costo)
                     annos.set(2,medicion.anno)}
                 "April"-> {
-                    medicionesAno.set(3,medicion.valor)
+                    medicionesAno.set(3,medicion.valor*costo)
                     annos.set(3,medicion.anno)}
                 "May"-> {
-                    medicionesAno.set(4,medicion.valor)
+                    medicionesAno.set(4,medicion.valor*costo)
                     annos.set(4,medicion.anno)}
                 "June"-> {
-                    medicionesAno.set(5,medicion.valor)
+                    medicionesAno.set(5,medicion.valor*costo)
                     annos.set(5,medicion.anno)}
                 "July"-> {
-                    medicionesAno.set(6,medicion.valor)
+                    medicionesAno.set(6,medicion.valor*costo)
                     annos.set(6,medicion.anno)}
                 "August"->{
-                    medicionesAno.set(7,medicion.valor)
+                    medicionesAno.set(7,medicion.valor*costo)
                     annos.set(7,medicion.anno)}
                 "September"-> {
-                    medicionesAno.set(8,medicion.valor)
+                    medicionesAno.set(8,medicion.valor*costo)
                     annos.set(8,medicion.anno)}
                 "October"->{
-                    medicionesAno.set(9,medicion.valor)
+                    medicionesAno.set(9,medicion.valor*costo)
                     annos.set(9,medicion.anno)}
                 "November"-> {
-                    medicionesAno.set(10,medicion.valor)
+                    medicionesAno.set(10,medicion.valor*costo)
                     annos.set(10,medicion.anno)}
                 "December"->{
-                    medicionesAno.set(11,medicion.valor)
+                    medicionesAno.set(11,medicion.valor*costo)
                     annos.set(11,medicion.anno)}
                 else ->{
                     println("No sirve")}
@@ -538,8 +686,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             contador++
             i++
         }
+        var cost=1
 
-
+        if(mostrarCostos){
+            cost=cost*5
+        }
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 13.0, -3.0, 20.0)
             .setAxes(0.0, 0.0)
@@ -571,14 +722,15 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     fun llenarGraficoMes(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int){
 
+        val costo = obtenerCosto()
         val medicionesMes= arrayOf(0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
             when(medicion.metrica.split(" ").get(0)){
-                "1eek"-> medicionesMes.set(0,medicion.valor)
-                "2eek"-> medicionesMes.set(1,medicion.valor)
-                "3eek"-> medicionesMes.set(2,medicion.valor)
-                "4eek"-> medicionesMes.set(3,medicion.valor)
+                "1eek"-> medicionesMes.set(0,medicion.valor*costo)
+                "2eek"-> medicionesMes.set(1,medicion.valor*costo)
+                "3eek"-> medicionesMes.set(2,medicion.valor*costo)
+                "4eek"-> medicionesMes.set(3,medicion.valor*costo)
 
                 else ->{
                     println("No sirve")}
@@ -598,6 +750,12 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
             Label(7.0, "S3"),
             Label(10.0, "S4")
         )
+
+        var cost=1
+
+        if(mostrarCostos){
+            cost=cost*5
+        }
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 11.0, -3.0, 20.0)
             .setAxes(0.0, 0.0)
@@ -626,19 +784,20 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
 
     }
 
-    fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int){
+    fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int) {
 
+        val costo = obtenerCosto()
         val medicionesSemana= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
 
             when(medicion.metrica.split(" ").get(0)){
-                "Monday"-> medicionesSemana.set(0,medicion.valor)
-                "Tuesday"-> medicionesSemana.set(1,medicion.valor)
-                "Wednesday"-> medicionesSemana.set(2,medicion.valor)
-                "Thursday"-> medicionesSemana.set(3,medicion.valor)
-                "Friday"-> medicionesSemana.set(4,medicion.valor)
-                "Saturday"-> medicionesSemana.set(5,medicion.valor)
-                "Sunday"-> medicionesSemana.set(6,medicion.valor)
+                "Monday"-> medicionesSemana.set(0,medicion.valor*costo)
+                "Tuesday"-> medicionesSemana.set(1,medicion.valor*costo)
+                "Wednesday"-> medicionesSemana.set(2,medicion.valor*costo)
+                "Thursday"-> medicionesSemana.set(3,medicion.valor*costo)
+                "Friday"-> medicionesSemana.set(4,medicion.valor*costo)
+                "Saturday"-> medicionesSemana.set(5,medicion.valor*costo)
+                "Sunday"-> medicionesSemana.set(6,medicion.valor*costo)
 
                 else ->{
                     println("No sirve")}
@@ -669,7 +828,11 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         }
 
 
+        var cost=1
 
+        if(mostrarCostos){
+            cost=cost*5
+        }
         val graph = Graph.Builder()
             .setWorldCoordinates(-2.0, 14.0, -3.0, 20.0)
             .setAxes(0.0, 0.0)
@@ -838,3 +1001,4 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener  {
         return true
     }
 }
+
