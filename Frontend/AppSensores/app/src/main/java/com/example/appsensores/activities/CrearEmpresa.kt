@@ -11,7 +11,13 @@ import com.example.appsensores.R
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
 import com.example.appsensores.services.ServiceBuilder
+import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_crear_empresa.*
 import kotlinx.android.synthetic.main.activity_crear_sensores.*
+import kotlinx.android.synthetic.main.activity_crear_sensores.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,10 +45,10 @@ class CrearEmpresa : AppCompatActivity() {
             btnCrear.isClickable = false
             var cuenta = Cuenta()
             cuenta.nombre = nombreEmpresa.text.toString()
-            cuenta.usuario = usuario.text.toString()
+            cuenta.usuario = usuario.text.toString() // Se puede quitar
             cuenta.telefono = telefono.text.toString()
-            cuenta.email = email.text.toString()
-            cuenta.clave = clave.text.toString()
+            cuenta.email = email.text.toString() // ID
+            val clave = clave.text.toString()
             cuenta.codigo = codigo.text.toString()
             cuenta.seccion = seccion.text.toString()
 
@@ -63,6 +69,14 @@ class CrearEmpresa : AppCompatActivity() {
                         return
                     }
                     val cuenta = response.body()
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(cuenta.email, clave).addOnCompleteListener { task: Task<AuthResult> ->
+                        if (task.isSuccessful) {
+                            val firebaseUser = FirebaseAuth.getInstance().currentUser!!
+                        } else {
+                            //Registration error
+                            Snackbar.make(crear_empresa_layout, "No se pudo crear el usuario", Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
                     startActivity(intent)
                 }
                 override fun onFailure(call: Call<Cuenta>, t:Throwable) {
