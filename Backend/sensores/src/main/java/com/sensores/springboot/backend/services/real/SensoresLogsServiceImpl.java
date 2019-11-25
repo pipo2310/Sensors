@@ -7,6 +7,7 @@ import com.sensores.springboot.backend.model.entity.real.Sensores_Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class SensoresLogsServiceImpl implements ISensoresLogsService {
 
     @Autowired
-    ISensoresLogsDao iSensoresLogsDao;
+    private ISensoresLogsDao iSensoresLogsDao;
 
     @Override
     public List<Sensores_Logs> findAll() {return (List<Sensores_Logs>)this.iSensoresLogsDao.findAll(); }
@@ -27,5 +28,11 @@ public class SensoresLogsServiceImpl implements ISensoresLogsService {
 
     @Override
     public List<Medicion> getDiasHistoricos(int tipo){return this.iSensoresLogsDao.obtenerDias(tipo);}
+
+    @Override
+    @Transactional
+    public Sensores_Logs save(Sensores_Logs log) {
+        return iSensoresLogsDao.save(log);
+    }
 
 }
