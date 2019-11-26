@@ -28,7 +28,10 @@ INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nom
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('ml/s', 1, 12.3 , 20.0, 3, 'Sensor de Agua 1');
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('m1/s', 1, 12.3 , 20.0, 3 , 'Sensor de Agua 2');
 
+
+
 --Tabla Sensores Logs
+
 INSERT INTO sensores_logs VALUES ('2018-11-12 09:43:21.043412', 3 ,12.3);
 INSERT INTO sensores_logs VALUES ('2018-12-23 09:43:21.043412', 3 ,8.8);
 INSERT INTO sensores_logs VALUES ('2019-01-21 09:43:21.043412', 3 ,10.4);
@@ -57,7 +60,7 @@ INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 3 ,9.1);
 INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 3 ,6.3);
 
 -- ELECTRICIDAD
-
+INSERT INTO sensores_logs (id_sensor, valor) VALUES (2 ,1.3);
 INSERT INTO sensores_logs VALUES ('2018-11-12 09:43:21.043412', 2 ,1.3);
 INSERT INTO sensores_logs VALUES ('2018-12-23 09:43:21.043412', 2 ,1.8);
 INSERT INTO sensores_logs VALUES ('2019-01-21 09:43:21.043412', 2 ,1.4);
@@ -114,7 +117,3 @@ INSERT INTO sensores_logs VALUES ('2019-10-28 09:44:21.043412', 1 ,7.8);
 INSERT INTO sensores_logs VALUES ('2019-10-29 09:43:21.043412', 1 ,10.3);
 INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 1 ,9.1);
 INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 1 ,6.3);
-
-
-
-

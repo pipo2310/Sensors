@@ -2,10 +2,12 @@ package com.sensores.springboot.backend.controllers.real;
 
 import com.sensores.springboot.backend.model.entity.real.Medicion;
 import com.sensores.springboot.backend.model.entity.real.Sensores_Logs;
+import com.sensores.springboot.backend.model.entity.real.Sensores_logs_pk;
 import com.sensores.springboot.backend.services.real.ISensoresLogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,8 +31,15 @@ public class SensoresLogsController {
     public Collection<Medicion> index4(@RequestParam int tipo) {return this.iSensoresLogsService.getDiasHistoricos(tipo);}
 
     @PostMapping("/sensoresLogs_post")
-    public Sensores_Logs create(@RequestBody Sensores_Logs log) {
-        return iSensoresLogsService.save(log);
+    public Sensores_Logs create(@RequestParam String log) {
+        String[] elem = log.split(",");
+        Sensores_Logs senLog = new Sensores_Logs();
+        double d = Double.parseDouble(elem[1]);
+        long l = Long.parseLong(elem[0]);
+        Sensores_logs_pk spk = new Sensores_logs_pk(l);
+        senLog.setSensoresLogsPk(spk);
+        senLog.setValor(d);
+        return iSensoresLogsService.save(senLog);
     }
 
 }
