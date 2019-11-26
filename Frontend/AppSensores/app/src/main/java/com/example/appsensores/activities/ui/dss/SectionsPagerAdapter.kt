@@ -22,9 +22,9 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
         if(position == 0){
             return AguaFragment.newInstance(position + 1)
         }else if (position == 1){
-            return AguaFragment.newInstance(position + 1)
+            return GasFragment.newInstance(position + 1)
         }else {
-            return AguaFragment.newInstance(position + 1)
+            return ElectFragment.newInstance(position + 1)
         }
     }
 
