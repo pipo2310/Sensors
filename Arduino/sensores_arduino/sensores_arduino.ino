@@ -4,6 +4,7 @@
 #define FONA_TX 3
 #define FONA_RST 4
 #define FLOWSENSORPIN 6
+#define LEDLISTO 13 //led se enciende cuando setup termina
 
 //Para app
 #define ID_SENSOR_AGUA 3
@@ -18,7 +19,6 @@ SoftwareSerial *fonaSerial = &fonaSS;
 
 //Variables FONA
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 uint8_t type;
 
 
@@ -72,7 +72,7 @@ void postDatos(int id, float valor){
         uint16_t statuscode;
         int16_t length;
         char url[]  = "ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/sensoresLogs_post";
-        String jsonstring = "{\"sensoresLogsPk\":{\"id_sensor\":" + String(id) + ",\"dateTime\":\"2019-12-30T09:43:21.2999\"},\"valor\":" + String(valor) + "}";
+        String jsonstring = "{\"id_sensor\":" + String(id) + ",\"valor\":" + String(valor) + "}";
         char json[200];
         jsonstring.toCharArray(json,jsonstring.length()+1);
 
@@ -107,8 +107,15 @@ void postDatos(int id, float valor){
         }
 }
 
+void flushSerial() {
+  while (Serial.available())
+    Serial.read();
+}
+
 
 void setup() {
+  pinMode(LEDLISTO, OUTPUT); // Declare the LED as an output
+  digitalWrite(LEDLISTO, LOW);
   while (!Serial);
 
   Serial.begin(115200);
@@ -139,7 +146,8 @@ void setup() {
     default: 
       Serial.println(F("???")); break;
   }
-  
+
+ 
   // Print module IMEI number.
   char imei[16] = {0}; // MUST use a 16 character buffer for IMEI!
   uint8_t imeiLen = fona.getIMEI(imei);
@@ -147,28 +155,55 @@ void setup() {
     Serial.print("Module IMEI: "); Serial.println(imei);
   }
 
+   //Revisa Bateria FONA
+        uint16_t vbat;
+        if (! fona.getBattVoltage(&vbat)) {
+          Serial.println(F("Failed to read Batt"));
+        } else {
+          Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
+        }
+        if (! fona.getBattPercent(&vbat)) {
+          Serial.println(F("Failed to read Batt"));
+        } else {
+          Serial.print(F("Carga Bateria FONA = ")); Serial.print(vbat); Serial.println(F("%"));
+        }
+
+   //Revisa Saldo
+//   revisaSaldo();
+
   //Para la comunicacion del GPRS se tiene que definir el APN del proveedor, en este caso Kolbi
   fona.setGPRSNetworkSettings(F("kolbi3g"));
-
-  //Inicializa GPRS para conexion a internet
-  fona.enableGPRS(true);
-
+    //Inicializa GPRS para conexion a internet
+    int intentos = 10;
+   while (!fona.enableGPRS(true) && intentos != 0){
+    Serial.println("FALLO GPRS, reintentando");
+    intentos--;
+  }
 
   //Prueba si la conexion GPRS esta funcionando
   uint16_t statuscode;
   int16_t length;
-  char url[80];
-  String url_string = "google.com";
-  url_string.toCharArray(url,80);
-  if (fona.HTTP_GET_start(url, &statuscode, (uint16_t *)&length)) {
-          Serial.println("CONEXION A INTERNET EXITOSA");
-  } else Serial.println("FALLO CONEXION A INTERNET");
+  char url[80] = "http://minimalsites.com/";
+  intentos = 10;
+  while (!fona.HTTP_GET_start(url, &statuscode, (uint16_t *)&length)&& intentos != 0){
+    Serial.println("FALLO CONEXION A INTERNET, REINTENTANDO");
+    intentos--;
+    delay(2000);
+  }
+  if (intentos == 0){
+    void(* resetFunc) (void) = 0;//declare reset function at address 0
+    resetFunc(); //call reset 
+  }
+  Serial.println("CONEXION INTERNET EXITOSA");
 
-  //Para sensor Agua
+
+   //Para sensor Agua
   pinMode(FLOWSENSORPIN, INPUT);
   digitalWrite(FLOWSENSORPIN, HIGH);
   lastflowpinstate = digitalRead(FLOWSENSORPIN);
   useInterrupt(true);
+
+  digitalWrite(LEDLISTO, HIGH);//enciende led
 
 }
 
@@ -198,4 +233,23 @@ void loop() {
   litros_nuevos = 0.00;
   litros_anteriores = liters;
   delay(5000);
+}
+
+void revisaSaldo(){
+  char message[6] = "*888#";
+  char ussd[2] = "1";
+  Serial.println(message);
+  Serial.println(ussd);
+  uint16_t ussdlen;
+  fona.sendUSSD(ussd, replybuffer, 250, &ussdlen);
+  delay(7500);
+  fona.sendUSSD(message, replybuffer, 250, &ussdlen);
+  delay(7500);
+  fona.sendUSSD(ussd, replybuffer, 250, &ussdlen);
+  delay (7500);
+  fona.sendUSSD(ussd, replybuffer, 250, &ussdlen);
+  delay (7500);
+  while (fona.available()) {
+    Serial.write(fona.read());
+  }
 }
