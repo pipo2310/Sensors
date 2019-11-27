@@ -4,6 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="com.name.name.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.name.name.permission.C2D_MESSAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -12,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.IniciarSesion"/>
+        <activity android:name=".activities.DetallesSensor"></activity>
+        <activity android:name=".activities.IniciarSesion" />
         <activity android:name=".activities.Costos" />
         <activity android:name=".activities.Historicos" />
         <activity android:name=".activities.ModificarSensores" />
@@ -20,7 +29,7 @@
         <activity android:name=".activities.VistaSensores" />
         <activity android:name=".activities.ModificarLimites" />
         <activity android:name=".activities.Semaforos" />
-        <activity android:name=".activities.DetallesEmpresa"></activity>
+        <activity android:name=".activities.DetallesEmpresa" />
         <activity android:name=".activities.ModificarEmpresa" />
         <activity
             android:name=".activities.ListaDeEmpresas"
@@ -35,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

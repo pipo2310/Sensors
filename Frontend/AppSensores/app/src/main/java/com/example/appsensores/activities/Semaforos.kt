@@ -1,17 +1,26 @@
 package com.example.appsensores.activities
 
+import android.app.*
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.appsensores.R
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 
 class Semaforos : AppCompatActivity() {
+    // Variables para notificaciones
+    private var CHANNEL_ID = "personal_notification"
+    private var NOTIFICATION_ID = 1
+
     private var progressStatus = 0
     private val handler = Handler()
     private var yellowLimit1 = 45
@@ -97,6 +106,7 @@ class Semaforos : AppCompatActivity() {
         var redLimit = redLimitParam
         var tv = findViewById<TextView>(R.id.titulo)
         val res = resources
+        //desplegarNotificacion(idSem)
         val thread = Thread {
             pb!!.max = totalLimit
             while (progressStatus < totalLimit) {
@@ -122,16 +132,70 @@ class Semaforos : AppCompatActivity() {
                 handler.post {
                     pb.progress = progressStatus
                     if (progressStatus >= yellowLimit) {
+
                         pb.setProgressDrawable(res.getDrawable(R.drawable.yellowprogressbar));
                     }
                     if (progressStatus >= redLimit) {
+
                         pb.setProgressDrawable(res.getDrawable(R.drawable.redprogressbar));
+                        showNotification(idSem)
+
                     }
                 }
             }
         }
         thread.start()
     }
+
+
+
+    // Notificar de alertas
+    private fun showNotification(idSem : Int) {
+        var mensaje : String = ""
+        if(idSem == 0){ // agua
+            mensaje = "El sensor de agua sobrepasa los límites"
+        }else if(idSem == 1){ // gas
+            mensaje = "El sensor de gas sobrepasa los límites"
+        }else if(idSem == 2){ // electricidad
+            mensaje = "El sensor de electricidad sobrepasa los límites"
+        }
+        val resultIntent = Intent(this, Semaforos::class.java)
+// Create the TaskStackBuilder
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+            // Add the intent, which inflates the back stack
+            addNextIntentWithParentStack(resultIntent)
+            // Get the PendingIntent containing the entire back stack
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val builder = NotificationCompat.Builder(this, "default")
+            .setSmallIcon(R.drawable.ic_alerta_sensor)
+            .setContentTitle("ALERTA EN SENSOR")
+            .setContentText(mensaje)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+            .setContentIntent(resultPendingIntent)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            builder.setChannelId("com.example.appsensores")
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val channel = NotificationChannel(
+                "com.example.appsensores",
+                "app",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            if (notificationManager != null)
+            {
+                notificationManager.createNotificationChannel(channel)
+            }
+        }
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

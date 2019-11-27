@@ -8,11 +8,13 @@ import java.util.List;
 
 
 public interface ISensoresLogsService {
-    public List<Sensores_Logs> findAll();
+    List<Sensores_Logs> findAll();
 
-    public List<Medicion> getMesesHistoricos(int tipo);
+    List<Medicion> getMesesHistoricos(int tipo);
 
-    public List<Medicion> getSemanasHistoricos(int tipo);
+    List<Medicion> getSemanasHistoricos(int tipo);
 
-    public List<Medicion> getDiasHistoricos(int tipo);
+    List<Medicion> getDiasHistoricos(int tipo);
+
+    Sensores_Logs save(Sensores_Logs log);
 }

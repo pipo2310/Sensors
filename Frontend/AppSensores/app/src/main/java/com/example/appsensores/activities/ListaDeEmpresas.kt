@@ -1,27 +1,20 @@
 package com.example.appsensores.activities
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appsensores.R
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
-import com.example.appsensores.services.SensoresService
 import com.example.appsensores.services.ServiceBuilder
 
 import kotlinx.android.synthetic.main.activity_lista_de_empresas.*
 import kotlinx.android.synthetic.main.activity_lista_de_empresas.toolbar
-import kotlinx.android.synthetic.main.another_view.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class ListaDeEmpresas : AppCompatActivity() {
     var listaEmpresas: List<Cuenta> = listOf(Cuenta())
@@ -94,7 +87,7 @@ class ListaDeEmpresas : AppCompatActivity() {
             atributos.add(cuenta.cuentasPk)
             body.add(atributos)
         }
-        expandableListView.setAdapter(ExpandableListAdapter(this, expandableListView, header, body))
+        expandableListView.setAdapter(ExpandableListAdapterEmpresas(this, expandableListView, header, body))
     }
 
     fun mostrarMensaje(msj: String){

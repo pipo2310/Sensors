@@ -18,9 +18,9 @@ INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuar
 
 
 --Tabla Tipo Sensor
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (1, 'Gas', 12.3 , 19.5, NULL);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (2, 'Electricidad', 12.3 , 19.5,NULL);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (3, 'Agua', 12.3 , 19.5,NULL);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (1, 'Gas', 12.3 , 19.5, 1.0);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (2, 'Electricidad', 12.3 , 19.5,2.0);
+INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (3, 'Agua', 12.3 , 19.5,3.0);
 
 --TablaSensores
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('mg/m3', 1, 12.3 , 20.0, 1, 'Sensor de Gas 1');
@@ -28,7 +28,10 @@ INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nom
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('ml/s', 1, 12.3 , 20.0, 3, 'Sensor de Agua 1');
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('m1/s', 1, 12.3 , 20.0, 3 , 'Sensor de Agua 2');
 
+
+
 --Tabla Sensores Logs
+
 INSERT INTO sensores_logs VALUES ('2018-11-12 09:43:21.043412', 3 ,12.3);
 INSERT INTO sensores_logs VALUES ('2018-12-23 09:43:21.043412', 3 ,8.8);
 INSERT INTO sensores_logs VALUES ('2019-01-21 09:43:21.043412', 3 ,10.4);
@@ -56,6 +59,61 @@ INSERT INTO sensores_logs VALUES ('2019-10-29 09:43:21.043412', 3 ,10.3);
 INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 3 ,9.1);
 INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 3 ,6.3);
 
+-- ELECTRICIDAD
+INSERT INTO sensores_logs (id_sensor, valor) VALUES (2 ,1.3);
+INSERT INTO sensores_logs VALUES ('2018-11-12 09:43:21.043412', 2 ,1.3);
+INSERT INTO sensores_logs VALUES ('2018-12-23 09:43:21.043412', 2 ,1.8);
+INSERT INTO sensores_logs VALUES ('2019-01-21 09:43:21.043412', 2 ,1.4);
+INSERT INTO sensores_logs VALUES ('2019-02-10 09:43:21.043412', 2 ,1.1);
+INSERT INTO sensores_logs VALUES ('2019-03-04 09:43:21.043412', 2 ,1.9);
+INSERT INTO sensores_logs VALUES ('2019-04-16 09:43:21.043412', 2 ,1.7);
+INSERT INTO sensores_logs VALUES ('2019-05-12 09:43:21.043412', 2 ,1.9);
+INSERT INTO sensores_logs VALUES ('2019-06-03 09:43:21.043412', 2 ,1.2);
+INSERT INTO sensores_logs VALUES ('2019-07-10 09:43:21.043412', 2 ,1.3);
+INSERT INTO sensores_logs VALUES ('2019-08-14 09:43:21.043412', 2 ,1.5);
+INSERT INTO sensores_logs VALUES ('2019-09-20 09:43:21.043412', 2 ,1.8);
+INSERT INTO sensores_logs VALUES ('2019-10-10 09:43:21.043412', 2 ,1.3);
+
+INSERT INTO sensores_logs VALUES ('2019-10-3 09:43:21.043412', 2 ,7.4);
+INSERT INTO sensores_logs VALUES ('2019-10-9 09:43:21.043412', 2 ,14.7);
+INSERT INTO sensores_logs VALUES ('2019-10-17 09:43:21.043412', 2 ,6.1);
+INSERT INTO sensores_logs VALUES ('2019-10-24 09:43:21.043412', 2 ,6.3);
+INSERT INTO sensores_logs VALUES ('2019-10-28 09:43:21.043412', 2 ,12.5);
+
+INSERT INTO sensores_logs VALUES ('2019-10-25 09:43:21.043412', 2 ,5.3);
+INSERT INTO sensores_logs VALUES ('2019-10-26 09:43:21.043412', 2 ,3.1);
+INSERT INTO sensores_logs VALUES ('2019-10-27 09:43:21.043412', 2 ,18.2);
+INSERT INTO sensores_logs VALUES ('2019-10-28 09:44:21.043412', 2 ,7.8);
+INSERT INTO sensores_logs VALUES ('2019-10-29 09:43:21.043412', 2 ,10.3);
+INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 2 ,9.1);
+INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 2 ,6.3);
 
 
+-- GAS
 
+INSERT INTO sensores_logs VALUES ('2018-11-12 09:43:21.043412', 1 ,8.3);
+INSERT INTO sensores_logs VALUES ('2018-12-23 09:43:21.043412', 1 ,8.8);
+INSERT INTO sensores_logs VALUES ('2019-01-21 09:43:21.043412', 1 ,8.4);
+INSERT INTO sensores_logs VALUES ('2019-02-10 09:43:21.043412', 1 ,8.1);
+INSERT INTO sensores_logs VALUES ('2019-03-04 09:43:21.043412', 1 ,8.9);
+INSERT INTO sensores_logs VALUES ('2019-04-16 09:43:21.043412', 1 ,8.7);
+INSERT INTO sensores_logs VALUES ('2019-05-12 09:43:21.043412', 1 ,8.9);
+INSERT INTO sensores_logs VALUES ('2019-06-03 09:43:21.043412', 1 ,8.2);
+INSERT INTO sensores_logs VALUES ('2019-07-10 09:43:21.043412', 1 ,8.3);
+INSERT INTO sensores_logs VALUES ('2019-08-14 09:43:21.043412', 1 ,8.5);
+INSERT INTO sensores_logs VALUES ('2019-09-20 09:43:21.043412', 1 ,8.8);
+INSERT INTO sensores_logs VALUES ('2019-10-10 09:43:21.043412', 1 ,8.3);
+
+INSERT INTO sensores_logs VALUES ('2019-10-3 09:43:21.043412', 1 ,7.4);
+INSERT INTO sensores_logs VALUES ('2019-10-9 09:43:21.043412', 1 ,14.7);
+INSERT INTO sensores_logs VALUES ('2019-10-17 09:43:21.043412', 1 ,6.1);
+INSERT INTO sensores_logs VALUES ('2019-10-24 09:43:21.043412', 1 ,6.3);
+INSERT INTO sensores_logs VALUES ('2019-10-28 09:43:21.043412', 1 ,12.5);
+
+INSERT INTO sensores_logs VALUES ('2019-10-25 09:43:21.043412', 1 ,5.3);
+INSERT INTO sensores_logs VALUES ('2019-10-26 09:43:21.043412', 1 ,3.1);
+INSERT INTO sensores_logs VALUES ('2019-10-27 09:43:21.043412', 1 ,18.2);
+INSERT INTO sensores_logs VALUES ('2019-10-28 09:44:21.043412', 1 ,7.8);
+INSERT INTO sensores_logs VALUES ('2019-10-29 09:43:21.043412', 1 ,10.3);
+INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 1 ,9.1);
+INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 1 ,6.3);

@@ -9,7 +9,12 @@ public interface ISensoresService {
 
     public Sensores save(Sensores sensores);
 
-    public Sensores findById(Long id);
+    /**
+     * Metodo para buscar una cuenta de la base de datos
+     * @param sensorId id del sensor que se quiere buscar
+     * @return Retorna la cuenta que se encontró
+     */
+    public Sensores findById(long sensorId);
 
     public int  delete(Long id);
 }
