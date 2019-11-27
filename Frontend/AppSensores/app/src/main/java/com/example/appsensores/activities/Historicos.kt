@@ -49,6 +49,7 @@ import java.io.FileOutputStream
 import java.net.URI
 import java.util.Date
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, GestureDetector.OnGestureListener ,GestureDetector.OnDoubleTapListener  {
@@ -158,7 +159,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_historicos)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar2)
+
 
         myGestureDetector = GestureDetectorCompat(this,this )
         myGestureDetector?.setOnDoubleTapListener(this)
@@ -615,11 +617,20 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
         return metrica
     }
     fun llenarGraficoAno(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int) {
+        var minimo = 11111111111.0
+        var maximo = -1.0
 
         val costo = obtenerCosto()
         val medicionesAno= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         val annos= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
+            if(medicion.valor*costo<minimo){
+                minimo=medicion.valor*costo
+            }
+
+            if(medicion.valor*costo>maximo){
+                maximo=medicion.valor*costo
+            }
 
             when(medicion.metrica.split(" ").get(0)){
                 "January"-> {
@@ -667,6 +678,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
 
         }
 
+        if(mediciones.size != 12){
+            minimo = 0.0
+        }
+
         val listaDeMeses = arrayOf("E","F","M","A","M","J","J","A","S","O","N","D")
         var contador = ( Calendar.getInstance().get(Calendar.MONTH) ) + 1
         var i = 0
@@ -691,11 +706,21 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
         if(mostrarCostos){
             cost=cost*5
         }
+        var listTicks = arrayOf(0.0,3.0,9.0,15.0,20.0)
+        if(minimo < maximo){
+            listTicks = obtenerTicks(minimo,maximo)
+            minimo= minimo-3
+            maximo = maximo +3
+
+        }else{
+            minimo = -3.0
+            maximo = 20.0
+        }
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 13.0, -3.0, 20.0)
+            .setWorldCoordinates(-2.0, 13.0, minimo, maximo)
             .setAxes(0.0, 0.0)
             .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            .setYTicks(doubleArrayOf(listTicks[0].roundToInt().toDouble(),listTicks[1].roundToInt().toDouble(), listTicks[2].roundToInt().toDouble(), listTicks[3].roundToInt().toDouble(),listTicks[4].roundToInt().toDouble(),(maximo-3).roundToInt().toDouble()))
             //.addFunction({ x -> 170.0 }, Color.GREEN)
             .addLineGraph(points, Color.RED)
             .build()
@@ -721,10 +746,18 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
     }
 
     fun llenarGraficoMes(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int){
-
+        var minimo = 11111111111.0
+        var maximo = -1.0
         val costo = obtenerCosto()
         val medicionesMes= arrayOf(0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
+            if(medicion.valor*costo<minimo){
+                minimo=medicion.valor*costo
+            }
+
+            if(medicion.valor*costo>maximo){
+                maximo=medicion.valor*costo
+            }
 
             when(medicion.metrica.split(" ").get(0)){
                 "1eek"-> medicionesMes.set(0,medicion.valor*costo)
@@ -736,6 +769,10 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
                     println("No sirve")}
             }
 
+        }
+
+        if(mediciones.size != 4){
+            minimo = 0.0
         }
 
         val points = arrayOf(
@@ -756,11 +793,20 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
         if(mostrarCostos){
             cost=cost*5
         }
+        var listTicks = arrayOf(0.0,3.0,9.0,15.0,20.0)
+        if(minimo < maximo){
+            listTicks = obtenerTicks(minimo,maximo)
+            minimo= minimo-3
+            maximo = maximo +3
+        }else{
+            minimo = -3.0
+            maximo = 20.0
+        }
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 11.0, -3.0, 20.0)
+            .setWorldCoordinates(-2.0, 11.0, minimo, maximo)
             .setAxes(0.0, 0.0)
             .setXLabels(xLabels)
-            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            .setYTicks(doubleArrayOf(listTicks[0].roundToInt().toDouble(),listTicks[1].roundToInt().toDouble(), listTicks[2].roundToInt().toDouble(), listTicks[3].roundToInt().toDouble(),listTicks[4].roundToInt().toDouble(), (maximo-3).roundToInt().toDouble()))
             //.addFunction({ x -> 170.0 }, Color.GREEN)
             .addLineGraph(points, Color.RED)
             .build()
@@ -768,8 +814,8 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
         val graphView = findViewById<GraphView>(R.id.graph_view)
         graphView.setGraph(graph)
         setTitle("Historicos Mensuales")
-        val textView = findViewById<TextView>(R.id.graph_view_label)
-        textView.setText("Graph of Axes")
+        //val textView = findViewById<TextView>(R.id.graph_view_label)
+       // textView.setText("Graph of Axes")
         if(generarPDF){
             val sacarGrafico = findViewById<FrameLayout>(R.id.frameLayout2)
             if(tipoImagenes==1){
@@ -785,10 +831,18 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
     }
 
     fun llenarGraficoSemana(mediciones:Collection<Medicion>,generarPDF:Boolean,tipoImagenes:Int) {
-
+        var minimo = 11111111111.0
+        var maximo = -1.0
         val costo = obtenerCosto()
         val medicionesSemana= arrayOf(0.0,0.0,0.0,0.0,0.0,0.0,0.0)
         for (medicion in mediciones){
+            if(medicion.valor*costo<minimo){
+                minimo=medicion.valor*costo
+            }
+
+            if(medicion.valor*costo>maximo){
+                maximo=medicion.valor*costo
+            }
 
             when(medicion.metrica.split(" ").get(0)){
                 "Monday"-> medicionesSemana.set(0,medicion.valor*costo)
@@ -827,17 +881,29 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
             ticks+=2
         }
 
-
+        if(mediciones.size != 7){
+            minimo = 0.0
+        }
         var cost=1
 
         if(mostrarCostos){
             cost=cost*5
         }
+
+        var listTicks = arrayOf(0.0,3.0,7.0,12.0,15.0)
+        if(minimo < maximo){
+            listTicks = obtenerTicks(minimo,maximo)
+            minimo= minimo-3
+            maximo = maximo +3
+        }else{
+            minimo = -3.0
+            maximo = 20.0
+        }
         val graph = Graph.Builder()
-            .setWorldCoordinates(-2.0, 14.0, -3.0, 20.0)
+            .setWorldCoordinates(-2.0, 14.0, minimo, maximo)
             .setAxes(0.0, 0.0)
             .setXLabels(xLabelsDays)
-            .setYTicks(doubleArrayOf(0.0,5.0, 10.0, 15.0))
+            .setYTicks(doubleArrayOf(listTicks[0].roundToInt().toDouble(),listTicks[1].roundToInt().toDouble(), listTicks[2].roundToInt().toDouble(), listTicks[3].roundToInt().toDouble(),listTicks[4].roundToInt().toDouble(), (maximo-3).roundToInt().toDouble()))
             //.addFunction({ x -> 2.0 }, Color.GREEN)
             .addLineGraph(pointsDays, Color.RED)
             .build()
@@ -881,6 +947,18 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
         //takeScreenshot("histSemanaAgua")
     }
 
+    fun obtenerTicks(minimo :Double , maximo:Double ) : Array<Double> {
+        var listaTicks = arrayOf(0.0,0.0,0.0,0.0,0.0)
+        val intervalo = (maximo-minimo)/5
+        var i=minimo;
+        var index = 0
+        while(i<maximo){
+            listaTicks.set(index, i)
+            i+=intervalo
+            index++
+        }
+        return listaTicks
+    }
 
 
 
