@@ -8,6 +8,7 @@
 
 //Para app
 #define ID_SENSOR_AGUA 3
+#define ID_SENSOR_GAS 1
 
 // this is a large buffer for replies
 char replybuffer[255];
@@ -20,6 +21,10 @@ SoftwareSerial *fonaSerial = &fonaSS;
 //Variables FONA
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 uint8_t type;
+
+//Variables sensor de presion
+const float SensorOffset = 37.0;
+int fullScale = 922; // max pressure (span) adjust
 
 
 //Variables y funciones para sensor de agua, extraido de https://github.com/adafruit/Adafruit-Flow-Meter/blob/master/Adafruit_FlowMeter.pde
@@ -232,6 +237,19 @@ void loop() {
   // Espera
   litros_nuevos = 0.00;
   litros_anteriores = liters;
+
+  //Sensor de presion
+  // read the input on analog pin 0:
+  float sensorValue = (analogRead(A0)-SensorOffset)*500.0 / (fullScale - SensorOffset); //Do maths for calibration
+  // print out the value you read:
+  Serial.print("Air Pressure: ");  
+  Serial.print(sensorValue,2);
+  Serial.println(" kPa");
+  //Hace post si el valor de presion es mayor a 2kPA
+  if (sensorValue > 2.0){
+    postDatos(ID_SENSOR_GAS,sensorValue);
+  }
+  
   delay(5000);
 }
 
