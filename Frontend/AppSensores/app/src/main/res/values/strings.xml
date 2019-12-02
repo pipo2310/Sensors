@@ -12,7 +12,6 @@
     </string-array>
     <string name="nombre_usuario">Nombre de Usuario</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
-    <string name="iniciar_sesion_google">Iniciar Sesión con Google</string>
     <string name="sign_out">Cerrar Sesión</string>
 
     <string name="google_status_fmt">Usuario Google: %s</string>
@@ -22,4 +21,11 @@
     <string name="olvido_contrasena">Olvidó su Contraseña?</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
     <string name="logo_de_la_empresa">Logo de la empresa</string>
+    <string name="iniciar_sesion_codigo">Iniciar sesión con código de la empresa</string>
+    <string name="codigo">Código</string>
+    <string name="iniciar_sesion_google">Iniciar sesión con Google</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="iniciar_sesion_correo">Iniciar sesión con correo electrónico</string>
+    <string name="empresa">Nombre de la empresa</string>
+    <string name="enviar_correo">Enviar correo electrónico</string>
 </resources>

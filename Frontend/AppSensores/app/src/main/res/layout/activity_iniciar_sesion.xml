@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/iniciar_sesion_layout"
     android:fitsSystemWindows="true"
-    android:background="@drawable/inicio_background"
-    >
+    android:background="@drawable/inicio_background">
 
     <LinearLayout
         android:orientation="vertical"
@@ -25,62 +23,167 @@
             android:contentDescription="@string/logo_de_la_empresa"
             android:src="@mipmap/logo_round" />
 
-        <EditText
-            android:id="@+id/nombre_usuario_editText"
+
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:ems="10"
-            android:inputType="textEmailAddress|textPersonName"
-            android:hint="@string/nombre_usuario"
-            android:background="@drawable/edit_text_background"
-            android:layout_gravity="center_horizontal"
-            android:drawableStart="@drawable/ic_user"
-            android:drawableLeft="@drawable/ic_user"
-            android:padding="10dp"
-            android:drawablePadding="10dp"
-            android:importantForAutofill="no" />
-
-        <EditText
-            android:id="@+id/contrasena_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="@string/contrasena"
-            android:background="@drawable/edit_text_background"
-            android:layout_gravity="center_horizontal"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableLeft="@drawable/ic_lock"
-            android:padding="10dp"
-            android:drawablePadding="10dp"
-            android:importantForAutofill="no" />
-
-        <TextView
-            android:id="@+id/olvido_contrasena"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/olvido_contrasena"
-            android:onClick="forgotPassword"
-            android:clickable="true"
-            android:textColor="@color/link"
-            android:layout_gravity="end"
-            android:focusable="true" />
+            >
+            <EditText
+                android:id="@+id/correo_electronico_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="@string/correo_electronico"
+                android:background="@drawable/edit_text_background"
+                android:color="@color/colorAzul"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/ic_user" android:drawableLeft="@drawable/ic_user"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:importantForAutofill="no"
+            />
 
+            <EditText
+                android:id="@+id/empresa_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="@string/empresa"
+                android:background="@drawable/edit_text_background"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/ic_business"
+                android:drawableLeft="@drawable/ic_business"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:importantForAutofill="no"
+                android:visibility="gone"
+            />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            >
+            <EditText
+                android:id="@+id/contrasena_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:hint="@string/contrasena"
+                android:background="@drawable/edit_text_background"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawableEnd="@drawable/ic_visibility_off"
+                android:drawableRight="@drawable/ic_visibility_off"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:importantForAutofill="no"
+            />
+
+            <EditText
+                android:id="@+id/codigo_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:hint="@string/codigo"
+                android:background="@drawable/edit_text_background"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawableEnd="@drawable/ic_visibility_off"
+                android:drawableRight="@drawable/ic_visibility_off"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:importantForAutofill="no"
+                android:visibility="gone"
+            />
+
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/olvido_contrasena_grid"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_marginBottom="5dp"
+            >
+
+            <TextView
+                android:id="@+id/olvido_contrasena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/olvido_contrasena"
+                android:clickable="true"
+                android:textColor="@color/link"
+                android:layout_gravity="end"
+                android:focusable="true"
+            />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            >
         <Button
             android:id="@+id/iniciar_sesion_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:text="@string/iniciar_sesion"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:background="@drawable/boton_inicio"
             android:shadowColor="@color/colorAccent"
+            />
+
+        <Button
+            android:id="@+id/enviar_correo_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enviar_correo"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:background="@drawable/boton_inicio"
+            android:shadowColor="@color/colorAccent"
+            android:visibility="gone"
+            />
+        </GridLayout>
+
+        <Button
+            android:id="@+id/iniciar_sesion_codigo_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="@string/iniciar_sesion_codigo"
+            android:textAllCaps="false"
+            android:background="@drawable/boton_grad_blanco"
+            android:textColor="#7F7F7F"
+            android:layout_margin="3dp"
+            />
+
+        <Button
+            android:id="@+id/iniciar_sesion_correo_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="@string/iniciar_sesion_correo"
+            android:textAllCaps="false"
+            android:background="@drawable/boton_grad_blanco"
+            android:textColor="#7F7F7F"
+            android:layout_margin="3dp"
+            android:visibility="gone"
             />
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
@@ -90,6 +193,7 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/iniciar_sesion_google"
             />
+
 
     </LinearLayout>
 </ScrollView>

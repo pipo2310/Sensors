@@ -3,6 +3,8 @@ package com.example.appsensores.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
+import android.text.method.SingleLineTransformationMethod
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -13,9 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -26,6 +26,8 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
 
+    private var emailAuth: Boolean = true
+
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,11 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
         iniciar_sesion_button.setOnClickListener(this)
         iniciar_sesion_google_button.setOnClickListener(this)
         olvido_contrasena.setOnClickListener(this)
+        iniciar_sesion_codigo_button.setOnClickListener(this)
+        iniciar_sesion_correo_button.setOnClickListener(this)
+        contrasena_editText.setOnClickListener(this)
+        codigo_editText.setOnClickListener(this)
+        enviar_correo_button.setOnClickListener(this)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -55,16 +62,6 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
         updateUI(currentUser)
 
     }
-
-    //TODO: Poner esto en la creación del usuario
-//    this.firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task: Task<AuthResult> ->
-//        if (task.isSuccessful) {
-//            //Registration OK
-//            val firebaseUser = this.firebaseAuth.currentUser!!
-//        } else {
-//            //Registration error
-//        }
-//    }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -89,76 +86,125 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
-
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success")
-                        val user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Snackbar.make(iniciar_sesion_layout, "Authentication Fallida.", Snackbar.LENGTH_SHORT).show()
-                        updateUI(null)
-                    }
+        auth.fetchSignInMethodsForEmail(acct.email.toString())
+            .addOnCompleteListener(this) { task ->
+                val isNewUser = task.result?.signInMethods?.isEmpty()
+                if (isNewUser!!) {
+                    signOut()
+                    Toast.makeText(this,"El correo ${acct.email} no se encuentra registrado en el sistema.",Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+                    val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+                    auth.signInWithCredential(credential).addOnCompleteListener(this){
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithCredential:success")
+                                Toast.makeText(this,"Authentication Exitosa",Toast.LENGTH_SHORT).show()
+                                updateUI(auth.currentUser)
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithCredential:failure", task.exception)
+                                Snackbar.make(iniciar_sesion_layout, "Authentication Fallida.", Snackbar.LENGTH_SHORT).show()
+                                updateUI(null)
+                            }
+                        }
                 }
+            }
+
     }
 
-    private fun signInGoogle() {
+    private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun signIn() {
-
-        var user = findViewById<EditText>(R.id.nombre_usuario_editText).text.toString()
-        //TODO:Obtener email de la base dependiendo de la entrada del usuario
-        var email = user
-        var password = findViewById<EditText>(R.id.contrasena_editText).text.toString()
-        // TODO: esto no se puede utilizar debido a error con las dependencias y duplicados de clases generados, buscar solución
-        //        println(BCryptPasswordEncoder().encode(password))
-
-        if(!email.isEmpty() && !password.isEmpty()){
-            this.auth.signInWithEmailAndPassword(email,password).addOnCompleteListener ( this, OnCompleteListener<AuthResult> { task ->
-                if (task.isSuccessful) {
-                    updateUI(auth.currentUser)
-                    Toast.makeText(this, "Authentication Exitosa", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, "Authentication Fallida", Toast.LENGTH_SHORT).show()
+    private fun signInWithEmail() {
+        val email = findViewById<EditText>(R.id.correo_electronico_editText).text.toString()
+        val password = findViewById<EditText>(R.id.contrasena_editText).text.toString()
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            this.auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        updateUI(auth.currentUser)
+                        Toast.makeText(this, "Authentication Exitosa", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "Authentication Fallida", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
-            })
-        }else{
+        } else{
             Toast.makeText(this, "Por favor llene los campos", Toast.LENGTH_SHORT).show()
         }
-
-        auth.currentUser?.sendEmailVerification()
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                    }
-                }
     }
 
-    private fun forgotPassword(){
-        // TODO: utilizar firebase para ello
-        //TODO: enviar un correo electrónico al usuario que lo requiera, para cambiar la contraseña, hacer tambíen vista para cambiar la contraseña al recivir un código
-        println("password send to email")
-        var user = findViewById<EditText>(R.id.nombre_usuario_editText).text.toString()
-        //TODO:Obtener email de la base dependiendo de la entrada del usuario
-        var email = user
-        auth.sendPasswordResetEmail(email)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                    }
+    private fun signInWithCode() {
+        val business = findViewById<EditText>(R.id.empresa_editText).text.toString()
+        val code = findViewById<EditText>(R.id.codigo_editText).text.toString()
+        if (business.isNotEmpty() && code.isNotEmpty()) {
+            // TODO: un mejor método para verificar el nombre y el código
+//            val cuentasService: CuentasService = ServiceBuilder.buildService(CuentasService::class.java)
+//            val call: Call<MutableList<Cuenta>> = cuentasService.cuentas
+//            call.enqueue(object: Callback<MutableList<Cuenta>> {
+//                    override fun onResponse(call: Call<MutableList<Cuenta>>, response: Response<MutableList<Cuenta>>) {
+//                        if (response.isSuccessful){
+//                            val cuentas = response.body()
+//                            if(cuentas.any()){
+//                                for (i in 0 until cuentas.size){
+//                                    if(cuentas[i].nombre.toString().toLowerCase() == business.toLowerCase() && cuentas[i].codigo == code){
+//                                        signInAnonymously(business)
+//                                    }else{
+//                                        Toast.makeText(null,"Datos incorrectos",Toast.LENGTH_SHORT).show()
+//                                    }
+//                                }
+//                            }else{
+//                                Toast.makeText(parent,"No hay empresas registradas por el momento",Toast.LENGTH_SHORT).show()
+//                            }
+//                        }else{
+//                            Toast.makeText(parent,"Error del sistema.",Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                override fun onFailure(call: Call<MutableList<Cuenta>>?, t: Throwable?) {
+//                    Toast.makeText(parent,"Error del sistema 2.",Toast.LENGTH_SHORT).show()
+//                }
+//            })
+            signInAnonymously(business)
+        } else {
+            Toast.makeText(this, "Por favor llene los campos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun signInAnonymously(business: String){
+        auth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    updateUI(auth.currentUser)
+                    Toast.makeText(this, "Usuario Anónimo de $business", Toast.LENGTH_SHORT).show()
+                } else {
+                    updateUI(null)
+                    Toast.makeText(this, "Authentication Fallida", Toast.LENGTH_SHORT).show()
                 }
+            }
+    }
+
+    private fun signIn() {
+        if(emailAuth) {
+            signInWithEmail()
+        }else{
+            signInWithCode()
+        }
     }
 
     private fun signOut() {
+        val user = auth.currentUser
+        if(user != null) {
+            if (user.isAnonymous) {
+                user.delete().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User account deleted.")
+                    }
+                }
+            }
+        }
         // Firebase sign out
         auth.signOut()
         // Google sign out
@@ -167,27 +213,113 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun forgotPassword(){
+        println("password send to email")
+        val email = findViewById<EditText>(R.id.correo_electronico_editText).text.toString()
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Correo electrónico enviado a $email", Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(this, "Error no se logró enviar el correo a $email", Toast.LENGTH_LONG).show()
+                }
+            }
+        showSignInEmail()
+    }
+
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             intent = Intent(this, MainActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
             finish()
+        }else{
+            showSignInEmail()
         }
     }
 
+    /**
+     * Cambia como se muestra la pantalla de inicio, a un inicio con el códgio de la empresa
+     */
+    private fun showForgotPassword() {
+        enviar_correo_button.visibility = View.VISIBLE
+        iniciar_sesion_correo_button.visibility = View.VISIBLE
+
+        olvido_contrasena_grid.visibility = View.GONE
+        contrasena_editText.visibility = View.GONE
+        olvido_contrasena.visibility = View.GONE
+        iniciar_sesion_codigo_button.visibility = View.GONE
+        iniciar_sesion_google_button.visibility = View.GONE
+        iniciar_sesion_button.visibility = View.GONE
+
+    }
+
+
+    /**
+     * Cambia como se muestra la pantalla de inicio, a un inicio con el códgio de la empresa
+     */
+    private fun showSignInCode() {
+        emailAuth = false
+        empresa_editText.visibility = View.VISIBLE
+        codigo_editText.visibility = View.VISIBLE
+        iniciar_sesion_correo_button.visibility = View.VISIBLE
+
+        correo_electronico_editText.visibility = View.GONE
+        contrasena_editText.visibility = View.GONE
+        olvido_contrasena.visibility = View.GONE
+        iniciar_sesion_codigo_button.visibility = View.GONE
+        iniciar_sesion_google_button.visibility = View.GONE
+    }
+
+    /**
+     * Cambia como se muestra la pantalla de inicio, a un inicio con correo electrónico.
+     */
+    private fun showSignInEmail() {
+        emailAuth = true
+        empresa_editText.visibility = View.GONE
+        codigo_editText.visibility = View.GONE
+        iniciar_sesion_correo_button.visibility = View.GONE
+        enviar_correo_button.visibility = View.GONE
+
+        correo_electronico_editText.visibility = View.VISIBLE
+        contrasena_editText.visibility = View.VISIBLE
+        olvido_contrasena_grid.visibility = View.VISIBLE
+        olvido_contrasena.visibility = View.VISIBLE
+        iniciar_sesion_button.visibility = View.VISIBLE
+        iniciar_sesion_codigo_button.visibility = View.VISIBLE
+        iniciar_sesion_google_button.visibility = View.VISIBLE
+    }
+
+    private fun togglePassword(passwordEditText: EditText) {
+        if (passwordEditText.transformationMethod.javaClass.simpleName == "PasswordTransformationMethod") {
+            passwordEditText.transformationMethod = SingleLineTransformationMethod()
+            passwordEditText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.ic_visibility, 0)
+        }
+        else {
+            passwordEditText.transformationMethod = PasswordTransformationMethod()
+            passwordEditText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.ic_visibility_off, 0)
+        }
+        passwordEditText.setSelection(passwordEditText.text.length)
+    }
+
+    /**
+     * Lista de acciones al hacer clic en cada botón
+     */
     override fun onClick(v: View?) {
-        val i = v?.id
-        when(i){
-            R.id.iniciar_sesion_google_button -> signInGoogle()
+        when(v?.id){
+            R.id.contrasena_editText -> togglePassword(contrasena_editText)
+            R.id.codigo_editText -> togglePassword(codigo_editText)
+            R.id.iniciar_sesion_google_button -> signInWithGoogle()
             R.id.iniciar_sesion_button -> signIn()
-            R.id.olvido_contrasena -> forgotPassword()
+            R.id.olvido_contrasena -> showForgotPassword()
+            R.id.iniciar_sesion_codigo_button -> showSignInCode()
+            R.id.iniciar_sesion_correo_button -> showSignInEmail()
+            R.id.enviar_correo_button -> forgotPassword()
         }
     }
 
     companion object {
         private const val TAG = "GoogleActivity"
         private const val RC_SIGN_IN = 9001
-        private const val RC_SIGN_OUT = 9002
     }
 }
