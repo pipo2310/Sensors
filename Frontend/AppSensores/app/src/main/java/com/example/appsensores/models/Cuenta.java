@@ -14,16 +14,10 @@ public class Cuenta {
     private String telefono;
 
     @Expose
-    private String clave;
-
-    @Expose
     private String seccion;
 
     @Expose
     private String email;
-
-    @Expose
-    private String usuario;
 
     @Expose
     private String nombre;
@@ -59,28 +53,12 @@ public class Cuenta {
         this.telefono = telefono;
     }
 
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getNombre() {

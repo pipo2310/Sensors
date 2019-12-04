@@ -13,10 +13,13 @@ import android.widget.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.appsensores.R
+import com.example.appsensores.utilities.Constants
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 
 
 class Semaforos : AppCompatActivity() {
+    private val c: Constants = Constants()
     // Variables para notificaciones
     private var CHANNEL_ID = "personal_notification"
     private var NOTIFICATION_ID = 1
@@ -200,6 +203,21 @@ class Semaforos : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
+        var user = FirebaseAuth.getInstance().currentUser
+        if(user!!.email == c.ADMIN){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = true
+            menu.findItem(R.id.empresas).isVisible = true
+        }
+        else if(user != null){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }else {
+            menu.findItem(R.id.costos).isVisible = false
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }
         return true
     }
 

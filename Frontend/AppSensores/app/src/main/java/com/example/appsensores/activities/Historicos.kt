@@ -26,6 +26,7 @@ import com.example.appsensores.models.Medicion
 import com.example.appsensores.models.TipoSensor
 import com.example.appsensores.services.MedicionesService
 import com.example.appsensores.services.TiposSensorService
+import com.example.appsensores.utilities.Constants
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
 import com.itextpdf.text.pdf.PdfWriter
@@ -54,7 +55,7 @@ import kotlin.math.roundToInt
 
 class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, GestureDetector.OnGestureListener ,GestureDetector.OnDoubleTapListener  {
 
-
+    private val c: Constants = Constants()
     var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
     var list_of_items2 = arrayOf("Ultima semana", "Ultimo mes", "Ultimo año");
     var listaTipos: List<TipoSensor> = listOf(TipoSensor())
