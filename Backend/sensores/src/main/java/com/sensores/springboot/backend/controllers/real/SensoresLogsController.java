@@ -1,9 +1,6 @@
 package com.sensores.springboot.backend.controllers.real;
 
-import com.sensores.springboot.backend.model.entity.real.Logs_Post;
-import com.sensores.springboot.backend.model.entity.real.Medicion;
-import com.sensores.springboot.backend.model.entity.real.Sensores_Logs;
-import com.sensores.springboot.backend.model.entity.real.Sensores_logs_pk;
+import com.sensores.springboot.backend.model.entity.real.*;
 import com.sensores.springboot.backend.services.real.ISensoresLogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +26,9 @@ public class SensoresLogsController {
 
     @GetMapping("/sensoresLogs_dia")
     public Collection<Medicion> index4(@RequestParam int tipo) {return this.iSensoresLogsService.getDiasHistoricos(tipo);}
+
+    @GetMapping("/valorSemaforo")
+    public Collection<ValorSemaforo> index5(@RequestParam int tipo){return this.iSensoresLogsService.getValorSemaforo(tipo);}
 /*
     @PostMapping("/sensoresLogs_post")
     public Sensores_Logs create(@RequestBody Logs_Post log) {

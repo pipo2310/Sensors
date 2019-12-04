@@ -11,10 +11,10 @@ INSERT INTO test (test_pk, description) VALUES (4,'asdkjnsakjda');
 -- Real
 
 -- Tabla Cuentas
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (1,true, '87334455', '123', 'Alimentos', 'walmart@gmail.com', 'kat', 'Walmart', '9F4636P3');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (2,true, '87592234', '456', 'Alimentos', 'florida@gmail.com', 'cris', 'Florida Bebidas', 'XCGPQU8V');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (3,true, '86265544', '789', 'Alimentos', 'wal@gmail.com', 'wal', 'Perimercados', 'GZRAK38Z');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (4,true, '87654533', '100', 'Alimentos', 'jav@gmail.com', 'jav', 'Automercado', '3CDWV48H');
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo) VALUES (1,true, '87334455',  'Alimentos', 'walmart@gmail.com',  'Walmart', '9F4636P3');
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo) VALUES (2,true, '87592234',  'Alimentos', 'florida@gmail.com',  'Florida Bebidas', 'XCGPQU8V');
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo) VALUES (3,true, '86265544',  'Alimentos', 'wal@gmail.com',      'Perimercados', 'GZRAK38Z');
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo) VALUES (4,true, '87654533',  'Alimentos', 'jav@gmail.com',      'Automercado', '3CDWV48H');
 
 
 --Tabla Tipo Sensor

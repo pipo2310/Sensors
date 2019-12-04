@@ -52,6 +52,20 @@ import java.io.Serializable;
         "        AND s.tipo = :tipo  GROUP BY year, day" , resultSetMapping = "mapeoDias")
 
 
+@SqlResultSetMapping( name = "mapeoSemaforo",
+        classes = {
+                @ConstructorResult(targetClass = ValorSemaforo.class,
+                        columns = {
+                                @ColumnResult(name = "day"),
+                                @ColumnResult(name = "Sumatoria")
+                        })
+        })
+@NamedNativeQuery(name = "Sensores_Logs.obtenerValorSem", query = "select  to_char(date_time , 'Day' ) as day, sum(sl.valor) as Sumatoria\n" +
+        "        from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk\n" +
+        "        where sl.date_time >= now()::date + interval '1h'\n" +
+        "        AND s.tipo = :tipo GROUP BY day;" , resultSetMapping = "mapeoSemaforo")
+
+
 
 
 
