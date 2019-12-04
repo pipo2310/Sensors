@@ -12,8 +12,10 @@ import com.example.appsensores.R
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
 import com.example.appsensores.services.ServiceBuilder
+import com.example.appsensores.utilities.Constants
 import com.example.appsensores.utilities.Validacion
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_lista_de_empresas.toolbar
 import kotlinx.android.synthetic.main.activity_modificar_empresa.*
 import retrofit2.Call
@@ -23,6 +25,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ModificarEmpresa : AppCompatActivity() {
+    private val c: Constants = Constants()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,11 +147,30 @@ class ModificarEmpresa : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
+        var user = FirebaseAuth.getInstance().currentUser
+        if(user!!.email == c.ADMIN){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = true
+            menu.findItem(R.id.empresas).isVisible = true
+        }
+        else if(user != null){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }else {
+            menu.findItem(R.id.costos).isVisible = false
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         if(item.itemId == R.id.sensores){
             intent = Intent(this, VistaSensores::class.java)
             startActivity(intent)
@@ -156,6 +178,18 @@ class ModificarEmpresa : AppCompatActivity() {
         {
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if (item.itemId == R.id.costos)
+        {
+            intent = Intent(this, Costos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)
+        }else if(item.itemId == R.id.cerrar_sesion){
+            finishAffinity()
+            setResult(R.id.cerrar_sesion)
+            startActivity(Intent(this, IniciarSesion::class.java))
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
             startActivity(intent)
         }else if (item.itemId == R.id.empresas)
         {

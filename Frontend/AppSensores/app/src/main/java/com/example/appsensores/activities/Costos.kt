@@ -13,6 +13,8 @@ import com.example.appsensores.models.Medicion
 import com.example.appsensores.models.TipoSensor
 import com.example.appsensores.services.MedicionesService
 import com.example.appsensores.services.TiposSensorService
+import com.example.appsensores.utilities.Constants
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class Costos : AppCompatActivity() {
-
+    private val c: Constants = Constants()
     var tipos_sensores = emptyList<TipoSensor>()
     var costo_agua = 0.0F
     var costo_elec = 0.0F
@@ -150,6 +152,21 @@ class Costos : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
+        var user = FirebaseAuth.getInstance().currentUser
+        if(user!!.email == c.ADMIN){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = true
+            menu.findItem(R.id.empresas).isVisible = true
+        }
+        else if(user != null){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }else {
+            menu.findItem(R.id.costos).isVisible = false
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }
         return true
     }
 
@@ -174,6 +191,9 @@ class Costos : AppCompatActivity() {
             finishAffinity()
             setResult(R.id.cerrar_sesion)
             startActivity(Intent(this, IniciarSesion::class.java))
+        }else if(item.itemId == R.id.historicos){
+            intent = Intent(this, Historicos::class.java)
+            startActivity(intent)
         }else if (item.itemId == R.id.empresas)
         {
             intent = Intent(this, ListaDeEmpresas::class.java)

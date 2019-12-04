@@ -292,8 +292,7 @@ class VistaSensores : AppCompatActivity() {
             intent = Intent(this, ListaDeEmpresas::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
-        }
-        else{
+        }else{
             super.onOptionsItemSelected(item)
         }
         return true
