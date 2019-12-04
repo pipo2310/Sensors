@@ -8,14 +8,12 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import android.widget.Button
 import com.example.appsensores.R
+import com.example.appsensores.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    //var list_of_items = arrayOf("Agua", "Gas", "Electricidad");
-    //var spinner: Spinner? = null;
-    //var textView_msg: TextView? = null;
-    //var tipo=""
+    private val c: Constants = Constants()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,46 +25,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        /*
-        var prob= findViewById<Button>(R.id.prueba);
-        prueba.setOnClickListener {
-            intent = Intent(this, CrearSensores::class.java)
-            startActivity(intent);
-        }
-        var agregarProb= findViewById<Button>(R.id.button);
-        agregarProb.setOnClickListener {
-            var nombre = findViewById<EditText>(R.id.editText2);
-            ;
-            //Tipo se cambia cuando se selecciona
-            //tipo.selec.toString()
-            // var tipo = spinner.getSelectedItem().toString()
-            //var tipo = findViewById<EditText>(R.id.tipo);
-            var unidad = findViewById<EditText>(R.id.editText5);
-
-            intent = Intent(this, VistaSensores::class.java)
-            startActivity(intent);
-        }
-
-
-
-        spinner!!.setOnItemSelectedListener(this)
-
-        // Create an ArrayAdapter using a simple spinner layout and languages array
-        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
-        // Set layout to use when the list of choices appear
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        // Set Adapter to Spinner
-        spinner!!.setAdapter(aa)
-
-        //Button agregarProb = findViewById(R.id.button);
-        //Button agregarProb = clearFindViewByIdCache(R.id.button);
-*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
+        var user = FirebaseAuth.getInstance().currentUser
+        if(user!!.email == c.ADMIN){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = true
+            menu.findItem(R.id.empresas).isVisible = true
+        }
+        else if(user != null){
+            menu.findItem(R.id.costos).isVisible = true
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }else {
+            menu.findItem(R.id.costos).isVisible = false
+            menu.findItem(R.id.sensores).isVisible = false
+            menu.findItem(R.id.empresas).isVisible = false
+        }
         return true
     }
 

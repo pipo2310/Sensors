@@ -61,8 +61,6 @@ class DetallesEmpresa : AppCompatActivity() {
     fun llenarCampos(cuenta :Cuenta){
         val nombreEmpresa = findViewById<TextView>(R.id.nombreEmpresa)
         nombreEmpresa.setText(cuenta.nombre.toString())
-        val usuario = findViewById<TextView>(R.id.usuario)
-        usuario.setText(cuenta.usuario)
         val telefono = findViewById<TextView>(R.id.telefono)
         telefono.setText(cuenta.telefono)
         val email = findViewById<TextView>(R.id.email)

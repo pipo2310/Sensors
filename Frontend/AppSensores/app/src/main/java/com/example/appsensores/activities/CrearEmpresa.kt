@@ -7,16 +7,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.appsensores.R
 import com.example.appsensores.models.Cuenta
 import com.example.appsensores.services.CuentasService
 import com.example.appsensores.services.ServiceBuilder
-import kotlinx.android.synthetic.main.activity_crear_sensores.*
+import com.example.appsensores.utilities.Validacion
+import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_crear_empresa.*
+import kotlinx.android.synthetic.main.activity_crear_sensores.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CrearEmpresa : AppCompatActivity() {
 
@@ -27,7 +32,6 @@ class CrearEmpresa : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val nombreEmpresa = findViewById<EditText>(R.id.nombreEmpresa)
-        val usuario = findViewById<EditText>(R.id.usuario)
         val telefono = findViewById<EditText>(R.id.telefono)
         val email = findViewById<EditText>(R.id.email)
         val clave = findViewById<EditText>(R.id.clave)
@@ -37,40 +41,72 @@ class CrearEmpresa : AppCompatActivity() {
         val btnCrear = findViewById<Button>(R.id.crearE)
         btnCrear.setOnClickListener {
             btnCrear.isClickable = false
+            var correcto = true
+            var validacion: Validacion = Validacion()
             var cuenta = Cuenta()
             cuenta.nombre = nombreEmpresa.text.toString()
-            cuenta.usuario = usuario.text.toString()
+            if(!validacion.validacionAlfaNumerica(cuenta.nombre)){
+                Toast.makeText(this, "Nombre Incorrecto, debe ser alfanumerico", Toast.LENGTH_LONG).show()
+                correcto = false
+            }
             cuenta.telefono = telefono.text.toString()
-            cuenta.email = email.text.toString()
-            cuenta.clave = clave.text.toString()
+            if(!validacion.validacionNumerica(cuenta.telefono)){
+                Toast.makeText(this, "Numero de Telefono Incorrecto, debe ser numerico, 8 digitos", Toast.LENGTH_LONG).show()
+                correcto = false
+            }
+            cuenta.email = email.text.toString() // ID
+            if(!validacion.validacionEmail(cuenta.email)){
+                Toast.makeText(this, "Email Incorrecto, debe ser un email valido", Toast.LENGTH_LONG).show()
+                correcto = false
+            }
+            val clave = clave.text.toString()
             cuenta.codigo = codigo.text.toString()
+            if(!validacion.validacionCodigo(cuenta.codigo)){
+                Toast.makeText(this, "Codigo Incorrecto, debe ser alfanumerica y letras mayusculas", Toast.LENGTH_LONG).show()
+                correcto = false
+            }
             cuenta.seccion = seccion.text.toString()
+            if(!validacion.validacionAlfaNumerica(cuenta.seccion)){
+                Toast.makeText(this, "Seccion Incorrecta, debe ser alfanumerica", Toast.LENGTH_LONG).show()
+                correcto = false
+            }
+            if(correcto) {
+                val cuentasService: CuentasService = ServiceBuilder.buildService(
+                    CuentasService::class.java)
 
-            val cuentasService: CuentasService = ServiceBuilder.buildService(
-                CuentasService::class.java)
+                val call: Call<Cuenta> = cuentasService.insertCuenta(cuenta)
 
-            val call: Call<Cuenta> = cuentasService.insertCuenta(cuenta)
+                intent = Intent(this, ListaDeEmpresas::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
-            intent = Intent(this, ListaDeEmpresas::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-
-            call.enqueue(object: Callback<Cuenta> {
-                override fun onResponse(call: Call<Cuenta>, response: Response<Cuenta>) {
-                    if (!response.isSuccessful())
-                    {
-                        // Mensaje de Error
-                        btnCrear.isClickable = true
-                        return
+                call.enqueue(object: Callback<Cuenta> {
+                    override fun onResponse(call: Call<Cuenta>, response: Response<Cuenta>) {
+                        if (!response.isSuccessful())
+                        {
+                            Snackbar.make(crear_empresa_layout, "No se pudo crear el usuario, intente de nuevo o mas tarde", Snackbar.LENGTH_SHORT).show()
+                            btnCrear.isClickable = true
+                            return
+                        }
+                        val cuenta = response.body()
+                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(cuenta.email, clave).addOnCompleteListener { task: Task<AuthResult> ->
+                            if (task.isSuccessful) {
+                                val firebaseUser = FirebaseAuth.getInstance().currentUser!!
+                            } else {
+                                //Registration error
+                                Snackbar.make(crear_empresa_layout, "No se pudo crear el usuario", Snackbar.LENGTH_SHORT).show()
+                            }
+                        }
+                        startActivity(intent)
                     }
-                    val cuenta = response.body()
-                    startActivity(intent)
-                }
-                override fun onFailure(call: Call<Cuenta>, t:Throwable) {
-                    // Mensaje de Error
-                    btnCrear.isClickable = true
+                    override fun onFailure(call: Call<Cuenta>, t:Throwable) {
+                        Snackbar.make(crear_empresa_layout, "No se pudo crear el usuario, intente de nuevo o mas tarde", Snackbar.LENGTH_SHORT).show()
+                        btnCrear.isClickable = true
 
-                }
-            })
+                    }
+                })
+            }else{
+                btnCrear.isClickable = true
+            }
         }
     }
 
