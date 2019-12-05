@@ -9,63 +9,114 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.appsensores.R
+import com.example.appsensores.models.Cuenta
+import com.example.appsensores.services.CuentasService
+import com.example.appsensores.services.ServiceBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_modificar_empresa.*
+import kotlinx.android.synthetic.main.activity_modificar_limites.*
+import kotlinx.android.synthetic.main.activity_semaforos.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
+import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ModificarLimites : AppCompatActivity() {
-    var yellowlimA = 0
-    var redlimA = 0
-    var yellowlimG = 0
-    var redlimG = 0
-    var yellowlimE = 0
-    var redlimE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modificar_limites)
+        toolbar.title = "Modificar Limites"
         setSupportActionBar(toolbar)
+
+        var user = FirebaseAuth.getInstance().currentUser
+        var empresaId = "wal@gmail.com"
+        if(user != null){
+            //empresaId = user.email.orEmpty()
+        }else{
+            //empresaId = "a" // codigoEmpresa //
+        }
+
+        val cuentasService: CuentasService = ServiceBuilder.buildService(
+            CuentasService::class.java)
+
+        val call: Call<Cuenta> = cuentasService.getCuenta2(empresaId)
+
+        call.enqueue(object: Callback<Cuenta> {
+            override fun onResponse(call: Call<Cuenta>, response: Response<Cuenta>) {
+                if (!response.isSuccessful())
+                {
+                    Snackbar.make(modificar_limites_layout, "Ocurrio un error, intente luego", Snackbar.LENGTH_SHORT).show()
+                    return
+                }
+
+                val cuenta = response.body()
+                llenarCampos(cuenta)
+            }
+            override fun onFailure(call: Call<Cuenta>, t:Throwable) {
+                Snackbar.make(modificar_limites_layout, "Ocurrio un error, intente luego", Snackbar.LENGTH_SHORT).show()
+                startActivity(intent)
+            }
+        })
     }
 
-    override fun onResume() {
-        super.onResume()
-        yellowlimA = intent.getIntExtra("yellowlimA", yellowlimA)
-        redlimA = intent.getIntExtra("redlimA", redlimA)
-        yellowlimG = intent.getIntExtra("yellowlimG", yellowlimG)
-        redlimG = intent.getIntExtra("redlimG", redlimG)
-        yellowlimE = intent.getIntExtra("yellowlimE", yellowlimE)
-        redlimE = intent.getIntExtra("redlimE", redlimE)
-
+    fun llenarCampos(cuenta: Cuenta){
         val minA = findViewById<EditText>(R.id.min_agua)
-        minA.setText(yellowlimA.toString())
+        minA.setText(cuenta.limiteAguaMedio.toString())
         val maxA = findViewById<EditText>(R.id.max_agua)
-        maxA.setText(redlimA.toString())
+        maxA.setText(cuenta.limiteAguaAlto.toString())
         val minG = findViewById<EditText>(R.id.min_gas)
-        minG.setText(yellowlimG.toString())
+        minG.setText(cuenta.limiteGasMedio.toString())
         val maxG = findViewById<EditText>(R.id.max_gas)
-        maxG.setText(redlimG.toString())
+        maxG.setText(cuenta.limiteGasAlto.toString())
         val minE = findViewById<EditText>(R.id.min_elect)
-        minE.setText(yellowlimE.toString())
+        minE.setText(cuenta.limiteElectMedio.toString())
         val maxE = findViewById<EditText>(R.id.max_elect)
-        maxE.setText(redlimE.toString())
+        maxE.setText(cuenta.limiteElectAlto.toString())
 
         val btnAceptar = findViewById<Button>(R.id.btn_aceptar)
         btnAceptar.setOnClickListener{
-            yellowlimA = minA.text.toString().toInt()
+            cuenta.limiteAguaMedio = minA.text.toString().toLong()
+            cuenta.limiteAguaAlto = maxA.text.toString().toLong()
+            cuenta.limiteGasMedio = minG.text.toString().toLong()
+            cuenta.limiteGasAlto = maxG.text.toString().toLong()
+            cuenta.limiteElectMedio = minE.text.toString().toLong()
+            cuenta.limiteElectAlto = maxE.text.toString().toLong()
 
-            redlimA = maxA.text.toString().toInt()
-            yellowlimG = minG.text.toString().toInt()
-            redlimG = maxG.text.toString().toInt()
-            yellowlimE = minE.text.toString().toInt()
-            redlimE = maxE.text.toString().toInt()
+            val cuentasService: CuentasService = ServiceBuilder.buildService(
+                CuentasService::class.java
+            )
+
+            val call: Call<Cuenta> = cuentasService.updateCuenta(cuenta)
+
             intent = Intent(this, Semaforos::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
-            intent.putExtra("yLA", yellowlimA)
-            intent.putExtra("rLA", redlimA)
-            intent.putExtra("yLG", yellowlimG)
-            intent.putExtra("rLG", redlimG)
-            intent.putExtra("yLR", yellowlimE)
-            intent.putExtra("rLR", redlimE)
-            startActivity(intent)
+            call.enqueue(object : Callback<Cuenta> {
+                override fun onResponse(call: Call<Cuenta>, response: Response<Cuenta>) {
+                    if (!response.isSuccessful()) {
+                        Snackbar.make(modificar_limites_layout, "Ocurrio un error, intente otra vez", Snackbar.LENGTH_SHORT).show()
+                        btn_modi.isClickable = true
+                        return
+                    }
+                    val cuenta = response.body()
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    startActivity(intent)
+                    finish()
+                }
+
+                override fun onFailure(call: Call<Cuenta>, t: Throwable) {
+                    Snackbar.make(modificar_limites_layout, "Ocurrio un error, intente otra vez", Snackbar.LENGTH_SHORT).show()
+                    btn_modi.isClickable = true
+
+                }
+            })
+            /*
+            intent = Intent(this, Semaforos::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(intent)*/
         }
     }
 

@@ -1,6 +1,7 @@
 package com.sensores.springboot.backend.services.real;
 
 import com.sensores.springboot.backend.model.entity.real.Cuentas;
+import org.springframework.data.jpa.repository.Query;
 
 
 import java.util.List;
@@ -31,4 +32,7 @@ public interface ICuentasService {
      * @return Retorna la infromacion de la cuenta
      */
     public Cuentas findById(long cuentasPk);
+
+    @Query("SELECT C FROM Cuentas C WHERE C.codigo = ?1 OR C.email = ?1")
+    public Cuentas getCuentaByCorreoOrCodigo(String identificador);
 }

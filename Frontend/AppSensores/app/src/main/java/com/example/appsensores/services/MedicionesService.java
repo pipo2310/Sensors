@@ -19,4 +19,7 @@ public interface MedicionesService {
 
     @GET("sensoresLogs_dia")
     Call<Collection<Medicion>> getMedicionesSemana(@Query("tipo") int tipo);
+
+    @GET("sensoresLogs_dia")
+    Call<Collection<Medicion>> getMedicionesHoy(@Query("tipo") int tipo);
 }

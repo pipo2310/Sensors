@@ -29,6 +29,12 @@ public class CuentasController {
         cuentas.setEsAdmin(false);
         try{
             // Se inserta y retorna la cuenta nueva
+            cuentas.setLimiteAguaMedio(100L);
+            cuentas.setLimiteAguaAlto(200L);
+            cuentas.setLimiteGasMedio(100L);
+            cuentas.setLimiteGasAlto(200L);
+            cuentas.setLimiteElectMedio(100L);
+            cuentas.setLimiteElectAlto(200L);
             return iCuentasService.save(cuentas);
         }catch (Exception ex){
             // Falta error
@@ -95,6 +101,16 @@ public class CuentasController {
     public Cuentas buscarCuentaPorId(@RequestParam long cuentaId){
         try{
             return iCuentasService.findById(cuentaId);
+        }catch (Exception ex){
+            // Falta error
+            return null;
+        }
+    }
+
+    @GetMapping("cuenta_por_correo_codigo")
+    public Cuentas buscarCuentaPorCorreoOCodigo(@RequestParam String identificador){
+        try{
+            return iCuentasService.getCuentaByCorreoOrCodigo(identificador);
         }catch (Exception ex){
             // Falta error
             return null;

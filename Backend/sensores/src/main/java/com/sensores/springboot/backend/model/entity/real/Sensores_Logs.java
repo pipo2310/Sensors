@@ -60,10 +60,11 @@ import java.io.Serializable;
                                 @ColumnResult(name = "Sumatoria")
                         })
         })
-@NamedNativeQuery(name = "Sensores_Logs.obtenerValorSem", query = "select  to_char(date_time , 'Day' ) as day, sum(sl.valor) as Sumatoria\n" +
-        "        from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk\n" +
-        "        where sl.date_time >= now()::date + interval '1h'\n" +
-        "        AND s.tipo = :tipo GROUP BY day;" , resultSetMapping = "mapeoSemaforo")
+@NamedNativeQuery(name = "Sensores_Logs.obtenerValorSem", query = "select  to_char(date_time , 'Day' ) as day, sum(sl.valor) as sumatoria\n" +
+        "from sensores_logs as sl join sensores s on sl.id_sensor = s.sensores_pk\n" +
+        "where sl.date_time >= current_date\n" +
+        "AND sl.date_time < current_date + interval '24H'\n" +
+        "AND s.tipo = :tipo GROUP BY day;" , resultSetMapping = "mapeoSemaforo")
 
 
 

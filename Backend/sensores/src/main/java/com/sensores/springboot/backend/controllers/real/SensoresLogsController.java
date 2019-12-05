@@ -28,7 +28,7 @@ public class SensoresLogsController {
     public Collection<Medicion> index4(@RequestParam int tipo) {return this.iSensoresLogsService.getDiasHistoricos(tipo);}
 
     @GetMapping("/valorSemaforo")
-    public Collection<ValorSemaforo> index5(@RequestParam int tipo){return this.iSensoresLogsService.getValorSemaforo(tipo);}
+    public List<ValorSemaforo> index5(@RequestParam int tipo){return this.iSensoresLogsService.getValorSemaforo(tipo);}
 /*
     @PostMapping("/sensoresLogs_post")
     public Sensores_Logs create(@RequestBody Logs_Post log) {
