@@ -50,4 +50,9 @@ public class CuentasServiceImpl implements ICuentasService {
     public Cuentas findById(long cuentasPk) {
         return iCuentasDao.findById(cuentasPk).orElse(null);
     }
+
+    @Override
+    public Cuentas getCuentaByCorreoOrCodigo(String identificador) {
+        return iCuentasDao.getCuentaByCorreoOrCodigo(identificador);
+    }
 }

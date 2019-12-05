@@ -16,14 +16,6 @@ public class TipoSensor {
     @Column(name = "nombre")
     private String nombre;
 
-
-    @Column(name = "alerta_amarilla_global")
-    private double alerta_amarilla_global;
-
-
-    @Column(name = "alerta_roja_global")
-    private double alerta_roja_global;
-
     @Column(name = "costo")
     @Basic()
     private Float costo;
@@ -43,22 +35,6 @@ public class TipoSensor {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public double getAlerta_amarilla_global() {
-        return alerta_amarilla_global;
-    }
-
-    public void setAlerta_amarilla_global(double alerta_amarilla_global) {
-        this.alerta_amarilla_global = alerta_amarilla_global;
-    }
-
-    public double getAlerta_roja_global() {
-        return alerta_roja_global;
-    }
-
-    public void setAlerta_roja_global(double alerta_roja_global) {
-        this.alerta_roja_global = alerta_roja_global;
     }
 
     public Float getCosto() {

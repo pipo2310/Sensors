@@ -4,6 +4,7 @@ package com.sensores.springboot.backend.services.real;
 import com.sensores.springboot.backend.dao.real.ISensoresLogsDao;
 import com.sensores.springboot.backend.model.entity.real.Medicion;
 import com.sensores.springboot.backend.model.entity.real.Sensores_Logs;
+import com.sensores.springboot.backend.model.entity.real.ValorSemaforo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class SensoresLogsServiceImpl implements ISensoresLogsService {
 
     @Override
     public List<Medicion> getDiasHistoricos(int tipo){return this.iSensoresLogsDao.obtenerDias(tipo);}
+
+    @Override
+    public List<ValorSemaforo> getValorSemaforo(int tipo){return this.iSensoresLogsDao.obtenerValorSem(tipo);}
 
     @Override
     @Transactional

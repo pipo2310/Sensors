@@ -4,6 +4,7 @@ package com.sensores.springboot.backend.dao.real;
 import com.sensores.springboot.backend.model.entity.real.Medicion;
 import com.sensores.springboot.backend.model.entity.real.Sensores_Logs;
 import com.sensores.springboot.backend.model.entity.real.Sensores_logs_pk;
+import com.sensores.springboot.backend.model.entity.real.ValorSemaforo;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +25,7 @@ public interface ISensoresLogsDao extends CrudRepository<Sensores_Logs, Sensores
     @Query(nativeQuery = true)
     List<Medicion> obtenerDias(@Param("tipo") int tipo);
 
+    @Query(nativeQuery = true)
+    List<ValorSemaforo> obtenerValorSem(@Param("tipo") int tipo);
 
 }

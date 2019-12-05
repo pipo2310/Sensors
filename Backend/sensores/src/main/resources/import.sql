@@ -11,16 +11,16 @@ INSERT INTO test (test_pk, description) VALUES (4,'asdkjnsakjda');
 -- Real
 
 -- Tabla Cuentas
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (1,true, '87334455', '123', 'Alimentos', 'walmart@gmail.com', 'kat', 'Walmart', '9F4636P3');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (2,true, '87592234', '456', 'Alimentos', 'florida@gmail.com', 'cris', 'Florida Bebidas', 'XCGPQU8V');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (3,true, '86265544', '789', 'Alimentos', 'wal@gmail.com', 'wal', 'Perimercados', 'GZRAK38Z');
-INSERT INTO cuentas (cuentas_pk,es_admin, telefono, clave, seccion, email, usuario, nombre, codigo) VALUES (4,true, '87654533', '100', 'Alimentos', 'jav@gmail.com', 'jav', 'Automercado', '3CDWV48H');
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo, limite_agua_medio, limite_agua_alto, limite_gas_medio, limite_gas_alto, limite_elect_medio, limite_elect_alto) VALUES (1,true, '87334455',  'Alimentos', 'walmart@gmail.com',  'Walmart', '9F4636P3', 100, 200, 100, 200, 100, 200);
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo, limite_agua_medio, limite_agua_alto, limite_gas_medio, limite_gas_alto, limite_elect_medio, limite_elect_alto) VALUES (2,true, '87592234',  'Alimentos', 'florida@gmail.com',  'Florida Bebidas', 'XCGPQU8V', 100, 200, 100, 200, 100, 200);
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo, limite_agua_medio, limite_agua_alto, limite_gas_medio, limite_gas_alto, limite_elect_medio, limite_elect_alto) VALUES (3,true, '86265544',  'Alimentos', 'wal@gmail.com',      'Perimercados', 'GZRAK38Z', 100, 200, 100, 200, 100, 200);
+INSERT INTO cuentas (cuentas_pk,es_admin, telefono,  seccion, email, nombre, codigo, limite_agua_medio, limite_agua_alto, limite_gas_medio, limite_gas_alto, limite_elect_medio, limite_elect_alto) VALUES (4,true, '87654533',  'Alimentos', 'jav@gmail.com',      'Automercado', '3CDWV48H', 100, 200, 100, 200, 100, 200);
 
 
 --Tabla Tipo Sensor
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (1, 'Gas', 12.3 , 19.5, 1.0);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (2, 'Electricidad', 12.3 , 19.5,2.0);
-INSERT INTO tipo_sensor (id_tipo, nombre, alerta_amarilla_global, alerta_roja_global, costo) VALUES (3, 'Agua', 12.3 , 19.5,3.0);
+INSERT INTO tipo_sensor (id_tipo, nombre, costo) VALUES (1, 'Gas', 12.3);
+INSERT INTO tipo_sensor (id_tipo, nombre, costo) VALUES (2, 'Electricidad', 12.3);
+INSERT INTO tipo_sensor (id_tipo, nombre, costo) VALUES (3, 'Agua', 12.3);
 
 --TablaSensores
 INSERT INTO sensores (unidad, id_cuenta, alerta_amarilla, alerta_roja, tipo, nombre) VALUES ('mg/m3', 1, 12.3 , 20.0, 1, 'Sensor de Gas 1');
@@ -117,3 +117,15 @@ INSERT INTO sensores_logs VALUES ('2019-10-28 09:44:21.043412', 1 ,7.8);
 INSERT INTO sensores_logs VALUES ('2019-10-29 09:43:21.043412', 1 ,10.3);
 INSERT INTO sensores_logs VALUES ('2019-10-30 09:43:21.043412', 1 ,9.1);
 INSERT INTO sensores_logs VALUES ('2019-10-31 09:43:21.043412', 1 ,6.3);
+
+/*Prueba demo*/
+INSERT INTO sensores_logs VALUES ('2019-12-04 09:40:21.043412', 1 ,5.3);
+INSERT INTO sensores_logs VALUES ('2019-12-04 10:43:21.043412', 1 ,3.1);
+INSERT INTO sensores_logs VALUES ('2019-12-04 11:43:21.043412', 1 ,18.2);
+INSERT INTO sensores_logs VALUES ('2019-12-04 12:44:21.043412', 1 ,7.8);
+
+INSERT INTO sensores_logs VALUES ('2019-12-05 09:40:21.043412', 1 ,5.3);
+INSERT INTO sensores_logs VALUES ('2019-12-05 10:43:21.043412', 1 ,3.1);
+INSERT INTO sensores_logs VALUES ('2019-12-05 11:43:21.043412', 1 ,18.2);
+INSERT INTO sensores_logs VALUES ('2019-12-05 12:44:21.043412', 1 ,7.8);
+INSERT INTO sensores_logs VALUES ('2019-12-05 23:59:59.000000', 1 ,5.6);

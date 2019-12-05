@@ -19,6 +19,9 @@ public interface CuentasService {
     @GET("cuentas/cuenta_por_id")
     Call<Cuenta> getCuenta(@Query("cuentaId") Long cuentaId);
 
+    @GET("cuentas/cuenta_por_correo_codigo")
+    Call<Cuenta> getCuenta2(@Query("identificador") String identificador);
+
     @PUT("cuentas/actualizar_cuenta")
     Call<Cuenta> updateCuenta(@Body Cuenta cuenta);
 
