@@ -75,7 +75,7 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
+                Log.w("GoogleActivity", "Google sign in failed", e)
                 // [START_EXCLUDE]
                 updateUI(null)
                 // [END_EXCLUDE]
@@ -93,18 +93,18 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
                     signOut()
                     Toast.makeText(this,"El correo ${acct.email} no se encuentra registrado en el sistema.",Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+                    Log.d("GoogleActivity", "firebaseAuthWithGoogle:" + acct.id!!)
                     val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
                     auth.signInWithCredential(credential).addOnCompleteListener(this){
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithCredential:success")
-                                Toast.makeText(this,"Authentication Exitosa",Toast.LENGTH_SHORT).show()
+                                Log.d("GoogleActivity", "signInWithCredential:success")
+                                Toast.makeText(this,"Autenticación Exitosa: Usuario de Google ${acct.email}",Toast.LENGTH_SHORT).show()
                                 updateUI(auth.currentUser)
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithCredential:failure", task.exception)
-                                Snackbar.make(iniciar_sesion_layout, "Authentication Fallida.", Snackbar.LENGTH_SHORT).show()
+                                Log.w("GoogleActivity", "signInWithCredential:failure", task.exception)
+                                Toast.makeText(this, "Autenticación Fallida: error de red o del servidor por favor compruebe su señal de internet", Toast.LENGTH_LONG).show()
                                 updateUI(null)
                             }
                         }
@@ -126,14 +126,16 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         updateUI(auth.currentUser)
-                        Toast.makeText(this, "Authentication Exitosa", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Autenticación Exitosa: Usuario $email", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(this, "Authentication Fallida", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Autenticación Fallida: credenciales inválidos", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
+        } else if (email.isEmpty()){
+            Toast.makeText(this, "El campo correo no puede estar vacío", Toast.LENGTH_SHORT).show()
         } else{
-            Toast.makeText(this, "Por favor llene los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "El campo contraseña no puede estar vacío", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -141,35 +143,17 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
         val business = findViewById<EditText>(R.id.empresa_editText).text.toString()
         val code = findViewById<EditText>(R.id.codigo_editText).text.toString()
         if (business.isNotEmpty() && code.isNotEmpty()) {
-            // TODO: un mejor método para verificar el nombre y el código
-//            val cuentasService: CuentasService = ServiceBuilder.buildService(CuentasService::class.java)
-//            val call: Call<MutableList<Cuenta>> = cuentasService.cuentas
-//            call.enqueue(object: Callback<MutableList<Cuenta>> {
-//                    override fun onResponse(call: Call<MutableList<Cuenta>>, response: Response<MutableList<Cuenta>>) {
-//                        if (response.isSuccessful){
-//                            val cuentas = response.body()
-//                            if(cuentas.any()){
-//                                for (i in 0 until cuentas.size){
-//                                    if(cuentas[i].nombre.toString().toLowerCase() == business.toLowerCase() && cuentas[i].codigo == code){
-//                                        signInAnonymously(business)
-//                                    }else{
-//                                        Toast.makeText(null,"Datos incorrectos",Toast.LENGTH_SHORT).show()
-//                                    }
-//                                }
-//                            }else{
-//                                Toast.makeText(parent,"No hay empresas registradas por el momento",Toast.LENGTH_SHORT).show()
-//                            }
-//                        }else{
-//                            Toast.makeText(parent,"Error del sistema.",Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                override fun onFailure(call: Call<MutableList<Cuenta>>?, t: Throwable?) {
-//                    Toast.makeText(parent,"Error del sistema 2.",Toast.LENGTH_SHORT).show()
-//                }
-//            })
-            signInAnonymously(business)
-        } else {
-            Toast.makeText(this, "Por favor llene los campos", Toast.LENGTH_SHORT).show()
+            //consulta = bla
+//            if(business == consulta[x] && code == consulta[y]) {
+                signInAnonymously(business)
+//                adminEmail = consulta[z]
+//            }else{
+//                Toast.makeText(this, "Autenticación Fallida: credenciales inválidos", Toast.LENGTH_LONG).show()
+//            }
+        } else if(business.isEmpty()){
+            Toast.makeText(this, "El campo empresa no puede estar vacío", Toast.LENGTH_SHORT).show()
+        } else{
+            Toast.makeText(this, "El campo código no puede estar vacío", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -181,7 +165,7 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Usuario Anónimo de $business", Toast.LENGTH_SHORT).show()
                 } else {
                     updateUI(null)
-                    Toast.makeText(this, "Authentication Fallida", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Autenticación Fallida: error de red o del servidor por favor compruebe su señal de internet", Toast.LENGTH_LONG).show()
                 }
             }
     }
@@ -200,9 +184,10 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
             if (user.isAnonymous) {
                 user.delete().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.d(TAG, "User account deleted.")
+                        Log.d("GoogleActivity", "User account deleted.")
                     }
                 }
+                adminEmail = ""
             }
         }
         // Firebase sign out
@@ -216,12 +201,12 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
     private fun forgotPassword(){
         println("password send to email")
         val email = findViewById<EditText>(R.id.correo_electronico_editText).text.toString()
-        auth.sendPasswordResetEmail(email)
+         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Correo electrónico enviado a $email", Toast.LENGTH_SHORT).show()
                 }else {
-                    Toast.makeText(this, "Error no se logró enviar el correo a $email", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Error: no se logró enviar el correo a $email", Toast.LENGTH_LONG).show()
                 }
             }
         showSignInEmail()
@@ -319,7 +304,9 @@ class IniciarSesion : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        private const val TAG = "GoogleActivity"
         private const val RC_SIGN_IN = 9001
+//        import com.example.appsensores.activities.IniciarSesion.Companion.adminEmail // para saber a que empresa pertenece el usuario anónimo
+
+        var adminEmail: String = ""
     }
 }
