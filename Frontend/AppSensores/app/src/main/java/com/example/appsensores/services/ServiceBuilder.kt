@@ -7,7 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceBuilder {
     // Before release, change this URL to your live server URL such as "https://smartherd.com/"
-    private const val URL = "http://10.0.2.2:8080/api/"
+    //private const val URL = "http://10.0.2.2:8080/api/"
+    private const val URL = "http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/"
 
     // Create Logger
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

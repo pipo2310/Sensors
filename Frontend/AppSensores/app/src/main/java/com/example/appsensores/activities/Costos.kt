@@ -74,7 +74,7 @@ class Costos : AppCompatActivity() {
 
     private fun getData(){
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

@@ -230,7 +230,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
 
     fun recuperarCostos(){
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.105:8080/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -440,7 +440,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
     fun generarHistoricosAno(generarPDF:Boolean,tipoImagenes:Int) {
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.105:8080/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -487,7 +487,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
 
     fun generarHistoricosMes(generarPDF:Boolean,tipoImagenes:Int) {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.105:8080/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -534,7 +534,7 @@ class Historicos : AppCompatActivity(), AdapterView.OnItemSelectedListener, Gest
 
     fun generarHistoricosSemana(generarPDF:Boolean,tipoImagenes:Int) {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.105:8080/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             //.baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()

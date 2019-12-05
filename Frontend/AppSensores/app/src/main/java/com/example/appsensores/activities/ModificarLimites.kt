@@ -14,8 +14,11 @@ import com.example.appsensores.services.CuentasService
 import com.example.appsensores.services.ServiceBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_crear_empresa.*
+import kotlinx.android.synthetic.main.activity_historicos.*
 import kotlinx.android.synthetic.main.activity_modificar_empresa.*
 import kotlinx.android.synthetic.main.activity_modificar_limites.*
+import kotlinx.android.synthetic.main.activity_modificar_sensores.*
 import kotlinx.android.synthetic.main.activity_semaforos.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.*
 import kotlinx.android.synthetic.main.activity_vista_sensores.toolbar
@@ -28,8 +31,8 @@ class ModificarLimites : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modificar_limites)
-        toolbar.title = "Modificar Limites"
-        setSupportActionBar(toolbar)
+        //toolbar.title = "Modificar Limites"
+        setSupportActionBar(toolbar2)
 
         var user = FirebaseAuth.getInstance().currentUser
         var empresaId = "wal@gmail.com"

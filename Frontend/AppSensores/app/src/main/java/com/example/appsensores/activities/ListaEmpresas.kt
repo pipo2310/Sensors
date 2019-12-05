@@ -36,7 +36,7 @@ class ListaEmpresas : AppCompatActivity() {
 
     fun recuperarCuentas(){
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://ec2-3-86-67-165.compute-1.amazonaws.com/sensores-backend/api/")
+            .baseUrl("http://ec2-34-235-147-100.compute-1.amazonaws.com/sensores/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
