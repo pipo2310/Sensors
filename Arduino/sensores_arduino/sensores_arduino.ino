@@ -1,4 +1,8 @@
 #include "Adafruit_FONA.h"
+#include "EmonLib.h"                            // Include Emon Library
+
+#define SUPPLY_VOLTAGE 110
+#define CURRENT_CALIBRATION 111.1
 
 #define FONA_RX 2
 #define FONA_TX 3
@@ -8,6 +12,7 @@
 
 //Para app
 #define ID_SENSOR_AGUA 3
+#define ID_SENSOR_ELECTRICO 2
 #define ID_SENSOR_GAS 1
 
 // this is a large buffer for replies
@@ -21,6 +26,9 @@ SoftwareSerial *fonaSerial = &fonaSS;
 //Variables FONA
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 uint8_t type;
+
+//Variable sensor electrico
+EnergyMonitor emon1;                            // Create an instance
 
 //Variables sensor de presion
 const float SensorOffset = 37.0;
@@ -123,6 +131,8 @@ void setup() {
   digitalWrite(LEDLISTO, LOW);
   while (!Serial);
 
+  emon1.current(1, CURRENT_CALIBRATION);        // Current: input pin, calibration.
+
   Serial.begin(115200);
   Serial.println(F("FONA basic test"));
   Serial.println(F("Initializing....(May take 3 seconds)"));
@@ -216,7 +226,7 @@ void loop() {
   //Una vez que inicializa el modulo GPRS
   Serial.print("Freq: "); Serial.println(flowrate);
   Serial.print("Pulses: "); Serial.println(pulses, DEC);
-  
+   
   // if a plastic sensor use the following calculation
   // Sensor Frequency (Hz) = 7.5 * Q (Liters/min)
   // Liters = Q * time elapsed (seconds) / 60 (seconds/minute)
@@ -249,7 +259,23 @@ void loop() {
   if (sensorValue > 2.0){
     postDatos(ID_SENSOR_GAS,sensorValue);
   }
-  
+
+
+  double currentDraw = emon1.calcIrms(1480);  // Calculate Irms only
+  double watts = currentDraw * SUPPLY_VOLTAGE;
+
+  Serial.print("Aparent Power( ");
+  Serial.print(SUPPLY_VOLTAGE);
+  Serial.print("V * ");
+  Serial.print(currentDraw);
+  Serial.print("A ): ");
+  Serial.print(watts);
+  Serial.println("W");
+  Serial.println();
+
+  if(watts > 55){
+        postDatos(ID_SENSOR_ELECTRICO,watts);
+  }
   delay(5000);
 }
 
